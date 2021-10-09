@@ -1,0 +1,340 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="mainwindow_toplevel">
+    <property name="height">1000</property>
+    <property name="resizable">both</property>
+    <property name="title" translatable="yes">Microlok II Data Design Helper</property>
+    <property name="width">1000</property>
+    <child>
+      <object class="pygubu.builder.widgets.toplevelmenu" id="menubar_top">
+        <child>
+          <object class="tk.Menu" id="menubar_menu">
+            <child>
+              <object class="tk.Menuitem.Submenu" id="filemenu">
+                <property name="label" translatable="yes">File</property>
+                <property name="tearoff">true</property>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Menuitem.Command" id="aboutmenu_command">
+                <property name="command" type="command" cbtype="simple">open_about_toplevel</property>
+                <property name="label" translatable="yes">About</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Notebook" id="mainwindow_notebook">
+        <layout manager="pack">
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Notebook.Tab" id="bitfomatter_tab">
+            <property name="text" translatable="yes">Bit Formattor</property>
+            <child>
+              <object class="ttk.Frame" id="bitformattor_frame">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="tk.LabelFrame" id="AboutFrame">
+                    <property name="text" translatable="yes">About</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="tk.Message" id="AboutMessage">
+                        <property name="anchor">center</property>
+                        <property name="justify">center</property>
+                        <property name="text" translatable="yes">Program to take MKII/GENII serial bits from Microlok II/Genisys II files and neatly formats them</property>
+                        <property name="width">600</property>
+                        <layout manager="pack">
+                          <property name="anchor">center</property>
+                          <property name="expand">true</property>
+                          <property name="fill">both</property>
+                          <property name="propagate">True</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.LabelFrame" id="InputTxtFrame">
+                    <property name="text" translatable="yes">Input</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="pygubu.builder.widgets.tkinterscrolledtext" id="InputTextBox">
+                        <property name="autoseparators">true</property>
+                        <property name="height">15</property>
+                        <property name="insertunfocussed">none</property>
+                        <property name="text" translatable="yes">Delete all text in this box &amp; Paste text:
+                   ND451H1R,    ND451HH1R,    ND451D1R,       ND451IZ1R,
+                   NU451H1R,    NU451HH1R,      NU451D1R,       NU451IZ1R,
+                   SPARE,       SPARE,          SPARE,          SPARE,
+                   SPARE,       SPARE,          SPARE,          SPARE;</property>
+                        <layout manager="pack">
+                          <property name="expand">true</property>
+                          <property name="fill">both</property>
+                          <property name="propagate">True</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="formatchoice_frame">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="pady">0 10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="Label2">
+                        <property name="text" translatable="yes">Covert to number of columns: </property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="Frame11">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="pady">0 10</property>
+                          <property name="propagate">True</property>
+                          <property name="row">1</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Radiobutton" id="Radiobutton6">
+                            <property name="state">normal</property>
+                            <property name="text" translatable="yes">1</property>
+                            <property name="value">1</property>
+                            <property name="variable">int:formatnrows</property>
+                            <layout manager="grid">
+                              <property name="column">0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Radiobutton" id="Radiobutton7">
+                            <property name="text" translatable="yes">2</property>
+                            <property name="value">2</property>
+                            <property name="variable">int:formatnrows</property>
+                            <layout manager="grid">
+                              <property name="column">1</property>
+                              <property name="padx">40 0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Radiobutton" id="Radiobutton8">
+                            <property name="text" translatable="yes">4</property>
+                            <property name="value">4</property>
+                            <property name="variable">int:formatnrows</property>
+                            <layout manager="grid">
+                              <property name="column">2</property>
+                              <property name="padx">40 0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Radiobutton" id="Radiobutton9">
+                            <property name="state">normal</property>
+                            <property name="text" translatable="yes">8</property>
+                            <property name="value">8</property>
+                            <property name="variable">int:formatnrows</property>
+                            <layout manager="grid">
+                              <property name="column">3</property>
+                              <property name="padx">40 0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Checkbutton" id="comma_checkbutton">
+                        <property name="offvalue">0</property>
+                        <property name="onvalue">1</property>
+                        <property name="text" translatable="yes">Remove Commas</property>
+                        <property name="variable">int:removecomma</property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">2</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Button" id="ConvertButton">
+                    <property name="command" type="command" cbtype="simple">ConvertTextCallback</property>
+                    <property name="justify">left</property>
+                    <property name="padx">20</property>
+                    <property name="pady">5</property>
+                    <property name="text" translatable="yes">↑ Convert ↓</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.LabelFrame" id="OutputTxtFrame">
+                    <property name="text" translatable="yes">Output</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="pygubu.builder.widgets.tkinterscrolledtext" id="OutputTextBox">
+                        <property name="height">15</property>
+                        <layout manager="pack">
+                          <property name="anchor">center</property>
+                          <property name="expand">true</property>
+                          <property name="fill">both</property>
+                          <property name="propagate">True</property>
+                          <property name="side">top</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Frame" id="DisplayNBits">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="tk.Label" id="LabelNLines">
+                        <property name="text" translatable="yes">No. Lines:</property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="tk.Text" id="TextNLines">
+                        <property name="height">1</property>
+                        <property name="text" translatable="yes">0</property>
+                        <property name="width">5</property>
+                        <layout manager="grid">
+                          <property name="column">1</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="tk.Label" id="LabelNBits">
+                        <property name="text" translatable="yes">No. Assigned Bits:</property>
+                        <layout manager="grid">
+                          <property name="column">2</property>
+                          <property name="padx">100 0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="tk.Text" id="TextNBits">
+                        <property name="height">1</property>
+                        <property name="state">normal</property>
+                        <property name="text" translatable="yes">0</property>
+                        <property name="width">5</property>
+                        <layout manager="grid">
+                          <property name="column">3</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Notebook.Tab" id="bitcomparator_tab">
+            <property name="text" translatable="yes">Bit Comparator</property>
+            <child>
+              <object class="ttk.Frame" id="Frame6">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="tk.Toplevel" id="about_toplevel">
+    <property name="height">500</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">About</property>
+    <property name="width">500</property>
+    <child>
+      <object class="ttk.Frame" id="about_frame">
+        <property name="borderwidth">1</property>
+        <property name="height">500</property>
+        <property name="padding">20</property>
+        <property name="takefocus">true</property>
+        <property name="width">500</property>
+        <layout manager="pack">
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Label" id="about_label">
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">Current version: 1.0
+Developed by Danny Tran 2021
+----------------------------------------------
+Changelog:
+V1.0 - 20211009 - Initial Release</property>
+            <layout manager="pack">
+              <property name="propagate">True</property>
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
