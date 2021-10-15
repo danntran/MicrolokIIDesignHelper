@@ -34,7 +34,7 @@ def obtcomminfo(text):
     # [name of link, protocol, address, port num, baud]
     # If p2p: [link name, protocol, MII address, Station Name, peer address]
     port_list = []
-    comm_text = text[text.index('COMM'): text.index('BOOLEAN BITS')]
+    comm_text = text[text.index('COMM'): [id for id, val in enumerate(text) if ('BOOLEAN BITS' in val)][-1]]
     # find every instance of LINK and put index into array
     link_indexes = [i for i, x in enumerate(comm_text) if x.startswith("LINK:")]
     link_indexes.append(None) # this adds a limit, to slice the list
@@ -81,9 +81,9 @@ def obtcomminfo(text):
                     param_list['PEER.ADDRESS:'] = None
                     param_list['STATION.NAME:'] = None
 
-                if line.startswith('OUTPUT'):
+                if 'OUTPUT' in line:
                     outputmode = True
-                if line.startswith('INPUT'):
+                if 'INPUT' in line:
                     inputmode = True
                 if outputmode == True:
                     output_text += line
