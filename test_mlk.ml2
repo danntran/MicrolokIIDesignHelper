@@ -1,0 +1,1142 @@
+/***************************************************************************
+        WARNING - This is a vital interlocking program.
+        Changing of any statements can compromise the safe
+        performance of this program.
+****************************************************************************/
+
+        MICROLOK_II PROGRAM N123_31MAR21_5C;
+
+/*      QUEENSLAND RAILWAYS, BURPENGARY HUT N123 - MICROLOK_II
+
+                PRODUCED BY UNION SWITCH & SIGNAL:
+
+                MICROLOK II COMPILER VERSION: 8.3
+                MICROLOK II EXECUTIVE VERSION: 8.3
+
+
+        REVISION: (N123VL10)
+
+        Designed to Preliminary Control Table Version 001.
+
+        DESIGNED BY:    M.PRABU KUMAR                   DATE: 19/07/00
+
+        CHECKED BY:     MARI ARUNACHALAM                DATE: 02/08/00
+
+
+
+        REVISION: (N123VT11)
+
+        1) Updated to official version of Control table dated 04/08/00.
+        2) Modified for FAT/Simulator.
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 29/08/00
+
+        QR CHECKED BY:  MIKE WADE                       DATE: 28/09/00
+
+
+
+        REVISION: (N123VT12)
+
+        Updated to QR's preliminary checking comments dated 28/09/00
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 12/10/00
+
+        QR CHECKED BY:  KYLEE BISHOP                    DATE: 10/11/00
+
+
+
+        REVISION: (N123VT13)
+
+        1) Updated to QR's checking comments dated 10/11/00
+        2) Updated to general changes
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 14/11/00
+
+        QR CHECKED BY:  KYLEE BISHOP                    DATE: 17/11/00
+
+
+
+        REVISION: (N123S5VL_13DEC00_1148)
+
+        1) Restored from simulator changes.
+        2) 24V MONITOR LOGIC ADDED
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 14/12/00
+
+        CHECKED BY:     MARI ARUNACHALAM                DATE: 14/12/00
+
+        QR CHECKED BY:  C.TRUSCOTT                      DATE: 14/12/00
+
+        QR PASSED BY:   MIKE WADE                       DATE: 14/12/00
+
+        QR APPROVED BY: M.J.DUFFY                       DATE: 15/12/00
+
+        *************** COMMISSIONED ON 16/12/00 **********************
+
+
+        REVISION: (N123VL_05FEB01_1200)
+
+        1) Executive Version changed from 3.2 to 4.01
+        2) Binary coding implemented
+        3) Simulator mod added for 24VMONITOR
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 06/02/01
+
+        CHECKED BY:     P.J.STRINGER                    DATE: 09/02/01
+
+        QR CHECKED BY:  C.TRUSCOTT                      DATE: 21/02/01
+
+        QR PASSED BY:   T.MCHUGH                        DATE: 21/02/01
+
+        QR APPROVED BY: N.R.MANN                        DATE: 22/02/01
+
+        *************** COMMISSIONED ON 26/02/01 **********************
+
+        REVISION: (N123VL_06MAR01_1200)
+
+        1) Binary code checking removed
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 06/03/01
+
+        CHECKED BY:     P.J.STRINGER                    DATE: 06/03/01
+
+        QR CHECKED BY:  C.TRUSCOTT                      DATE: 07/03/01
+
+        QR PASSED BY:   M.WADE                          DATE: 08/03/01
+
+        QR APPROVED BY: M.LITTLEFORD                    DATE: 08/03/01
+
+        *************** COMMISSIONED ON 12/03/01 **********************
+
+
+        REVISION: (N123VL_30MAR01_1200)
+
+        1) VSL Status bit indications taken from master ends
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 30/03/01
+
+        CHECKED BY:                                     DATE:
+
+        QR CHECKED BY:                                  DATE:
+
+        QR PASSED BY:                                   DATE:
+
+        QR APPROVED BY:                                 DATE:
+
+        *************** COMMISSIONED ON --/--/-- ************
+
+
+        REVISION: (N123_31MAR21_5C)
+
+        D2B STAGE 2 - INITIAL DESIGN.
+          1) Upgrade of Executive v4.01 to v8.30
+          2) Upgrade comm links to P2P
+          3) Removal of A/B links, redundancy now done via Ruggedcom
+          4) MOD A01429
+
+        DESIGNED BY:    Z. PIPER                     DATE: 31/03/21
+
+        CHECKED BY:                                  DATE: 
+
+        PASSED BY:                                   DATE: 
+
+        APPROVED BY:                                 DATE: 
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+        REVISIONS:
+                (BELOW, LIST REVISIONS AS MADE, AND RECORD DATE
+                AND NAME OF PERSON MAKING THE REVISION)
+
+***************************************************************************/
+
+
+INTERFACE
+
+
+% All vital I/O boards and VSL links with `ADJUSTABLE ENABLE:1'
+  can be switched out of service by the Microlok II maintenance tool.
+  Where system controls need to be `ADJUSTABLE' during initial on site
+  system optimum performance configuration, they are declared
+  'ADJUSTABLE XXXX: XX'.  After satisfactory QR witnessed and
+  signed off acceptance of the configuration, they are changed
+  to `FIXED XXXX: XX'. \
+
+
+% START OF SIMULATOR MODIFICATION 1 OF 6
+
+//  The LOCAL declarations are to be commented out during testing on the
+//  Microlok II simulator.
+
+
+LOCAL
+
+
+BOARD:             OUT_SLOT1
+ADJUSTABLE ENABLE: 1
+TYPE:              OUT16
+
+OUTPUT:
+        ND439HR,     ND439HHR,       ND439DR,        ND439IZR,
+        NU439HR,     NU439HHR,       NU439DR,        NU439IZR,
+        SPARE,       SPARE,          SPARE,          SPARE,
+        SPARE,       SPARE,          SPARE,          SPARE;
+
+
+BOARD:             OUT_SLOT2
+ADJUSTABLE ENABLE: 1
+TYPE:              OUT16
+
+OUTPUT:
+        ND444H1R,    ND444HH1R,      ND444D1R,       ND444IZ1R,
+        NU444H1R,    NU444HH1R,      NU444D1R,       NU444IZ1R,
+        SPARE,       SPARE,          SPARE,          SPARE,
+        SPARE,       SPARE,          SPARE,          SPARE;
+
+
+
+BOARD:             IN_SLOT3
+ADJUSTABLE ENABLE: 1
+TYPE:              IN16
+
+INPUT:
+        ND439RGPR,   ND439HGPR,      ND439HHGPR,     ND439IZCR,
+        NU439RGPR,   NU439HGPR,      NU439HHGPR,     NU439IZCR,
+        CHARGE.FAIL, 50VMONITOR,     24VMONITOR2,    RS400.FAIL,
+        24VMONITOR1, SPARE,          SPARE,          SPARE;
+
+
+BOARD:             IN_SLOT4
+ADJUSTABLE ENABLE: 1
+TYPE:              IN16
+
+INPUT:
+        ND444RGPR,   ND444HGPR,      ND444HHGPR,     ND444IZCR,
+        NU444RGPR,   NU444HGPR,      NU444HHGPR,     NU444IZCR,
+        425CTPR,     439ATSPR,       439BTPR,        444ATSPR,
+        444BTPR,     458CTPR,        ALARMPR,        SMOKEPR;
+
+
+ END OF SIMULATOR MODIFICATION 1 OF 6 \
+
+
+
+COMM
+
+LINK:                   VSL3A
+FIXED ENABLE:      1
+PROTOCOL:               MICROLOK.MASTER
+% START OF SIMULATOR MOD 2 OF 8 \  
+//*** COMMENT OUT FOR SITE, COMMENT IN FOR SIM
+      
+        // Simulator Version
+        FIXED PORT:                 1;
+        FIXED BAUD:                 1200;
+        FIXED STOPBITS:             1;
+        FIXED PARITY:               NONE;
+        ADJUSTABLE KEY.ON.DELAY:        64;   // ADJUSTABLE for sim only
+        ADJUSTABLE KEY.OFF.DELAY:       64;   // ADJUSTABLE for sim only                                      
+        ADJUSTABLE STALE.DATA.TIMEOUT:  10:SEC;  // ADJUSTABLE for sim only
+        FIXED POLLING.INTERVAL:     50:MSEC;
+        FIXED MASTER.TIMEOUT:       500:MSEC;
+        FIXED POINT.POINT:          1;
+        
+//*** COMMENT OUT FOR SIM, COMMENT IN FOR SITE
+%  
+        // Site Version
+        FIXED PORT:                 1;
+        FIXED BAUD:                 1200;
+        FIXED STOPBITS:             1;
+        FIXED PARITY:               NONE;
+        FIXED KEY.ON.DELAY:         12;
+        FIXED KEY.OFF.DELAY:        12; 
+        FIXED STALE.DATA.TIMEOUT:   2:SEC; 
+        FIXED POLLING.INTERVAL:     50:MSEC;
+        FIXED MASTER.TIMEOUT:       500:MSEC;
+        FIXED POINT.POINT:          1;
+   
+% END OF SIMULATOR MOD 2 OF 8 \
+
+ADDRESS: 9     // INTERFACE TO HELENSVALE 'LINK 3A'
+
+  FIXED ENABLE             : 1
+
+    OUTPUT:     // TO HELENSVALE 'LINK 3A'
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+    VSLBC1.NG.HE2.A,     VSLBC2.NG.HE2.A,     VSLBC3.NG.HE2.A,   VSLBC4.NG.HE2.A,
+    VSLBC5.NG.HE2.A,     SPARE,               SPARE,             SPARE,
+
+    NG.5EDN.ULSPR.A,     NG.7BDN.ULSPR.A,    NG.5C.UP.ULSCR.A,   NG.8A.UP.ULSCR.A,
+    NG.5CTPR.A,          NG.5DTPR.A,         NG.5ETPR.A,         NG.5ETCPR.A,
+
+    NG.7ATPR.A,          NG.7BTPR.A,         NG.7BTCPR.A,        NG.8ATPR.A,
+    NG.HE12.14.1MZR.A,   NG.HE12.14.2MZR.A,  HE1PIZR.A,          HE3PIZR.A;
+
+
+    INPUT:     // FROM HELENSVALE 'LINK 3A'
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+    VSLBC1.HE2.NG.A,     VSLBC2.HE2.NG.A,    VSLBC3.HE2.NG.A,     VSLBC4.HE2.NG.A,
+    VSLBC5.HE2.NG.A,     SPARE,              SPARE,               SPARE,
+
+    HE12DUP.ULSPR.HE2.NG.A, HE14DUP.ULSPR.HE2.NG.A, HE12DDN.ULSCR.HE2.NG.A,
+    HE14DDN.ULSCR.HE2.NG.A,
+    HE12DTCR.HE2.NG.A,      HE14DTCR.HE2.NG.A,      HE12DTR.HE2.NG.A,     HE14DTR.HE2.NG.A,
+
+    HE12CTR.HE2.NG.A,     HE14CTR.HE2.NG.A,         NG5ZR.HE2.NG.A,       NG7ZR.HE2.NG.A,
+    HE1PIZCR.A,           HE3PIZCR.A,               HE1PIZPR.A,           HE3PIZPR.A;
+
+ADDRESS: 11     // INTERFACE TO ROBINA 'LINK 3A'
+
+  FIXED ENABLE             : 1
+
+    OUTPUT:     // TO ROBINA 'LINK 3A'
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+    VSLBC1.NG.RA.A,     VSLBC2.NG.RA.A,     VSLBC3.NG.RA.A,     VSLBC4.NG.RA.A,
+    VSLBC5.NG.RA.A,     SPARE,              SPARE,              SPARE,
+
+    NG2CUP.ULSR.NG.RA.A, NG4EUP.ULSR.NG.RA.A, NG2CTCR.NG.RA.A, NG4ETCR.NG.RA.A,
+    RA23ZR.NG.RA.A,      RA25ZR.NG.RA.A,      SPARE,           SPARE;
+
+    INPUT:     // FROM ROBINA 'LINK A'
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+    VSLBC1.RA.NG.A,     VSLBC2.RA.NG.A,     VSLBC3.RA.NG.A,     VSLBC4.RA.NG.A,
+    VSLBC5.RA.NG.A,     SPARE,              SPARE,              SPARE,
+
+    RA23EDN.ULSPR.RA.NG.A, RA25CDN.ULSPR.RA.NG.A, RA25CTCR.RA.NG.A,
+    RA23ETCR.RA.NG.A,
+    NG2ZR.RA.NG.A,         NG4ZR.RA.NG.A,         SPARE,              SPARE;
+
+
+//*** START OF SIMULATOR MOD 3 OF 8 ****\
+//*** I-O FOR SIMULATION FOR MISS.NOTE ADDRESSES 111-127 FOR SIMUALTION\
+
+ADDRESS: 111       // INTERFACE TO SIMULATOR 'LINK A'
+
+  ADJUSTABLE ENABLE             : 1
+
+    OUTPUT:     // TO SIMULATOR 'LINK A'
+					1DR,		1HR,		1IZR,		2DR,
+					2IZR,		5DR,		5IZR,		6DR,
+					6HR,		6IZR,		POR,		SPARE,
+					SPARE,		SPARE,		SPARE,		SPARE,
+					3DR,		3HR,		3IZR,		4DR,
+					4IZR,		7DR,		7IZR,		8DR,
+					8HR,		8IZR,		SPARE,		SPARE,
+					SPARE,		SPARE,		SPARE,		SPARE,
+					SPARE,		SPARE,		SPARE,		SPARE,
+					SPARE,		SPARE,		SPARE,		4AA_RESET_R,
+					4AB_RESET_R,		4AC_RESET_R,		4B_RESET_R,		4C_RESET_R,
+					4D_RESET_R,		4E_RESET_R,		SPARE,		4AB_UNCOND_RESET_R,
+					2C_RESET_R,		2B_RESET_R,		2A_RESET_R,		1A_RESET_R,
+					1BA_RESET_R,		1BB_RESET_R,		1BC_RESET_R,		SPARE,
+					SPARE,		SPARE,		SPARE,		SPARE,
+					SPARE,		SPARE,		SPARE,		1BB_UNCOND_RESET_R;
+
+
+    INPUT:       // FROM SIMULATOR 'LINK A'
+
+					2CTR,		2BTSR,		2ATR,		1RGPR,
+					1HGPR,		1IZCR,		1ATSR,		1BATR,
+					2RGPR,		2DGPR,		2IZCR,		1CTR,
+					5RGPR,		5DGPR,		5IZCR,		5ATSR,
+					5BTR,		5CTSR,		6RGPR,		6HGPR,
+					6IZCR,		5DTR,		5ETR,		1LINK,
+					2LINK,		5LINK,		6LINK,		SPARE,
+					POCR,		POZR,		SPARE,		SPARE,
+					4ETR,		4DTSR,		4CTR,		3RGPR,
+					3HGPR,		3IZCR,		4BTSR,		4AATSR,
+					4RGPR,		4DGPR,		4IZCR,		8DTR,
+					7RGPR,		7DGPR,		7IZCR,		8CTSR,
+					8BTR,		8ATSR,		8RGPR,		8HGPR,
+					8IZCR,		7ATR,		7BTR,		3LINK,
+					4LINK,		7LINK,		8LINK,		4ABTR,
+					4ACTR,		1BBTR,		1BCTSR,		SPARE,
+					24VMONITOR,		ELDKR,		MAKR,		SBAKR,
+					MIUKR,		SBIUKR,		BBVSKR,		SPARE,
+					BATTERY.LOW.VOLTAGE,		INT.AL.R,		SPARE,		SPARE,
+					SPARE,		SPARE,		SPARE,		SPARE;
+
+
+
+      //*** END OF SIMULATOR MOD 3 OF 8 ****\
+
+LINK:                   VSL4
+FIXED ENABLE:      1
+PROTOCOL:               MICROLOK.SLAVE
+
+        FIXED PORT:                 2;
+        FIXED BAUD:                 1200;
+        FIXED STOPBITS:             1; 
+        FIXED PARITY:               NONE;
+        FIXED KEY.ON.DELAY:         12;  
+        FIXED KEY.OFF.DELAY:        12; 
+        FIXED STALE.DATA.TIMEOUT:   2:SEC; 
+        FIXED POINT.POINT:          1;
+
+ADDRESS: 10     // INTERFACE TO HELENSVALE
+
+  FIXED ENABLE             : 1
+
+    OUTPUT:     // TO HELENSVALE
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+    VSLBC1.NG.HE2.B,     VSLBC2.NG.HE2.B,     VSLBC3.NG.HE2.B,     VSLBC4.NG.HE2.B,
+    VSLBC5.NG.HE2.B,     SPARE,               SPARE,               SPARE,
+
+    NG.5EDN.ULSPR.B,     NG.7BDN.ULSPR.B,     NG.5C.UP.ULSCR.B,    NG.8A.UP.ULSCR.B,
+    NG.5CTPR.B,          NG.5DTPR.B,          NG.5ETPR.B,          NG.5ETCPR.B,
+
+    NG.7ATPR.B,          NG.7BTPR.B,          NG.7BTCPR.B,         NG.8ATPR.B,
+    NG.HE12.14.1MZR.B,   NG.HE12.14.2MZR.B,   HE1PIZR.B,           HE3PIZR.B;
+
+
+    INPUT:     // FROM HELENSVALE
+
+    // THIS LINK IS NOT TO BE USED OVER A DERIVED CHANNEL OR SWITCHED
+    // COMMUNICATION NETWORK. BINARY CODING BITS 1 TO 5 HAVE BEEN
+    // INCLUDED IN THE ADDRESS STREAM (BITS 6 TO 8 RESERVED AND NOT USED)
+    // BUT ARE NOT TESTED FOR A VALID BINARY CODE.
+
+	VSLBC1.HE2.NG.B,	VSLBC2.HE2.NG.B,	VSLBC3.HE2.NG.B,	VSLBC4.HE2.NG.B,
+	VSLBC5.HE2.NG.B,		SPARE,		SPARE,		SPARE,
+	HE12DUP.ULSPR.HE2.NG.B,		HE14DUP.ULSPR.HE2.NG.B,		HE12DDN.ULSCR.HE2.NG.B,		HE14DDN.ULSCR.HE2.NG.B,
+	HE12DTCR.HE2.NG.B,		HE14DTCR.HE2.NG.B,		HE12DTR.HE2.NG.B,		HE14DTR.HE2.NG.B,
+	HE12CTR.HE2.NG.B,		HE14CTR.HE2.NG.B,		NG5ZR.HE2.NG.B,		NG7ZR.HE2.NG.B,
+	HE1PIZCR.B,		HE3PIZCR.B,		HE1PIZPR.B,		HE3PIZPR.B;
+
+
+// P2P LINK TO THE NORTH RING
+
+LINK:                                NTHRING
+ADJUSTABLE ENABLE:                   1
+PROTOCOL:                            MII.PEER
+ADJUSTABLE PORT:                     3;      // ADJUSTABLE for testing
+ADJUSTABLE POINT.POINT:              1;      // ADJUSTABLE for testing
+ADJUSTABLE BAUD:                     19200;  // ADJUSTABLE for testing
+ADJUSTABLE STOPBITS:                 1;      // ADJUSTABLE for testing
+ADJUSTABLE PARITY:                   NONE;   // ADJUSTABLE for testing
+ADJUSTABLE KEY.ON.DELAY:             0;      // ADJUSTABLE for testing
+ADJUSTABLE KEY.OFF.DELAY:            12;     // ADJUSTABLE for testing
+ADJUSTABLE GRANT.DELAY:              1000:MSEC;// ADJUSTABLE for testing
+
+
+// N128
+
+MII.ADDRESS:                        635
+ADJUSTABLE ENABLE:                  1
+STATION.NAME:                       BU_N123_N128;
+ADJUSTABLE PEER.ADDRESS:            738;    // ADJUSTABLE for testing
+ADJUSTABLE TIME.STAMP:              0;      // ADJUSTABLE for testing
+ADJUSTABLE CLOCK.MASTER:            0;      // ADJUSTABLE for testing
+ADJUSTABLE ACK.TIMEOUT:             2000:MSEC;// ADJUSTABLE for testing
+ADJUSTABLE HEARTBEAT.INTERVAL:      800:MSEC;// ADJUSTABLE for testing
+ADJUSTABLE INDICATION.UPDATE.CYCLE: 10;     // ADJUSTABLE for testing
+ADJUSTABLE STALE.DATA.TIMEOUT:      2000:MSEC;// ADJUSTABLE for testing
+
+
+OUTPUT:     // TO N128 HUT
+
+        ND458HZR.N123.N128,             ND458HHZR.N123.N128,
+        ND458DZR.N123.N128,             SPARE,
+        NU458HZR.N123.N128,             NU458HHZR.N123.N128,
+        NU458DZR.N123.N128,             SPARE,
+
+        BU_MO.DL.DN.FLPR.N123.N128,     BU_MO.UL.DN.FLPR.N123.N128,
+        439BT1PR.N123.N128,             439BT1CPR.N123.N128,
+        439ATS1PR.N123.N128,            425CT1PR.N123.N128,
+        458CT1PR.N123.N128,             458CT1CPR.N123.N128,
+
+        444ATS1PR.N123.N128,            444BT1PR.N123.N128,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE;
+
+
+INPUT :    // FROM N128 HUT
+
+        ND439HZR.N128.N123,             ND439HHZR.N128.N123,
+        ND439DZR.N128.N123,             SPARE,
+        NU439HZR.N128.N123,             NU439HHZR.N128.N123,
+        NU439DZR.N128.N123,             SPARE,
+
+        MO_BU.DL.UP.FLPR.N128.N123,     MO_BU.UL.UP.FLPR.N128.N123,
+        439CT1PR.N128.N123,             439CT1CPR.N128.N123,
+        458BT1PR.N128.N123,             458BT1CPR.N128.N123,
+        SPARE,                          SPARE;
+
+
+
+
+// N121
+
+MII.ADDRESS:                        656
+ADJUSTABLE ENABLE:                  1
+STATION.NAME:                       BU_N121_N123;
+ADJUSTABLE PEER.ADDRESS:            634;    // ADJUSTABLE for testing
+ADJUSTABLE TIME.STAMP:              0;      // ADJUSTABLE for testing
+ADJUSTABLE CLOCK.MASTER:            0;      // ADJUSTABLE for testing
+ADJUSTABLE ACK.TIMEOUT:             2000:MSEC;// ADJUSTABLE for testing
+ADJUSTABLE HEARTBEAT.INTERVAL:      800:MSEC;// ADJUSTABLE for testing
+ADJUSTABLE INDICATION.UPDATE.CYCLE: 10;     // ADJUSTABLE for testing
+ADJUSTABLE STALE.DATA.TIMEOUT:      2000:MSEC;// ADJUSTABLE for testing
+
+
+OUTPUT:     // TO N121 HUT 
+
+        425CT1PR.N123.N121,             425CT1CPR.N123.N121,
+        439ATS1PR.N123.N121,            439BT1PR.N123.N121,
+        444ATS1PR.N123.N121,            444BT1PR.N123.N121,
+        444BT1CPR.N123.N121,            458CT1PR.N123.N121,
+
+        439CT1PR.N123.N121,             458BT1PR.N123.N121,
+        N123CFKPR.N123.N121,            N123.24VM1.N123.N121,
+        N123.24VM2.N123.N121,           N123.50VFAIL.N123.N121,
+        N123ALARMPR.N123.N121,          N123SMOKEPR.N123.N121,
+
+        ND439HR.N123.N121,              ND439HHR.N123.N121,
+        ND439DR.N123.N121,              ND439IZR.N123.N121,
+        ND439RGKR.N123.N121,            ND439HGKR.N123.N121,
+        ND439IZCR.N123.N121,            NU439HR.N123.N121,
+
+        NU439HHR.N123.N121,             NU439DR.N123.N121,
+        NU439IZR.N123.N121,             NU439RGKR.N123.N121,
+        NU439HGKR.N123.N121,            NU439IZCR.N123.N121,
+        ND444HR.N123.N121,              ND444HHR.N123.N121,
+
+        ND444DR.N123.N121,              ND444IZR.N123.N121,
+        ND444RGKR.N123.N121,            ND444HGKR.N123.N121,
+        ND444IZCR.N123.N121,            NU444HR.N123.N121,
+        NU444HHR.N123.N121,             NU444DR.N123.N121,
+
+        NU444IZR.N123.N121,             NU444RGKR.N123.N121,
+        NU444HGKR.N123.N121,            NU444IZCR.N123.N121,
+        ND425HZR.N123.N121,             ND425HHZR.N123.N121,
+        ND425DZR.N123.N121,             NU425HZR.N123.N121,
+
+        NU425HHZR.N123.N121,            NU425DZR.N123.N121,
+        MO_BU.DL.UP.FLPR.N123.N121,     MO_BU.UL.UP.FLPR.N123.N121,
+        N128.COMM.LINK.ALM.N123.N121,   SPARE,
+        N123CPS.OK.N123.N121,           N123RS400.FAIL.N123.N121;
+
+
+INPUT :     // FROM N121 HUT
+
+        ND444HZR.N121.N123,             ND444HHZR.N121.N123,
+        ND444DZR.N121.N123,             NU444HZR.N121.N123,
+        NU444HHZR.N121.N123,            NU444DZR.N121.N123,
+        BU_MO.DL.DN.FLPR.N121.N123,     BU_MO.UL.DN.FLPR.N121.N123,
+
+        425BT1CPR.N121.N123,            444CT1CPR.N121.N123,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE;
+
+
+
+
+% START OF SIMULATOR MODIFICATION 2 OF 6 \
+
+LINK:                           VSLSIM
+ADJUSTABLE ENABLE:              1
+PROTOCOL:                       MICROLOK.MASTER
+
+FIXED PORT:                     4;
+ADJUSTABLE BAUD:                9600;
+ADJUSTABLE STOPBITS:            1;
+ADJUSTABLE PARITY:              NONE;
+ADJUSTABLE KEY.ON.DELAY:        64;
+ADJUSTABLE KEY.OFF.DELAY:       64;
+ADJUSTABLE STALE.DATA.TIMEOUT:  2:SEC;
+ADJUSTABLE POLLING.INTERVAL:    50:MSEC;
+ADJUSTABLE MASTER.TIMEOUT:      500:MSEC;
+ADJUSTABLE POINT.POINT:         1;
+
+// VSL ADDRESSES 111 to 127 RESERVED FOR SIMULATOR ONLY.
+// THIS DATA TO BE COMMENTED OUT WHEN COMPILED FOR ACTUAL
+// SYSTEM OPERATION.
+
+ADDRESS: 115    // INTERFACE TO SIMULATOR
+ADJUSTABLE ENABLE: 1
+
+OUTPUT:     // TO SIMULATOR
+
+        ND439HR,     ND439HHR,       ND439DR,        ND439IZR,
+        NU439HR,     NU439HHR,       NU439DR,        NU439IZR,
+        SPARE,       SPARE,          SPARE,          SPARE,
+        SPARE,       SPARE,          SPARE,          SPARE,
+
+        ND444H1R,    ND444HH1R,      ND444D1R,       ND444IZ1R,
+        NU444H1R,    NU444HH1R,      NU444D1R,       NU444IZ1R,
+        SPARE,       SPARE,          SPARE,          SPARE,
+        SPARE,       SPARE,          SPARE,          SPARE;
+
+
+INPUT:      // FROM SIMULATOR
+
+        ND439RGPR,   ND439HGPR,      ND439HHGPR,     ND439IZCR,
+        NU439RGPR,   NU439HGPR,      NU439HHGPR,     NU439IZCR,
+        CHARGE.FAIL, 50VMONITOR,     24VMONITOR2,    RS400.FAIL,
+        24VMONITOR1, SPARE,          SPARE,          SPARE,
+
+        ND444RGPR,   ND444HGPR,      ND444HHGPR,     ND444IZCR,
+        NU444RGPR,   NU444HGPR,      NU444HHGPR,     NU444IZCR,
+        425CTPR,     439ATSPR,       439BTPR,        444ATSPR,
+        444BTPR,     458CTPR,        ALARMPR,        SMOKEPR;
+
+
+% END OF SIMULATOR MODIFICATION 2 OF 6 \
+
+
+
+
+BOOLEAN BITS
+
+        425CT1PR,       439ATS1PR,      439BT1PR,       444BT1PR,
+        444ATS1PR,      458CT1PR,       439CT1PR,       439CT1CPR,
+        458BT1PR,       458BT1CPR,     
+        425CTRJR,       444BTRJR,       439BTRJR,       458CTRJR,
+
+        ND439RG1PR,     ND439HG1PR,     ND439HHG1PR,    ND439IZ1CR,
+        NU439RG1PR,     NU439HG1PR,     NU439HHG1PR,    NU439IZ1CR,
+        ND444RG1PR,     ND444HG1PR,     ND444HHG1PR,    ND444IZ1CR,
+        NU444RG1PR,     NU444HG1PR,     NU444HHG1PR,    NU444IZ1CR,
+
+        BU_MO.DL.DN.FLPR,BU_MO.UL.DN.FLPR,MO_BU.DL.UP.FLPR,MO_BU.UL.UP.FLPR,
+
+        CHECKADDRESS,   CPS.OK,         24VDOWN,        24VMONITOR;
+
+
+
+
+TIMER BITS
+
+
+FIXED
+        CHECKADDRESS:                   SET=500:MSEC    CLEAR=20:SEC;
+
+
+        425CT1PR,       439ATS1PR,
+        439BT1PR,       444BT1PR,
+        444ATS1PR,      458CT1PR,
+
+        ND439RG1PR,     ND439IZ1CR,
+        NU439RG1PR,     NU439IZ1CR,
+
+        ND444RG1PR,     ND444IZ1CR,
+        NU444RG1PR,     NU444IZ1CR:     SET=1:SEC               CLEAR=0:SEC;
+
+        425CTRJR,       444BTRJR,
+        439BTRJR,       458CTRJR:       SET=3:SEC               CLEAR=0:SEC;
+
+        24VDOWN:                        SET=5:SEC               CLEAR=0:SEC;
+
+
+
+LOG
+
+BITS
+        LOCAL_IO,       COMM_IO,        APPLICATION_VARS;
+
+
+CONSTANTS
+
+        BOOLEAN
+                FALSE = 0;
+                TRUE = 1;
+
+        NUMERIC
+                INSTALLATION_ADDRESS       = 20;
+                APPLICATION_DATA_VERSION   = 5;
+                EXECUTIVE_SOFTWARE_VERSION = 830; // 830 STANDS FOR VERSION 8.30
+
+
+CONFIGURATION
+
+        SYSTEM
+                FIXED DEBUG_PORT_ADDRESS:       20;
+                ADJUSTABLE DEBUG_PORT_BAUDRATE: 9600; // ADJUSTABLE for testing
+                ADJUSTABLE LOGIC_TIMEOUT:       5:SEC; // ADJUSTABLE for testing
+
+        USER NUMERIC
+                CONFIGURATIONELEMENT_ADDRESS:                   "INSTALLATION ADDRESS";
+                CONFIGURATIONELEMENT_APPLICATION_DATA_VERSION:  "APPLICATION_DATA_VERSION";
+                CONFIGURATIONELEMENT_EXECUTIVE_SOFTWARE_VERSION: "EXECUTIVE_SOFTWARE_VERSION";
+
+
+
+
+LOGIC BEGIN
+
+// MICROLOK SYSTEM EQUATIONS
+ASSIGN  24VMONITOR1 + 24VMONITOR2                       TO 24VMONITOR;
+
+ASSIGN  TRUE * 24VMONITOR                               TO CPS.ENABLE;
+
+% THE FOLLOWING TWO EQUATIONS ARE ADDED TO FIX THE CPS.DOWN PROBLEM WHEN 24V IS LOST.
+
+If 24VMONITOR is lost, the system will reset because of the loss of 24V to the
+vital output card. When it boots again without the 24V supply it will go to
+CPS.DOWN mode straight away. When 24V comes back, the system will reset
+because of the RESET equation and when it comes back again, it will pick the
+CPS.   \
+
+% START OF SIMULATOR MODIFICATION 3 OF 6\
+
+// SIMULATOR VERSION
+
+ASSIGN  ~24VMONITOR * VSLSIM.115.STATUS + 24VDOWN         TO 24VDOWN; %SP 5 SEC\
+
+// FINAL VERSION
+
+//ASSIGN  ~24VMONITOR + 24VDOWN                             TO 24VDOWN; %SP 5 SEC\
+
+% END OF SIMULATOR MODIFICATION 3 OF 6\
+
+ASSIGN  24VDOWN * 24VMONITOR                            TO RESET;
+
+ASSIGN  ~CHECKADDRESS                                   TO CHECKADDRESS;
+                                                                // SP 500MSEC
+                                                                // SR 20SEC
+
+
+% START OF SIMULATOR MODIFICATION 4 OF 6 \
+
+//ASSIGN  CPS.STATUS                                      TO CPS.OK;
+
+ASSIGN  TRUE                                          TO CPS.OK;
+
+% END OF SIMULATOR MODIFICATION 4 OF 6 \
+
+
+// CPU PANEL LED DISPLAYS
+        // LED 1 & 2 NOT ALLOCATED BUT RESERVED
+        // LED 3 SYSTEM ALLOCATED FOR UPLOADING DATA - CPU RESETTING
+        // LED 4 SIMULATOR LINK STATUS
+        // LED 5 SERIAL PORT 1 LINK STATUS
+        // LED 6 SERIAL PORT 2 LINK STATUS
+        // LED 7 SERIAL PORT 3 LINK STATUS
+        // LED 8 SERIAL PORT 4 LINK STATUS
+
+
+% START OF SIMULATOR MODIFICATION 5 OF 6
+
+NV.ASSIGN  VSLSIM.115.STATUS                            TO LED.4;
+
+ END OF SIMULATOR MODIFICATION 5 OF 6 \
+
+
+NV.ASSIGN  NTHRING.BU_N121_N123.STATUS * 
+           NTHRING.BU_N123_N128.STATUS                  TO LED.7;
+
+
+
+
+// TDU EQUATIONS
+
+ASSIGN  425CTPR                                         TO 425CTRJR; //SP 3SEC
+
+ASSIGN  425CTPR * (425CTRJR + 425BT1CPR.N121.N123 +
+        BU_MO.DL.DN.FLPR * ~MO_BU.DL.UP.FLPR +
+        425CT1PR)                                       TO 425CT1PR; //SP 1SEC
+
+
+ASSIGN  439ATSPR * (~ND444HGPR * ~ND444HHGPR +
+        439ATS1PR)                                      TO 439ATS1PR; //SP 1SEC
+
+
+ASSIGN  439BTPR                                         TO 439BTRJR; //SP 3SEC
+
+ASSIGN  439BTPR * (439BTRJR + 439CT1CPR +
+        MO_BU.DL.UP.FLPR * ~BU_MO.DL.DN.FLPR +
+        439BT1PR)                                       TO 439BT1PR; //SP 1SEC
+
+
+ASSIGN  444BTPR                                         TO 444BTRJR; //SP 3SEC
+
+ASSIGN  444BTPR * (444BTRJR + 444CT1CPR.N121.N123 +
+        BU_MO.UL.DN.FLPR * ~MO_BU.UL.UP.FLPR +
+        444BT1PR)                                       TO 444BT1PR; //SP 1SEC
+
+
+ASSIGN  444ATSPR * (~NU444HGPR * ~NU444HHGPR +
+        444ATS1PR)                                      TO 444ATS1PR; //SP 1SEC
+
+
+ASSIGN  458CTPR                                         TO 458CTRJR; //SP 3SEC
+
+ASSIGN  458CTPR * (458CTRJR + 458BT1CPR +
+        MO_BU.UL.UP.FLPR * ~BU_MO.UL.DN.FLPR +
+        458CT1PR)                                       TO 458CT1PR; //SP 1SEC
+
+
+
+
+// SIGNAL REPEATING EQUATIONS
+
+ASSIGN  ND439RGPR * ~ND439HGPR * ~ND439HHGPR            TO ND439RG1PR; //SP 1SEC
+
+ASSIGN  ND439HGPR * ~ND439RGPR                          TO ND439HG1PR;
+
+ASSIGN  ND439HHGPR * ~ND439RGPR                         TO ND439HHG1PR;
+
+ASSIGN  ND439IZCR                                       TO ND439IZ1CR; // SP 1SEC
+
+
+ASSIGN  NU439RGPR * ~NU439HGPR * ~NU439HHGPR            TO NU439RG1PR; // SP 1SEC
+
+ASSIGN  NU439HGPR * ~NU439RGPR                          TO NU439HG1PR;
+
+ASSIGN  NU439HHGPR * ~NU439RGPR                         TO NU439HHG1PR;
+
+ASSIGN  NU439IZCR                                       TO NU439IZ1CR; // SP 1SEC
+
+
+ASSIGN  ND444RGPR * ~ND444HGPR * ~ND444HHGPR            TO ND444RG1PR; // SP 1SEC
+
+ASSIGN  ND444HGPR * ~ND444RGPR                          TO ND444HG1PR;
+
+ASSIGN  ND444HHGPR * ~ND444RGPR                         TO ND444HHG1PR;
+
+ASSIGN  ND444IZCR                                       TO ND444IZ1CR; // SP 1SEC
+
+
+ASSIGN  NU444RGPR * ~NU444HGPR * ~NU444HHGPR            TO NU444RG1PR; // SP 1SEC
+
+ASSIGN  NU444HGPR * ~NU444RGPR                          TO NU444HG1PR;
+
+ASSIGN  NU444HHGPR * ~NU444RGPR                         TO NU444HHG1PR;
+
+ASSIGN  NU444IZCR                                       TO NU444IZ1CR; // SP 1SEC
+
+
+
+
+// BIDIRECTIONAL WORKING BURPENGARY TO MORAYFIELD - DOWN LINE DOWN DIRECTION
+
+ASSIGN  BU_MO.DL.DN.FLPR.N121.N123 * ~MO_BU.DL.UP.FLPR  TO BU_MO.DL.DN.FLPR;
+
+
+// SIGNAL ND439 EQUATIONS
+
+ASSIGN  BU_MO.DL.DN.FLPR * ~MO_BU.DL.UP.FLPR *
+        439ATS1PR * 439BT1PR * ND444RG1PR *
+        ND439HZR.N128.N123                              TO ND439HR;
+
+ASSIGN  ND439HR * ND439HHZR.N128.N123                   TO ND439HHR;
+
+ASSIGN  ND439HHR * ND439HHZR.N128.N123 * 
+        ND439DZR.N128.N123                              TO ND439DR;
+
+ASSIGN  MO_BU.DL.UP.FLPR * ~425CT1PR                    TO ND439IZR;
+
+
+
+
+// BIDIRECTIONAL WORKING BURPENGARY TO MORAYFIELD - UP LINE DOWN DIRECTION
+
+ASSIGN  BU_MO.UL.DN.FLPR.N121.N123 * ~MO_BU.UL.UP.FLPR  TO BU_MO.UL.DN.FLPR;
+
+
+// SIGNAL NU439 EQUATIONS
+
+ASSIGN  BU_MO.UL.DN.FLPR * ~MO_BU.UL.UP.FLPR *
+        444ATS1PR * 458CT1PR * NU444RG1PR *
+        NU439HZR.N128.N123                              TO NU439HR;
+
+ASSIGN  NU439HR * NU439HHZR.N128.N123                   TO NU439HHR;
+
+ASSIGN  NU439HHR * NU439HHZR.N128.N123 * 
+        NU439DZR.N128.N123                              TO NU439DR;
+
+ASSIGN  MO_BU.UL.UP.FLPR * ~444BT1PR                    TO NU439IZR;
+
+
+
+
+// BIDIRECTIONAL WORKING MORAYFIELD TO BURPENGARY - DOWN LINE UP DIRECTION
+
+ASSIGN  MO_BU.DL.UP.FLPR.N128.N123 * ~BU_MO.DL.DN.FLPR  TO MO_BU.DL.UP.FLPR;
+
+
+// SIGNAL ND444 EQUATIONS
+
+ASSIGN  MO_BU.DL.UP.FLPR * ~BU_MO.DL.DN.FLPR *
+        439ATS1PR * 425CT1PR * ND439RG1PR *
+        ND444HZR.N121.N123                              TO ND444H1R;
+
+ASSIGN  ND444H1R * ND444HHZR.N121.N123                  TO ND444HH1R;
+
+ASSIGN  ND444HH1R * ND444HHZR.N121.N123 * 
+        ND444DZR.N121.N123                              TO ND444D1R;
+
+ASSIGN  BU_MO.DL.DN.FLPR * ~439BT1PR                    TO ND444IZ1R;
+
+
+
+
+// BIDIRECTIONAL WORKING MORAYFIELD TO BURPENGARY - UP LINE UP DIRECTION
+
+ASSIGN  MO_BU.UL.UP.FLPR.N128.N123 * ~BU_MO.UL.DN.FLPR  TO MO_BU.UL.UP.FLPR;
+
+
+// SIGNAL NU444 EQUATIONS
+
+ASSIGN  MO_BU.UL.UP.FLPR * ~BU_MO.UL.DN.FLPR *
+        444ATS1PR * 444BT1PR * NU439RG1PR *
+        NU444HZR.N121.N123                              TO NU444H1R;
+
+ASSIGN  NU444H1R * NU444HHZR.N121.N123                  TO NU444HH1R;
+
+ASSIGN  NU444HH1R * NU444HHZR.N121.N123 * 
+        NU444DZR.N121.N123                              TO NU444D1R;
+
+ASSIGN  BU_MO.UL.DN.FLPR * ~458CT1PR                    TO NU444IZ1R;
+
+
+
+
+// OUTPUT BITS TO N128 PBI HUT
+
+ASSIGN  BU_MO.DL.DN.FLPR * CPS.OK               TO BU_MO.DL.DN.FLPR.N123.N128;
+
+ASSIGN  BU_MO.UL.DN.FLPR * CPS.OK               TO BU_MO.UL.DN.FLPR.N123.N128;
+
+ASSIGN  MO_BU.DL.UP.FLPR * ~BU_MO.DL.DN.FLPR *
+        439BT1PR * 439ATS1PR * ND439RG1PR *
+        ~ND444IZ1R * ND444IZ1CR * CPS.OK        TO ND458HZR.N123.N128;
+
+ASSIGN  439ATS1PR * ND444HG1PR * CPS.OK         TO ND458HHZR.N123.N128;
+
+ASSIGN  439ATS1PR * ND444HG1PR * ND444HHG1PR *
+        CPS.OK                                  TO ND458DZR.N123.N128;
+
+
+
+ASSIGN  MO_BU.UL.UP.FLPR * ~BU_MO.UL.DN.FLPR *
+        458CT1PR * 444ATS1PR * NU439RG1PR *
+        ~NU444IZ1R * NU444IZCR * CPS.OK         TO NU458HZR.N123.N128;
+
+ASSIGN  444ATS1PR * NU444HG1PR * CPS.OK         TO NU458HHZR.N123.N128;
+
+ASSIGN  444ATS1PR * NU444HG1PR * NU444HHG1PR *
+        CPS.OK                                  TO NU458DZR.N123.N128;
+
+
+
+ASSIGN  439BT1PR * CPS.OK                       TO 439BT1PR.N123.N128;
+
+ASSIGN  ~439BT1PR * CPS.OK                      TO 439BT1CPR.N123.N128;
+
+ASSIGN  439ATS1PR * CPS.OK                      TO 439ATS1PR.N123.N128;
+
+ASSIGN  425CT1PR * CPS.OK                       TO 425CT1PR.N123.N128;
+
+
+
+ASSIGN  458CT1PR * CPS.OK                       TO 458CT1PR.N123.N128;
+
+ASSIGN  ~458CT1PR * CPS.OK                      TO 458CT1CPR.N123.N128;
+
+ASSIGN  444ATS1PR * CPS.OK                      TO 444ATS1PR.N123.N128;
+
+ASSIGN  444BT1PR * CPS.OK                       TO 444BT1PR.N123.N128;
+
+ASSIGN  439CT1PR * CPS.OK                       TO 439CT1PR.N123.N121;
+
+ASSIGN  458BT1PR * CPS.OK                       TO 458BT1PR.N123.N121;
+
+
+
+
+// INPUTS FROM N128 PBI HUT
+
+ASSIGN  439CT1PR.N128.N123 *
+        ~439CT1CPR.N128.N123                    TO 439CT1PR;
+
+ASSIGN  439CT1CPR.N128.N123 * 
+        ~439CT1PR.N128.N123                     TO 439CT1CPR;
+
+ASSIGN  458BT1PR.N128.N123 * 
+        ~458BT1CPR.N128.N123                    TO 458BT1PR;
+
+ASSIGN  458BT1CPR.N128.N123 * 
+        ~458BT1PR.N128.N123                     TO 458BT1CPR;
+
+
+
+
+// OUTPUT BITS TO N121 PBI HUT
+
+ASSIGN  MO_BU.DL.UP.FLPR * CPS.OK               TO MO_BU.DL.UP.FLPR.N123.N121;
+
+ASSIGN  MO_BU.UL.UP.FLPR * CPS.OK               TO MO_BU.UL.UP.FLPR.N123.N121;
+
+ASSIGN  BU_MO.DL.DN.FLPR * ~MO_BU.DL.UP.FLPR *
+        425CT1PR * 439ATS1PR * ND444RG1PR *
+        ~ND439IZR * ND439IZCR * CPS.OK          TO ND425HZR.N123.N121;
+
+ASSIGN  439ATS1PR * ND439HG1PR * CPS.OK         TO ND425HHZR.N123.N121;
+
+ASSIGN  439ATS1PR * ND439HG1PR * ND439HHG1PR *
+        CPS.OK                                  TO ND425DZR.N123.N121;
+
+
+
+ASSIGN  BU_MO.UL.DN.FLPR * ~MO_BU.UL.UP.FLPR *
+        444BT1PR * 444ATS1PR * NU444RG1PR *
+        ~NU439IZR * NU439IZCR * CPS.OK          TO NU425HZR.N123.N121;
+
+ASSIGN  444ATS1PR * NU439HG1PR * CPS.OK         TO NU425HHZR.N123.N121;
+
+ASSIGN  444ATS1PR * NU439HG1PR * NU439HHG1PR *
+        CPS.OK                                  TO NU425DZR.N123.N121;
+
+
+
+ASSIGN  ND439HR * CPS.OK                        TO ND439HR.N123.N121;
+
+ASSIGN  ND439HHR * CPS.OK                       TO ND439HHR.N123.N121;
+
+ASSIGN  ND439DR * CPS.OK                        TO ND439DR.N123.N121;
+
+ASSIGN  ND439IZR * CPS.OK                       TO ND439IZR.N123.N121;
+
+ASSIGN  ND439RG1PR * CPS.OK                     TO ND439RGKR.N123.N121;
+
+ASSIGN  ND439HG1PR * CPS.OK                     TO ND439HGKR.N123.N121;
+
+ASSIGN  ND439IZ1CR * CPS.OK                     TO ND439IZCR.N123.N121;
+
+
+
+ASSIGN  NU439HR * CPS.OK                        TO NU439HR.N123.N121;
+
+ASSIGN  NU439HHR * CPS.OK                       TO NU439HHR.N123.N121;
+
+ASSIGN  NU439DR * CPS.OK                        TO NU439DR.N123.N121;
+
+ASSIGN  NU439IZR * CPS.OK                       TO NU439IZR.N123.N121;
+
+ASSIGN  NU439RG1PR * CPS.OK                     TO NU439RGKR.N123.N121;
+
+ASSIGN  NU439HG1PR * CPS.OK                     TO NU439HGKR.N123.N121;
+
+ASSIGN  NU439IZ1CR * CPS.OK                     TO NU439IZCR.N123.N121;
+
+
+
+ASSIGN  ND444H1R * CPS.OK                       TO ND444HR.N123.N121;
+
+ASSIGN  ND444HH1R * CPS.OK                      TO ND444HHR.N123.N121;
+
+ASSIGN  ND444D1R * CPS.OK                       TO ND444DR.N123.N121;
+
+ASSIGN  ND444IZ1R * CPS.OK                      TO ND444IZR.N123.N121;
+
+ASSIGN  ND444RG1PR * CPS.OK                     TO ND444RGKR.N123.N121;
+
+ASSIGN  ND444HG1PR * CPS.OK                     TO ND444HGKR.N123.N121;
+
+ASSIGN  ND444IZ1CR * CPS.OK                     TO ND444IZCR.N123.N121;
+
+
+
+ASSIGN  NU444H1R * CPS.OK                       TO NU444HR.N123.N121;
+
+ASSIGN  NU444HH1R * CPS.OK                      TO NU444HHR.N123.N121;
+
+ASSIGN  NU444D1R * CPS.OK                       TO NU444DR.N123.N121;
+
+ASSIGN  NU444IZ1R * CPS.OK                      TO NU444IZR.N123.N121;
+
+ASSIGN  NU444RG1PR * CPS.OK                     TO NU444RGKR.N123.N121;
+
+ASSIGN  NU444HG1PR * CPS.OK                     TO NU444HGKR.N123.N121;
+
+ASSIGN  NU444IZ1CR * CPS.OK                     TO NU444IZCR.N123.N121;
+
+ASSIGN  425CT1PR * CPS.OK                       TO 425CT1PR.N123.N121;
+
+ASSIGN  ~425CT1PR * CPS.OK                      TO 425CT1CPR.N123.N121;
+
+ASSIGN  439ATS1PR * CPS.OK                      TO 439ATS1PR.N123.N121;
+
+ASSIGN  439BT1PR * CPS.OK                       TO 439BT1PR.N123.N121;
+
+ASSIGN  444BT1PR * CPS.OK                       TO 444BT1PR.N123.N121;
+
+ASSIGN  ~444BT1PR * CPS.OK                      TO 444BT1CPR.N123.N121;
+
+ASSIGN  444ATS1PR * CPS.OK                      TO 444ATS1PR.N123.N121;
+
+ASSIGN  458CT1PR * CPS.OK                       TO 458CT1PR.N123.N121;
+
+ASSIGN  CHARGE.FAIL * 24VMONITOR1 * 24VMONITOR2 TO N123CFKPR.N123.N121;
+
+ASSIGN  24VMONITOR1                             TO N123.24VM1.N123.N121;
+
+ASSIGN  24VMONITOR2                             TO N123.24VM2.N123.N121;
+
+ASSIGN  50VMONITOR                              TO N123.50VFAIL.N123.N121;
+
+ASSIGN  ALARMPR                                 TO N123ALARMPR.N123.N121;
+
+ASSIGN  SMOKEPR                                 TO N123SMOKEPR.N123.N121;
+
+
+ASSIGN  NTHRING.BU_N123_N128.STATUS             TO N128.COMM.LINK.ALM.N123.N121;
+
+ASSIGN  CPS.OK                                  TO N123CPS.OK.N123.N121;
+
+ASSIGN  RS400.FAIL                              TO N123RS400.FAIL.N123.N121;
+
+
+
+END LOGIC
+
+% START OF SIMULATOR MODIFICATION 6 OF 6
+
+NUMERIC BEGIN
+
+BLOCK 1 TRIGGERS ON CHECKADDRESS AND STALE AFTER 0:SEC;
+
+ASSIGN  (CONFIGURATIONELEMENT_ADDRESS <>
+        INSTALLATION_ADDRESS) OR
+        (CONFIGURATIONELEMENT_APPLICATION_DATA_VERSION <>
+        APPLICATION_DATA_VERSION) OR
+        (CONFIGURATIONELEMENT_EXECUTIVE_SOFTWARE_VERSION <>
+        EXECUTIVE_SOFTWARE_VERSION) OR
+        CONFIGURE.ERROR                         TO KILL;
+
+END BLOCK
+
+
+END NUMERIC
+
+ END OF SIMULATOR MODIFICATION 6 OF 6 \
+
+END PROGRAM

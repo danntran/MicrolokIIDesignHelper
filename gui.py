@@ -33,7 +33,7 @@ class MicrolokiidesignhelperguiApp:
         ## Format the text
         # Obtain the text from the text box
         self.in_textbox = self.builder.get_object('InputTextBox')
-        self.input_txt = fn.txt2column(self.in_textbox.get(1.0, tk.END))
+        self.input_txt = fn.rm_commnewlinesfromtext(fn.txt2column(self.in_textbox.get(1.0, tk.END)))
         self.formatted_txt = fn.formattxt(self.input_txt, self.formatnrows.get(), self.removecomma.get())
         # Print to the output text box
         self.out_textbox = self.builder.get_object('OutputTextBox')

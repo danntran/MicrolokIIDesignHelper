@@ -6,7 +6,7 @@ def txt2column(text):
     output_txt = re.split(r'[\n,;]', text)
     return output_txt # returns text in a signal column
 
-def formattxt(text, nrows, rmcomma):
+def formattxt1(text, nrows, rmcomma):
     # format the text to rows and shows/hides comma
     if nrows == 1: # only 1 column
         if rmcomma == 1:
@@ -57,31 +57,21 @@ def ObtainNLines(input_text):
     Nbits = NNewlines - NComments - NSpares
     return [NNewlines, Nbits] # returns Num NL and Num bits
 
-def rm_commnewlinesfromtext(text):    
-    # function removes all the comments from the text
-    # input list of strings, outputs the list of strings no comments, no blank newlines
-    # and stripped of white space before and after each element
-    nocomments_txt = []
-    commentmode = commentmodepct = False
-    # go through line by line
-    for line in text:
-        li = line.strip() # rm the whitespace left and right
-        if li.startswith("/*"): # comment starting with /*
-            commentmode = True
-        if li.startswith("%"): # comment starting with %
-            commentmodepct = True
-        if li.endswith("*/"): # end of /* with */
-            commentmode = False
-            continue
-        if li.endswith("\\"): # end of % with \
-            commentmodepct = False
-            continue
-        if not commentmode and not commentmodepct:
-            try:
-                idx = li.index("//") # comments with //
-            except:
-                nocomments_txt.append(li) # line with no comments
-            else:
-                nocomments_txt.append(li[:idx].strip()) # line contained comments remove
-    out_txt = list(filter(None, nocomments_txt)) # remove empty strings in the list
-    return out_txt
+in_text = """//hello
+ND458HZR.N123.N128,             ND458HHZR.N123.N128,
+ND458DZR.N123.N128,             SPARE,
+NU458HZR.N123.N128,             NU458HHZR.N123.N128,
+NU458DZR.N123.N128,             SPARE,
+BU_MO.DL.DN.FLPR.N123.N128,     BU_MO.UL.DN.FLPR.N123.N128,
+439BT1PR.N123.N128,             439BT1CPR.N123.N128,
+439ATS1PR.N123.N128,            425CT1PR.N123.N128,
+458CT1PR.N123.N128,             458CT1CPR.N123.N128,
+444ATS1PR.N123.N128,            444BT1PR.N123.N128,
+SPARE,                          SPARE,
+SPARE,                          SPARE,
+SPARE,                          SPARE;"""
+
+text1 = txt2column(in_text)
+text2 = formattxt1(text1,2,1)
+Nlines, Nbits = ObtainNLines(text1)
+print(text1, text2, Nlines, Nbits)

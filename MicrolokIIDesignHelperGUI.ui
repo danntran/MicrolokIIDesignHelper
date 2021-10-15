@@ -306,7 +306,7 @@
         </child>
         <child>
           <object class="ttk.Notebook.Tab" id="bitcomparator_tab">
-            <property name="state">hidden</property>
+            <property name="state">normal</property>
             <property name="text" translatable="yes">Bit Comparator</property>
             <child>
               <object class="ttk.Frame" id="bitcomparater_frame">
