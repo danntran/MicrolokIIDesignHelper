@@ -1,6 +1,7 @@
 import re
 
 def txt2column(text):
+    # input: file in long string
     # replaces the unwarnted character and puts the input text all in 1 row
     # replaces , (comma) with newline
     output_txt = re.split(r'[\n,;]', text)

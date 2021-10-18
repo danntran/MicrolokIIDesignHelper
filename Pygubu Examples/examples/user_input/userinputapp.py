@@ -38,6 +38,7 @@ class UserinputApp:
 
         # combobox
         combo = self.builder.get_object('combobox')
+        combo['values'] = "1 2 3 4 5"
         options = combo.cget('values')
         selection = random.choice(options)
         self.combovar.set(selection)

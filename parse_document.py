@@ -1,4 +1,6 @@
 import copy
+import re
+from tkinter import filedialog
 
 def rm_commnewlinesfromtext(text):    
     # function removes all the comments from the text
@@ -31,8 +33,17 @@ def rm_commnewlinesfromtext(text):
 def obtcomminfo(text):
     # obtains the comm from a text that has comments and newlines removed
     # returns dictionary in format: 
-    # [name of link, protocol, address, port num, baud]
-    # If p2p: [link name, protocol, MII address, Station Name, peer address]
+    #       LINK: (str) with link name
+    #       PROTOCOL: (str) with protocol name
+    #       PORT: (str) port number
+    #       BAUD: (str) baud rate
+    #       STOPBITS: (str) stopbits number
+    #       PARITY: (str) parity type
+    #       PEER.ADDRESS: (str) P2P address, else 'None' if not P2P
+    #       STATION.NAME: (str) P2P station name, else 'None' if not P2P
+    #       OUTPUT: (str) output bits in a long string
+    #       INPUT: (str) input bits in a long string
+
     port_list = []
     comm_text = text[text.index('COMM'): [id for id, val in enumerate(text) if ('BOOLEAN BITS' in val)][-1]]
     # find every instance of LINK and put index into array
@@ -42,7 +53,7 @@ def obtcomminfo(text):
     for link_idx in range(len(link_indexes)-1):
         param_list = {
                     'LINK:':None,'PROTOCOL:':None,'PORT:':None,'BAUD:':None,
-                    'STOPBITS:':None,'PARITY:':None
+                    'STOPBITS:':None,'PARITY:':None,'PEER.ADDRESS:':None,'STATION.NAME:':None
                     }
         # slice of comm_text showing link
         link_text = comm_text[link_indexes[link_idx]:link_indexes[link_idx+1]]
@@ -86,37 +97,65 @@ def obtcomminfo(text):
                 if 'INPUT' in line:
                     inputmode = True
                 if outputmode == True:
-                    output_text += line
+                    output_text += line + "\n"
                 if inputmode == True:
-                    input_text += line
+                    input_text += line + "\n"
                 if line.endswith(';'):
                     outputmode = inputmode = False
                     continue
-            param_list['OUTPUT:'] = (output_text.split(':'))[-1]
-            param_list['INPUT:'] = (input_text.split(':'))[-1]
+            param_list['OUTPUT:'] = (output_text.split(':'))[-1].strip()
+            param_list['INPUT:'] = (input_text.split(':'))[-1].strip()
             # finished getting all the info, put the dictionary into a list
             port_list.append(copy.deepcopy(param_list))
         # delete the dictionary to start again
         del(param_list)
     return port_list
 
-# TEST CODE BELOW
-if __name__ == "__main__":
-    file = open('test_mlk.ml2','r')
-    words = file.read().splitlines()
-    file.close()
+def returnaddresslist(port_list):
+    # input port_list
+    # output string of address from each entry e.g. '1 20 49 110 123'
+    output_txt = ""
+    if port_list:
+        for links in port_list:
+            output_txt += links["ADDRESS:"] + " "
+    return output_txt
 
-    txt = rm_commnewlinesfromtext(words)
-    port_list = obtcomminfo(txt)
+def indexportinfofromaddr(port_list, address):
+    # input portlist dictionary, address
+    # returns index in port_list
+    if port_list and address: # error check for blanks
+        for idx, value in enumerate(port_list):
+            if address in value["ADDRESS:"]:
+                return idx
+    return None
 
-    print(port_list[0]["PORT:"])
-    # output to a file
-    write_file = open("output_test.ml2", "w")
-    for lines in txt:
-        write_file.write(lines)
-        write_file.write("\n")
-    for address in port_list:
-        for key in address.keys():
-            write_file.write(str(key) + " : " + str(address[key]) + "\n")
-        write_file.write("\n")
-    write_file.close()
+def obtainportinfofromaddr(port_list, address):
+    # input portlist dictionary, address
+    # returns long string with port info for use in tkinter message box
+    output_str = ''
+    if port_list and address: # error check for blanks
+        idx = indexportinfofromaddr(port_list, address)
+        for key in port_list[idx].keys():
+            if key in ['OUTPUT:', 'INPUT:']:
+                # Don't include output and input info 
+                continue
+            output_str += str(port_list[idx][key]) + "\n"
+    return output_str
+
+def obtaininoutfromaddr(port_list, address, inputoutput):
+    # input portlist dictionary, address, input or output
+    # returns long str with input or output information
+    output_str = ''
+    if port_list and address and inputoutput: # error check for blanks
+        idx = indexportinfofromaddr(port_list, address)
+        output_str += str(port_list[idx][inputoutput])
+    return output_str
+    
+def getfilename(text):
+    # input text from readlines
+    # output the filename as a string
+    if text:
+        text_ncomms = rm_commnewlinesfromtext(text)
+        filenamelist = list(filter(None, re.split(r'[ ;]', text_ncomms[0])))
+        return filenamelist[-1]
+    return ''
