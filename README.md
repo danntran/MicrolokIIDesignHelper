@@ -1,6 +1,11 @@
 # MicrolokIIDesignHelper
  Tools to help write data for Microlok II Railway interlocking
 
+Packages Used:
+- pygubu
+- pygubu-designer
+- pyinstaller 
+
 To build: pyinstaller gui.py --add-data "MicrolokIIDesignHelperGUI.ui;." --add-data "MLKIIDesignHelperLogo_Large.ico;." --collect-all "pygubu" --name MLKIIDesignHelper --icon "MLKIIDesignHelperLogo_Large.ico" --noconsole --onefile
 
 ## Changelog:
