@@ -197,9 +197,11 @@ class MicrolokiidesignhelperguiApp:
         # call back for the compare button
         bits1_textbox = self.builder.get_object('file1bits_text')
         bits2_textbox = self.builder.get_object('file2bits_text')
+        [nerrors, compare_resultstr] = fn.comparebits(bits1_textbox.get(1.0, tk.END), bits2_textbox.get(1.0, tk.END))
         compare_textbox = self.builder.get_object('bitcompare_textbox')
         compare_textbox.delete(1.0, tk.END)
-        compare_textbox.insert(tk.END, fn.comparebits(bits1_textbox.get(1.0, tk.END), bits2_textbox.get(1.0, tk.END)))
+        compare_textbox.insert(tk.END, ('NUMBER OF ERRORS: ' + str(nerrors) + '\n'))
+        compare_textbox.insert(tk.END, compare_resultstr)
 
     def run(self):
         self.mainwindow.mainloop()

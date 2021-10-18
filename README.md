@@ -6,7 +6,8 @@ Packages Used:
 - pygubu-designer
 - pyinstaller 
 
-To build: pyinstaller gui.py --add-data "MicrolokIIDesignHelperGUI.ui;." --add-data "MLKIIDesignHelperLogo_Large.ico;." --collect-all "pygubu" --name MLKIIDesignHelper --icon "MLKIIDesignHelperLogo_Large.ico" --noconsole --onefile
+To build: 
+pyinstaller gui.py --add-data "MicrolokIIDesignHelperGUI.ui;." --add-data "MLKIIDesignHelperLogo_Large.ico;." --collect-all "pygubu" --name MLKIIDesignHelper --icon "MLKIIDesignHelperLogo_Large.ico" --noconsole --onefile
 
 ## Changelog:
 ### [1.0.0] - < 2021-10-09
