@@ -94,7 +94,7 @@
                                     </layout>
                                     <child>
                                       <object class="ttk.Button" id="file1open_button">
-                                        <property name="command" type="command" cbtype="simple">file1openfileCB</property>
+                                        <property name="command" type="command" cbtype="simple">file1openfilecallback</property>
                                         <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
                                         <property name="width">35</property>
                                         <layout manager="grid">
@@ -140,6 +140,25 @@
                                       </object>
                                     </child>
                                     <child>
+                                      <object class="ttk.Label" id="Label1">
+                                        <property name="text" translatable="yes">PORT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Combobox" id="file1port_combobox">
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
                                       <object class="ttk.Label" id="Label84">
                                         <property name="anchor">e</property>
                                         <property name="text" translatable="yes">(MII)ADDRESS:</property>
@@ -147,7 +166,7 @@
                                           <property name="column">0</property>
                                           <property name="pady">5</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">2</property>
+                                          <property name="row">3</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -156,7 +175,7 @@
                                         <layout manager="grid">
                                           <property name="column">1</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">2</property>
+                                          <property name="row">3</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -167,24 +186,23 @@
                                         <layout manager="grid">
                                           <property name="column">0</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">3</property>
+                                          <property name="row">4</property>
                                         </layout>
                                       </object>
                                     </child>
                                     <child>
                                       <object class="ttk.Combobox" id="file1inout_combobox">
-                                        <property name="validatecommand" type="command" cbtype="entry_validate" args="">comparebitsCB</property>
                                         <property name="values">INPUT: OUTPUT:</property>
                                         <layout manager="grid">
                                           <property name="column">1</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">3</property>
+                                          <property name="row">4</property>
                                         </layout>
                                       </object>
                                     </child>
                                     <child>
                                       <object class="ttk.Button" id="file1loadbit_button">
-                                        <property name="command" type="command" cbtype="simple">file1loadbitsCB</property>
+                                        <property name="command" type="command" cbtype="simple">file1loadbitscallback</property>
                                         <property name="text" translatable="yes">↓ Load Bits ↓</property>
                                         <property name="width">35</property>
                                         <layout manager="grid">
@@ -192,7 +210,7 @@
                                           <property name="columnspan">2</property>
                                           <property name="pady">10 0</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">4</property>
+                                          <property name="row">5</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -356,7 +374,7 @@ None
                                     </layout>
                                     <child>
                                       <object class="ttk.Button" id="file2open_button">
-                                        <property name="command" type="command" cbtype="simple">file2openfileCB</property>
+                                        <property name="command" type="command" cbtype="simple">file2openfilecallback</property>
                                         <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
                                         <property name="width">35</property>
                                         <layout manager="grid">
@@ -402,6 +420,25 @@ None
                                       </object>
                                     </child>
                                     <child>
+                                      <object class="ttk.Label" id="Label2">
+                                        <property name="text" translatable="yes">PORT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Combobox" id="file2port_combobox">
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
                                       <object class="ttk.Label" id="Label92">
                                         <property name="anchor">e</property>
                                         <property name="text" translatable="yes">(MII)ADDRESS:</property>
@@ -409,7 +446,7 @@ None
                                           <property name="column">0</property>
                                           <property name="pady">5</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">2</property>
+                                          <property name="row">3</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -418,7 +455,7 @@ None
                                         <layout manager="grid">
                                           <property name="column">1</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">2</property>
+                                          <property name="row">3</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -429,7 +466,7 @@ None
                                         <layout manager="grid">
                                           <property name="column">0</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">3</property>
+                                          <property name="row">4</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -439,13 +476,13 @@ None
                                         <layout manager="grid">
                                           <property name="column">1</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">3</property>
+                                          <property name="row">4</property>
                                         </layout>
                                       </object>
                                     </child>
                                     <child>
                                       <object class="ttk.Button" id="Button38">
-                                        <property name="command" type="command" cbtype="simple">file2loadbitsCB</property>
+                                        <property name="command" type="command" cbtype="simple">file2loadbitscallback</property>
                                         <property name="text" translatable="yes">↓ Load Bits ↓</property>
                                         <property name="width">35</property>
                                         <layout manager="grid">
@@ -453,7 +490,7 @@ None
                                           <property name="columnspan">2</property>
                                           <property name="pady">10 0</property>
                                           <property name="propagate">True</property>
-                                          <property name="row">4</property>
+                                          <property name="row">5</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -601,7 +638,7 @@ None
                         </layout>
                         <child>
                           <object class="tk.Button" id="CompareButton">
-                            <property name="command" type="command" cbtype="simple">comparebitsCB</property>
+                            <property name="command" type="command" cbtype="simple">comparebitscallback</property>
                             <property name="height">3</property>
                             <property name="text" translatable="yes">Compare</property>
                             <property name="width">40</property>
@@ -698,7 +735,7 @@ None
                         </layout>
                         <child>
                           <object class="ttk.Button" id="openfilebutton">
-                            <property name="command" type="command" cbtype="simple">bitformat_openfileCB</property>
+                            <property name="command" type="command" cbtype="simple">bitformat_openfilecallback</property>
                             <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
                             <property name="width">35</property>
                             <layout manager="grid">
@@ -744,12 +781,19 @@ None
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Label" id="addresslabel">
-                            <property name="anchor">e</property>
-                            <property name="text" translatable="yes">(MII)ADDRESS:</property>
+                          <object class="ttk.Label" id="Label3">
+                            <property name="text" translatable="yes">PORT:</property>
                             <layout manager="grid">
                               <property name="column">0</property>
-                              <property name="pady">5</property>
+                              <property name="propagate">True</property>
+                              <property name="row">2</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Combobox" id="bitcomp_portcombobox">
+                            <layout manager="grid">
+                              <property name="column">1</property>
                               <property name="propagate">True</property>
                               <property name="row">2</property>
                             </layout>
@@ -760,7 +804,19 @@ None
                             <layout manager="grid">
                               <property name="column">1</property>
                               <property name="propagate">True</property>
-                              <property name="row">2</property>
+                              <property name="row">3</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Label" id="addresslabel">
+                            <property name="anchor">e</property>
+                            <property name="text" translatable="yes">(MII)ADDRESS:</property>
+                            <layout manager="grid">
+                              <property name="column">0</property>
+                              <property name="pady">5</property>
+                              <property name="propagate">True</property>
+                              <property name="row">3</property>
                             </layout>
                           </object>
                         </child>
@@ -771,7 +827,7 @@ None
                             <layout manager="grid">
                               <property name="column">0</property>
                               <property name="propagate">True</property>
-                              <property name="row">3</property>
+                              <property name="row">4</property>
                             </layout>
                           </object>
                         </child>
@@ -781,13 +837,13 @@ None
                             <layout manager="grid">
                               <property name="column">1</property>
                               <property name="propagate">True</property>
-                              <property name="row">3</property>
+                              <property name="row">4</property>
                             </layout>
                           </object>
                         </child>
                         <child>
                           <object class="ttk.Button" id="portloadbutton">
-                            <property name="command" type="command" cbtype="simple">bitformat_loadCB</property>
+                            <property name="command" type="command" cbtype="simple">bitformat_loadcallback</property>
                             <property name="text" translatable="yes">↓ Load Bits ↓</property>
                             <property name="width">35</property>
                             <layout manager="grid">
@@ -795,7 +851,7 @@ None
                               <property name="columnspan">2</property>
                               <property name="pady">10 0</property>
                               <property name="propagate">True</property>
-                              <property name="row">4</property>
+                              <property name="row">5</property>
                             </layout>
                           </object>
                         </child>
@@ -982,7 +1038,7 @@ None
                     </child>
                     <child>
                       <object class="tk.Button" id="ConvertButton">
-                        <property name="command" type="command" cbtype="simple">bitformat_convertCB</property>
+                        <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                         <property name="height">2</property>
                         <property name="justify">left</property>
                         <property name="text" translatable="yes">↑ Convert ↓</property>

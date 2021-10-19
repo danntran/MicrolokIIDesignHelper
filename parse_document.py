@@ -14,19 +14,24 @@ def rm_commnewlinesfromtext(text):
             commentmode = True
         if li.startswith("%"): # comment starting with %
             commentmodepct = True
-        if li.endswith("*/"): # end of /* with */
+        if li.endswith("*/") and commentmode: # end of /* with */
             commentmode = False
             continue
-        if li.endswith("\\"): # end of % with \
+        if li.endswith("\\") and commentmodepct: # end of % with \
             commentmodepct = False
             continue
         if not commentmode and not commentmodepct:
-            try:
+            if "//" in li:
                 idx = li.index("//") # comments with //
-            except:
-                nocomments_txt.append(li) # line with no comments
-            else:
                 nocomments_txt.append(li[:idx].strip()) # line contained comments remove
+            elif "%" in li:
+                idx = li.index("%") # single line comments with % \, WHY would you ever do this?!
+                nocomments_txt.append(li[:idx].strip()) # line contained comments remove
+            elif "/*" in li:
+                idx = li.index("/*") # single line comments with /*, WHY would you ever do this?!
+                nocomments_txt.append(li[:idx].strip()) # line contained comments remove
+            else:
+                nocomments_txt.append(li) # line with no comments                
     out_txt = list(filter(None, nocomments_txt)) # remove empty strings in the list
     return out_txt
 
@@ -111,30 +116,41 @@ def obtcomminfo(text):
         del(param_list)
     return port_list
 
-def returnaddresslist(port_list):
+def returnaddresslist(port_list, port_num):
+    # input port_list and port number
+    # output string of address from the chosen port e.g. '1 20 49 110 123'
+    output_txt = ""
+    if port_list and port_num:
+        for links in port_list:
+            if port_num in links["PORT:"]:
+                output_txt += links["ADDRESS:"] + " "
+    return output_txt
+
+def returnportnumlist(port_list):
     # input port_list
-    # output string of address from each entry e.g. '1 20 49 110 123'
+    # output string of port for e.g. '1 2 3 4 '
     output_txt = ""
     if port_list:
         for links in port_list:
-            output_txt += links["ADDRESS:"] + " "
+            if links["PORT:"] not in output_txt:
+                output_txt += links["PORT:"] + " "
     return output_txt
 
-def indexportinfofromaddr(port_list, address):
+def indexportinfofromaddr(port_list, address, port_num):
     # input portlist dictionary, address
     # returns index in port_list
-    if port_list and address: # error check for blanks
+    if port_list and address and port_num: # error check for blanks
         for idx, value in enumerate(port_list):
-            if address in value["ADDRESS:"]:
+            if address in value["ADDRESS:"] and port_num in value["PORT:"]:
                 return idx
     return None
 
-def obtainportinfofromaddr(port_list, address):
+def obtainportinfofromaddr(port_list, address, port_num):
     # input portlist dictionary, address
     # returns long string with port info for use in tkinter message box
     output_str = ''
-    if port_list and address: # error check for blanks
-        idx = indexportinfofromaddr(port_list, address)
+    if port_list and address and port_num: # error check for blanks
+        idx = indexportinfofromaddr(port_list, address, port_num)
         for key in port_list[idx].keys():
             if key in ['OUTPUT:', 'INPUT:']:
                 # Don't include output and input info 
@@ -142,12 +158,12 @@ def obtainportinfofromaddr(port_list, address):
             output_str += str(port_list[idx][key]) + "\n"
     return output_str
 
-def obtaininoutfromaddr(port_list, address, inputoutput):
+def obtaininoutfromaddr(port_list, address, inputoutput, port_num):
     # input portlist dictionary, address, input or output
     # returns long str with input or output information
     output_str = ''
     if port_list and address and inputoutput: # error check for blanks
-        idx = indexportinfofromaddr(port_list, address)
+        idx = indexportinfofromaddr(port_list, address, port_num)
         output_str += str(port_list[idx][inputoutput])
     return output_str
     
@@ -159,3 +175,16 @@ def getfilename(text):
         filenamelist = list(filter(None, re.split(r'[ ;]', text_ncomms[0])))
         return filenamelist[-1]
     return ''
+
+# if __name__ == '__main__':
+#     file_types = (
+#                 ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
+#                 ('All files', '*.*'))
+#     openfile_text = filedialog.askopenfile(title='Open a file', filetypes=file_types).read().splitlines()
+#     portlist = rm_commnewlinesfromtext(openfile_text)
+#     outfile = open('testfile.gn2','w')
+#     for line in portlist:
+#         outfile.writelines(line)
+#         outfile.writelines('\n')
+#     outfile.close()
+#     print('1')

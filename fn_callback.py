@@ -6,7 +6,7 @@ def txt2column(text):
     # output: bits/text in a list delimited by newline, comma and semicolon
     output_txt = []
     for bit in re.split(r'[\n,;]', text):
-        if bit: # check for empty string
+        if bit.strip(): # check for empty string
             output_txt.append(bit.strip())
     return output_txt # returns text in a signal column
 
