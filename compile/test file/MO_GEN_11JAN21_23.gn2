@@ -1,0 +1,1657 @@
+/***************************************************************************
+        WARNING This is associated with a vital interlocking program for a
+        MICROLOK PBI.Changing of any statements within this program
+        listing can compromise the working of the interlocking.
+****************************************************************************/
+
+GENISYS_II PROGRAM MO_GEN_11JAN21_23;
+
+/*
+        QUEENSLAND RAILWAYS, MORAYFIELD SER. - GENISYS_II
+
+        GENISYS II COMPILER VERSION: 7.30
+        GENISYS II EXECUTIVE VERSION: 7.50
+
+
+        REVISION: (MONV10)
+
+        Designed to Preliminary Control Table Version 001.
+
+        DESIGNED BY:    M.PRABU KUMAR                   DATE: 22/06/00
+
+        CHECKED BY:     MARI ARUNACHALAM                DATE: 23/06/00
+
+
+        REVISION: (MONVT11)
+
+        1) Updated to US&S's preliminary internal checking comments.
+        2) Updated to official version of Control table dated 04/08/00.
+        3) Updated to general changes found in Caboolture.
+        4) Modified for FAT/Simulator.
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 21/09/00
+
+        QR CHECKED BY:  MIKE WADE                       DATE: 05/10/00
+
+
+
+        REVISION: (MONVT12)
+
+        Updated to QR's checking comments dated 05/10/00
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 23/10/00
+
+        QR CHECKED BY:  GARY CROTHERS                   DATE: 13/11/00
+
+
+
+        REVISION: (MONVT13)
+
+        1) Updated to QR's checking comments dated 13/11/00
+        2) Updated to general changes
+        3) Updated to UTC bit list dated 14/09/00
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 15/11/00
+
+        QR CHECKED BY:  KYLEE BISHOP                    DATE: 17/11/00
+
+
+
+        REVISION: (MONVT14)
+
+        1) RCR equation changed to simulator version
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 22/11/00
+
+        CHECKED BY:     MARI ARUNACHALAM                DATE: 27/11/00
+
+        QR CHECKED BY:  KYLEE BISHOP                    DATE: 28/11/00
+
+
+
+        REVISION: (MONVT15)
+
+        1) Updated to QR's testlog No. 1996
+        2) Morayfield Maintenance panel indications have been driven
+           by Morayfield Computer (Not Caboolture).
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 04/12/00
+
+        QR CHECKED BY:  KYLEE BISHOP                    DATE: 07/12/00
+
+
+        REVISION: (MONVT16)
+
+        1) Address 37 is changed to 38
+        2) 11AUPUSR.G.C and 14AUPUSR.G.C are changed as
+           11AUPULSR.G.C and 14AUPULSR.G.C respectively.
+
+        DESIGNED BY:    MARI ARUNACHALAM                DATE: 16/01/01
+
+        QR CHECKED BY:  CHRIS TRUSCOTT                  DATE: 17/01/01
+
+
+        REVISION: (MONV02)
+
+        1) Restored from simulator changes.
+
+        DESIGNED BY:    A.D.WADHAM                      DATE: 23/01/01
+
+        CHECKED BY:                                     DATE:
+
+        QR PASSED BY:                                   DATE:
+
+        QR APPROVED BY:                                 DATE::
+
+
+
+        REVISION: (MONV17)
+
+        1) Auto Signal Replacement Feature Added to Signals 
+           ND480 & NU480.
+
+        DESIGNED BY:    MICHAEL SNAPE                   DATE: 18/12/07
+
+        CHECKED BY:     GAVIN COOK                      DATE: 
+
+        QR PASSED BY:   ------N/A------                 DATE:
+
+        QR APPROVED BY: ------N/A------                 DATE::
+
+        *************** NOT COMMISSIONED **********************
+
+
+
+        REVISION: (MONV18)
+
+           BITLIST UPDATED TO NEW OPS-SYS STANDARD
+
+        DESIGNED BY:    MICHAEL SNAPE                   DATE: 18/12/07
+
+        CHECKED BY:                                     DATE:
+
+        QR PASSED BY:                                   DATE:
+
+        QR APPROVED BY:                                 DATE::
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+
+
+        REVISION: (MONV19)
+
+        TLC added to Morayfield Station Rd LX  & SIMULATION
+
+        DESIGNED BY:    BEN CONROY                      DATE: 26/06/13
+
+        CHECKED BY:     DANIEL DEVOIGT                  DATE: 27/06/13
+
+        QR PASSED BY:   GAVIN COOK                      DATE: 27/06/13
+
+        QR APPROVED BY: VIBHAKAR RAVAL                  DATE::28/06/13
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+
+        REVISION: (MONV20)
+
+        NEW PER
+
+        DESIGNED BY: DANIEL DEVOIGT                     DATE: 14.08.2015
+
+        CHECKED BY:                                     DATE: 14.08.2015
+
+        PASSED BY:                                      DATE: 14.08.2015
+
+        APPROVED BY:                                    DATE: 14.08.2015
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+
+        REVISION: (MONV21)
+
+        Removed two unassigned bits (PER.SD1KR.G.C and PER.IAR.G.C)
+
+        DESIGNED BY:    MES GEBREWOLD                  DATE: 01/10/2015
+
+        CHECKED BY:     KAMIAR MESHKI                  DATE: 01/10/2015
+
+        QR PASSED BY:                                  DATE: 
+
+        QR APPROVED BY:                                DATE:
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+        REVISION: (MO_GEN_07APR20_22)
+
+        CSIB TO GENISYS II UPGRADE, SIMULATION
+
+        DESIGNED BY:    DANIEL DEVOIGT                 DATE: 08/12/20
+                                                                     
+        CHECKED BY:     CRAIG BRENNAN                  DATE: 11/12/20
+                                                                     
+        QR PASSED BY:   DAMIAN LECH                    DATE: 18/01/21
+
+        QR APPROVED BY:                                DATE:
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+        REVISION: (MO_GEN_11JAN21_23)
+
+        CSIB TO GENISYS II UPGRADE, SITE VERSION.
+
+        DESIGNED BY:    DANIEL DEVOIGT                 DATE: 21/01/21
+                                      
+        CHECKED BY:     CRAIG BRENNAN                  DATE: 21/01/21
+                                      
+        QR PASSED BY:   DAMIAN LECH                    DATE: 21/01/21
+
+        QR APPROVED BY:                                DATE:
+
+        *************** COMMISSIONED ON --/--/-- **********************
+
+
+***************************************************************************/
+
+
+
+INTERFACE
+
+
+COMM
+
+//  START OF SIMULATOR MODIFICATION 1 OF 5
+//  SITE VERSION
+
+LINK:                          PT1
+ADJUSTABLE ENABLE:             1
+PROTOCOL:                      S2.SLAVE
+FIXED POINT.POINT:             1;
+FIXED PORT:                    1;
+FIXED BAUD:                    1200;
+FIXED STOPBITS:                1;
+FIXED PARITY:                  NONE;
+FIXED KEY.ON.DELAY:            5;
+FIXED KEY.OFF.DELAY:           2;
+FIXED STALE.DATA.TIMEOUT:      10:SEC;
+FIXED TRANSMITTER.INHIBIT:     25:MSEC;
+FRAME.LENGTH:                  64;
+
+//  END OF SIMULATOR MODIFICATION 1 OF 5
+//  START OF SIMULATOR MODIFICATION 2 OF 5
+//  SIMULATOR VERSION
+/*LINK:                     PT1
+ADJUSTABLE ENABLE:        1
+PROTOCOL:                 GENISYS.SLAVE
+ADJUSTABLE POINT.POINT:        0;
+ADJUSTABLE PORT:               1;
+ADJUSTABLE BAUD:               1200;
+ADJUSTABLE STOPBITS:           1;
+ADJUSTABLE PARITY:             NONE;
+ADJUSTABLE KEY.ON.DELAY:       0;
+ADJUSTABLE KEY.OFF.DELAY:      0;
+ADJUSTABLE STALE.DATA.TIMEOUT: 30:SEC;
+ADJUSTABLE CARRIER.MODE:       CONSTANT;
+ADJUSTABLE CRC.SIZE:            16;
+*/
+//  END OF SIMULATOR MODIFICATION 2 OF 5
+
+ADDRESS:                    22
+ADJUSTABLE ENABLE:          1
+
+NV.OUTPUT:    //ADDRESS 22 INDICATIONS TO UTC
+
+        22TFKR.PT1,      PFJC1KR.PT1,     ELD1KR.PT1,      MF1KR.PT1,
+        SBF1KR.PT1,      UPSCRIT.PT1,     UPSNCRIT.PT1,    COKR.PT1,
+        SPARE,           11AT1KR.PT1,     11BT1KR.PT1,     14AT1KR.PT1,
+        14BT1KR.PT1,     14CT1KR.PT1,     CE14DT1KR.PT1,   439CT1KR.PT1,
+
+        451AT1KR.PT1,    451BT1KR.PT1,    458AT1KR.PT1,    458BT1KR.PT1,
+        473AT1KR.PT1,    473BT1KR.PT1,    480AT1KR.PT1,    480BT1KR.PT1,
+        483AT1KR.PT1,    SPARE,          SPARE,          11NL1KR.PT1,
+        11RG1KR.PT1,     11HG1KR.PT1,     12NL1KR.PT1,     12RG1KR.PT1,
+
+        12HG1KR.PT1,     13NL1KR.PT1,     13RG1KR.PT1,     13HG1KR.PT1,
+        14NL1KR.PT1,     14RG1KR.PT1,     14HG1KR.PT1,     SPARE,
+        ND473Y1KR.PT1,   ND473HG1KR.PT1,  NU473Y1KR.PT1,   NU473HG1KR.PT1,
+        ND480Y1KR.PT1,   ND480HG1KR.PT1,  NU480Y1KR.PT1,   NU480HG1KR.PT1,
+
+        SPARE,          SPARE,          SPARE,          MSR.XJ1KR.PT1,
+        MSR.CONKR.PT1,   MSR.UP1KR.PT1,   MSR.DN1KR.PT1,   MSR.PX.ALM.PT1,
+        MSR.CFKPR.PT1,   SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SB_AVAIL.PT1, TELACTV_ADD22.PT1;
+
+
+NV.INPUT:    //ADDRESS 22 CONTROLS FROM UTC
+
+        RCFR.PT1,        SPARE,          SPARE,          SPARE,
+        11.1M.U1PR.PT1,  11.A.1PR.PT1,    12.1M.U1PR.PT1,  13.1M.U1PR.PT1,
+        14.1M.U1PR.PT1,  14.A.1PR.PT1,    SPARE,          SPARE,
+        ND473R1PR.PT1,   NU473R1PR.PT1,   ND480R1PR.PT1,   NU480R1PR.PT1,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          ADDR22_OK.PT1;
+
+
+ADDRESS:                    23
+ADJUSTABLE ENABLE:          1
+
+
+NV.OUTPUT:    //ADDRESS 23 INDICATIONS TO UTC
+
+        23TFKR.PT1,     SPARE,          SPARE,          N128.50VFAIL.PT1,
+        N130.50VFAIL.PT1,   N134.50VFAIL.PT1,   SPARE,          N128CFKPR.PT1,
+        N130CFKPR.PT1,   N134CFKPR.PT1,   SPARE,          N128INT.ALM.PT1,
+        N130INT.ALM.PT1, N134INT.ALM.PT1, INT.ALM.PT1,     PERINT.ALM.PT1,
+
+        N128SMKEPR.PT1,  N130SMKEPR.PT1,  N134SMKEPR.PT1,  SMKEPR.PT1,
+        PERSMKEPR.PT1,   SPARE,          CFKPR.PT1,       SER.50VFAIL.PT1,
+        SPARE,     SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        N128.VSL1A.PT1,  N128.VSL1B.PT1,  N128.COMM.LNK.ALM.PT1,  SPARE,
+        N130.COMM.LNK.ALM.PT1,  SPARE,  N134.COMM.LNK.ALM.PT1,  SPARE,
+        N137.COMM.LNK.ALM.PT1,  SPARE,  MOCE.COMM.LNK.ALM.PT1,     VSLBUMO.PT1,
+        SPARE,          MOBU.ULUPAV.PT1, MOBU.ULUPAR.PT1, BUMO.ULDNAR.PT1,
+
+        MOBU.DLUPAV.PT1, MOBU.DLUPAR.PT1, BUMO.DLDNAR.PT1, SPARE,
+        MOCE.ULDNAV.PT1, CEMO.ULUPAR.PT1, MOCE.ULDNAR.PT1, SPARE,
+        MOCE.DLDNAV.PT1, CEMO.DLUPAR.PT1, MOCE.DLDNAR.PT1, SPARE,
+        CRI.AL.PT1,      NCRI.AL.PT1,     SPARE, TELACTV_ADD23.PT1;
+
+
+NV.INPUT:     //ADDRESS 23 CONTROLS FROM UTC
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          ADDR23_OK.PT1;
+
+
+//  START OF SIMULATOR MODIFICATION 3 OF 5
+//  SITE VERSION
+
+LINK:                        PT2
+ADJUSTABLE ENABLE:           1
+PROTOCOL:                    S2.SLAVE
+FIXED POINT.POINT:           1;
+FIXED PORT:                  2;
+FIXED BAUD:                  1200;
+FIXED STOPBITS:              1;
+FIXED PARITY:                NONE;
+FIXED KEY.ON.DELAY:          5;
+FIXED KEY.OFF.DELAY:         2;
+FIXED STALE.DATA.TIMEOUT:    10:SEC;
+FIXED TRANSMITTER.INHIBIT:   25:MSEC;
+FRAME.LENGTH:                64;
+
+//  END OF SIMULATOR MODIFICATION 3 OF 5
+//  START OF SIMULATOR MODIFICATION 4 OF 5
+//  SIMULATOR VERSION
+/*LINK:                     PT2
+ADJUSTABLE ENABLE:        1
+PROTOCOL:                 GENISYS.SLAVE
+ADJUSTABLE POINT.POINT:        0;
+ADJUSTABLE PORT:               2;
+ADJUSTABLE BAUD:               1200;
+ADJUSTABLE STOPBITS:           1;
+ADJUSTABLE PARITY:             NONE;
+ADJUSTABLE KEY.ON.DELAY:       0;
+ADJUSTABLE KEY.OFF.DELAY:      0;
+ADJUSTABLE STALE.DATA.TIMEOUT: 30:SEC;
+ADJUSTABLE CARRIER.MODE:       CONSTANT;
+ADJUSTABLE CRC.SIZE:            16;
+*/
+//  END OF SIMULATOR MODIFICATION 4 OF 5
+
+ADDRESS:                    22
+ADJUSTABLE ENABLE:          1
+
+NV.OUTPUT:    //ADDRESS 22 INDICATIONS TO UTC
+
+        22TFKR.PT2,    PFJC1KR.PT2,     ELD1KR.PT2,      MF1KR.PT2,
+        SBF1KR.PT2,      UPSCRIT.PT2,     UPSNCRIT.PT2,    COKR.PT2,
+        SPARE,          11AT1KR.PT2,     11BT1KR.PT2,     14AT1KR.PT2,
+        14BT1KR.PT2,     14CT1KR.PT2,     CE14DT1KR.PT2,   439CT1KR.PT2,
+
+        451AT1KR.PT2,    451BT1KR.PT2,    458AT1KR.PT2,    458BT1KR.PT2,
+        473AT1KR.PT2,    473BT1KR.PT2,    480AT1KR.PT2,    480BT1KR.PT2,
+        483AT1KR.PT2,    SPARE,          SPARE,          11NL1KR.PT2,
+        11RG1KR.PT2,     11HG1KR.PT2,     12NL1KR.PT2,     12RG1KR.PT2,
+
+        12HG1KR.PT2,     13NL1KR.PT2,     13RG1KR.PT2,     13HG1KR.PT2,
+        14NL1KR.PT2,     14RG1KR.PT2,     14HG1KR.PT2,     SPARE,
+        ND473Y1KR.PT2,   ND473HG1KR.PT2,  NU473Y1KR.PT2,   NU473HG1KR.PT2,
+        ND480Y1KR.PT2,   ND480HG1KR.PT2,  NU480Y1KR.PT2,   NU480HG1KR.PT2,
+
+        SPARE,          SPARE,          SPARE,          MSR.XJ1KR.PT2,
+        MSR.CONKR.PT2,   MSR.UP1KR.PT2,   MSR.DN1KR.PT2,   MSR.PX.ALM.PT2,
+        MSR.CFKPR.PT2,   SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SB_AVAIL.PT2, TELACTV_ADD22.PT2;
+
+
+NV.INPUT:    //ADDRESS 22 CONTROLS FROM UTC
+
+        RCFR.PT2,        SPARE,          SPARE,          SPARE,
+        11.1M.U1PR.PT2,  11.A.1PR.PT2,    12.1M.U1PR.PT2,  13.1M.U1PR.PT2,
+        14.1M.U1PR.PT2,  14.A.1PR.PT2,    SPARE,          SPARE,
+        ND473R1PR.PT2,   NU473R1PR.PT2,   ND480R1PR.PT2,   NU480R1PR.PT2,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          ADDR22_OK.PT2;
+
+
+ADDRESS:                    23
+ADJUSTABLE ENABLE:          1
+
+
+NV.OUTPUT:    //ADDRESS 23 INDICATIONS TO UTC
+
+        23TFKR.PT2,     SPARE,          SPARE,          N128.50VFAIL.PT2,
+        N130.50VFAIL.PT2,   N134.50VFAIL.PT2,   SPARE,          N128CFKPR.PT2,
+        N130CFKPR.PT2,   N134CFKPR.PT2,   SPARE,          N128INT.ALM.PT2,
+        N130INT.ALM.PT2, N134INT.ALM.PT2, INT.ALM.PT2,     PERINT.ALM.PT2,
+
+        N128SMKEPR.PT2,  N130SMKEPR.PT2,  N134SMKEPR.PT2,  SMKEPR.PT2,
+        PERSMKEPR.PT2,   SPARE,          CFKPR.PT2,       SER.50VFAIL.PT2,
+        SPARE,     SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        N128.VSL1A.PT2,  N128.VSL1B.PT2,  N128.COMM.LNK.ALM.PT2,  SPARE,
+        N130.COMM.LNK.ALM.PT2,  SPARE,  N134.COMM.LNK.ALM.PT2,  SPARE,
+        N137.COMM.LNK.ALM.PT2,  SPARE,  MOCE.COMM.LNK.ALM.PT2,     VSLBUMO.PT2,
+        SPARE,          MOBU.ULUPAV.PT2, MOBU.ULUPAR.PT2, BUMO.ULDNAR.PT2,
+
+        MOBU.DLUPAV.PT2, MOBU.DLUPAR.PT2, BUMO.DLDNAR.PT2, SPARE,
+        MOCE.ULDNAV.PT2, CEMO.ULUPAR.PT2, MOCE.ULDNAR.PT2, SPARE,
+        MOCE.DLDNAV.PT2, CEMO.DLUPAR.PT2, MOCE.DLDNAR.PT2, SPARE,
+        CRI.AL.PT2,      NCRI.AL.PT2,     SPARE, TELACTV_ADD23.PT2;
+
+
+NV.INPUT:     //ADDRESS 23 CONTROLS FROM UTC
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          SPARE,
+        SPARE,          SPARE,          SPARE,          ADDR23_OK.PT2;
+
+
+LINK:                     NVSLINTGEN
+ADJUSTABLE ENABLE:        1
+PROTOCOL:                 GENISYS.MASTER
+FIXED PORT:               4;
+FIXED BAUD:               1200;
+FIXED STOPBITS:           1;
+FIXED PARITY:             NONE;
+FIXED KEY.ON.DELAY:       0;
+FIXED KEY.OFF.DELAY:      0;
+FIXED STALE.DATA.TIMEOUT: 5:SEC;
+FIXED CARRIER.MODE:       CONSTANT;
+FIXED POINT.POINT:        0;
+FIXED CRC.SIZE:           16;
+
+
+ADDRESS:                  17
+ADJUSTABLE ENABLE:        1
+
+NV.OUTPUT:        //TO MICROLOK II SER
+
+        SPARE,                          RCDR.G.SA,
+        11.1M.U1PR.G.SA,                11.A.1PR.G.SA,
+        12.1M.U1PR.G.SA,                13.1M.U1PR.G.SA,
+        14.1M.U1PR.G.SA,                14.A.1PR.G.SA,
+
+        ND473R1PR.G.SA,                 NU473R1PR.G.SA,
+        ND480R1PR.G.SA,                 NU480R1PR.G.SA,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE;
+
+NV.INPUT:         //FROM MICROLOK II SER
+
+        PFJCR.SA.G,                     SPARE,
+        SPARE,                          439CT1KR.SA.G,
+        451AT1KR.SA.G,                  451BT1KR.SA.G,
+        11AT1KR.SA.G,                   11BT1KR.SA.G,
+
+        473AT1KR.SA.G,                  473BT1KR.SA.G,
+        483AT1KR.SA.G,                  458BT1KR.SA.G,
+        458AT1KR.SA.G,                  14BT1KR.SA.G,
+        14AT1KR.SA.G,                   480BT1KR.SA.G,
+
+        480AT1KR.SA.G,                  CE14DT1KR.SA.G,
+        14CT1KR.SA.G,                   SPARE,
+        11NL1KR.SA.G,                   11RG1KR.SA.G,
+        11HG1KR.SA.G,                   12NL1KR.SA.G,
+
+        12RG1KR.SA.G,                   12HG1KR.SA.G,
+        13NL1KR.SA.G,                   13RG1KR.SA.G,
+        13HG1KR.SA.G,                   14NL1KR.SA.G,
+        14RG1KR.SA.G,                   14HG1KR.SA.G,
+
+        N128.ELD1KR.SA.G,               SPARE,
+        SPARE,                          SPARE,
+        SPARE,                          BBVS1KR.SA.G,
+        SPARE,                          SPARE,
+
+        SPARE,                          SPARE,
+        N128.VSL1A.SA.G,                N128.VSL1B.SA.G,
+        N130.COMM.LNK.ALM.SA.G,                SPARE,
+        N128.COMM.LNK.ALM.SA.G,                SPARE,
+
+        N134.COMM.LNK.ALM.SA.G,                SPARE,
+        N128CFKPR.SA.G,                 N130CFKPR.SA.G,
+        N134CFKPR.SA.G,                 CFKPR.SA.G,
+        N128SMKEPR.SA.G,                N130SMKEPR.SA.G,
+
+        N134SMKEPR.SA.G,                SMKEPR.SA.G,
+        N128ALMPR.SA.G,                 N130ALMPR.SA.G,
+        N134ALMPR.SA.G,                 ALMPR.SA.G,
+        CRI.AL.SA.G,                    NCRI.AL.SA.G,
+
+        MSR.XJ1KR.SA.G,                 MSR.CON1KR.SA.G,
+        MSR.UP1KR.SA.G,                 MSR.DN1KR.SA.G,
+        MSR.CFKPR.SA.G,                 MSR.PX.ALM.SA.G,
+        SPARE,                          SPARE,
+
+        MOBU.DLUPAR.SA.G,               BUMO.DLDNAR.SA.G,
+        MOBU.DLUPAV.SA.G,               MOBU.ULUPAR.SA.G,
+        BUMO.ULDNAR.SA.G,               MOBU.ULUPAV.SA.G,
+        MOCE.DLDNAR.SA.G,               CEMO.DLUPAR.SA.G,
+
+        MOCE.DLDNAV.SA.G,               MOCE.ULDNAR.SA.G,
+        CEMO.ULUPAR.SA.G,               MOCE.ULDNAV.SA.G,
+        ND473Y1KR.SA.G,                 ND473HG1KR.SA.G,
+        NU473Y1KR.SA.G,                 NU473HG1KR.SA.G,
+
+        N128.50VFAIL.SA.G,                 N130.50VFAIL.SA.G,
+        N134.50VFAIL.SA.G,                 SER.50VFAIL.SA.G,
+        SPARE,                          SPARE,
+        N137.COMM.LNK.ALM.SA.G,                SPARE,
+
+        MOCE.COMM.LNK.ALM.SA.G,         VSLBUMO.SA.G,
+        ND480Y1KR.SA.G,                 ND480HGKR.SA.G,
+        NU480Y1KR.SA.G,                 NU480HGKR.SA.G,
+        110V.ELD1KR.SA.G,               24VMLELD1KR.SA.G,
+
+        SBF1KR.SA.G,                    MF1KR.SA.G,
+        UBP1KR.SA.G,                    RF1KR.SA.G,
+        IF1KR.SA.G,                     BF1KR.SA.G,
+        LOB1KR.SA.G,                    LB1KR.SA.G,
+
+        FF1KR.SA.G,                     HT1KR.SA.G,
+        SPARE,                          PER.SD1KR.SA.G,
+        PER.IAR.SA.G,                   415V.ELD1KR.SA.G,
+        12VMLELD1KR.SA.G,               N128.RS400.FAIL.SA.GA,
+
+        N130.RS400.FAIL.SA.GA,          N134.RS400.FAIL.SA.GA,
+		SER.RS400.FAIL.SA.GA,           SPARE,
+        SPARE,                          SPARE,
+        SPARE,                          SPARE;
+
+ADDRESS:                  38
+ADJUSTABLE ENABLE:        1
+
+NV.INPUT:        //FROM MICROLOK II SER
+
+        11ADNULSR.SA.G,                 14ADNULSR.SA.G,
+        11AUPULSR.SA.G,                 14AUPULSR.SA.G,
+        451BAT1KR.SA.G,                 451BBT1KR.SA.G,
+        473AAT1KR.SA.G,                 473ABT1KR.SA.G,
+
+        483AAT1KR.SA.G,                 483ABT1KR.SA.G,
+        14BBT1KR.SA.G,                  14BAT1KR.SA.G,
+        480ABT1KR.SA.G,                 480AAT1KR.SA.G,
+        CE14CBT1KR.SA.G,                CE14CAT1KR.SA.G,
+
+        11U1PR.SA.G,                    11A1PR.SA.G,
+        11ALSR.SA.G,                    11HR.SA.G,
+        11HHR.SA.G,                     11DR.SA.G,
+        11IZR.SA.G,                     11IZCR.SA.G,
+
+        12U1PR.SA.G,                    12ALSR.SA.G,
+        12HR.SA.G,                      12HHR.SA.G,
+        12DR.SA.G,                      12IZR.SA.G,
+        12IZCR.SA.G,                    13U1PR.SA.G,
+
+        13ALSR.SA.G,                    13HR.SA.G,
+        13HHR.SA.G,                     13DR.SA.G,
+        13IZR.SA.G,                     13IZCR.SA.G,
+        14U1PR.SA.G,                    14A1PR.SA.G,
+
+        14ALSR.SA.G,                    14HR.SA.G,
+        14HHR.SA.G,                     14DR.SA.G,
+        14IZR.SA.G,                     14IZCR.SA.G,
+        MOSA.LOGLA.SA.G,                MOSA.LOGFL.SA.G,
+
+        LINK.OK.SA.G,                   SPARE,
+        ND451HR.SA.G,                   ND451HHR.SA.G,
+        ND451DR.SA.G,                   ND451IZR.SA.G,
+        ND451RGKR.SA.G,                 ND451HGKR.SA.G,
+
+        ND451IZCR.SA.G,                 NU451HR.SA.G,
+        NU451HHR.SA.G,                  NU451DR.SA.G,
+        NU451IZR.SA.G,                  NU451RGKR.SA.G,
+        NU451HGKR.SA.G,                 NU451IZCR.SA.G,
+
+        ND458HR.SA.G,                   ND458HHR.SA.G,
+        ND458DR.SA.G,                   ND458IZR.SA.G,
+        ND458RGKR.SA.G,                 ND458HGKR.SA.G,
+        ND458IZCR.SA.G,                 NU458HR.SA.G,
+
+        NU458HHR.SA.G,                  NU458DR.SA.G,
+        NU458IZR.SA.G,                  NU458RGKR.SA.G,
+        NU458HGKR.SA.G,                 NU458IZCR.SA.G,
+        ND473ALSR.SA.G,                 ND473HR.SA.G,
+
+        ND473HHR.SA.G,                  ND473DR.SA.G,
+        ND473IZR.SA.G,                  ND473RGKR.SA.G,
+        ND473IZCR.SA.G,                 NU473ALSR.SA.G,
+        NU473HR.SA.G,                   NU473HHR.SA.G,
+
+        NU473DR.SA.G,                   NU473IZR.SA.G,
+        NU473RGKR.SA.G,                 NU473IZCR.SA.G,
+        ND480ALSR.SA.G,                 ND480HR.SA.G,
+        ND480HHR.SA.G,                  ND480DR.SA.G,
+
+        ND480RGKR.SA.G,                 SPARE,
+        NU480ALSR.SA.G,                 NU480HR.SA.G,
+        NU480HHR.SA.G,                  NU480DR.SA.G,
+        NU480RGKR.SA.G,                 SPARE,
+
+        ND483HR.SA.G,                   ND483HHR.SA.G,
+        ND483DR.SA.G,                   ND483RGKR.SA.G,
+        ND483HGKR.SA.G,                 NU483HR.SA.G,
+        NU483HHR.SA.G,                  NU483DR.SA.G,
+
+        NU483RGKR.SA.G,                 NU483HGKR.SA.G,
+        MSR.CON1CKR.SA.G,               MSR.XO1CKR.SA.G,
+        MSR.CONKR.SA.G,                 MSRTLCCALL.SA.GA,
+        MSRTLC34JP.SA.GA,               MSRTLC34JZ.SA.GA,
+
+        451AATS1PR.SA.GA,               451ABTS1PR.SA.GA,
+        458AATS1PR.SA.GA,               458ABTS1PR.SA.GA,
+        PT1.SEL.SA.GA,                  PT2.SEL.SA.GA,
+        SPARE,                          SPARE;
+
+
+
+LINK:                     NVLC
+ADJUSTABLE ENABLE:        1
+PROTOCOL:                 GENISYS.MASTER
+FIXED PORT:               3;
+FIXED BAUD:               1200;
+FIXED STOPBITS:           1;
+FIXED PARITY:             NONE;
+FIXED KEY.ON.DELAY:       12;
+FIXED KEY.OFF.DELAY:      12;
+FIXED STALE.DATA.TIMEOUT: 4:SEC;
+FIXED POLLING.INTERVAL:   50:MSEC;
+FIXED MASTER.TIMEOUT:     500:MSEC;
+FIXED CARRIER.MODE:       CONSTANT;
+FIXED CRC.SIZE:           16;
+FIXED SECURE.MODE:        ON;
+FIXED MASTER.CHECKBACK:   OFF;
+FIXED POINT.POINT:        1;
+
+ADDRESS:                  39
+ADJUSTABLE ENABLE:        1
+
+NV.OUTPUT:         //INDICATIONS TO MAINTENANCE COMPUTER
+
+        11ADNULSR.G.C,          14ADNULSR.G.C,          11AUPULSR.G.C,
+        14AUPULSR.G.C,          11BT1KR.G.C,            480BT1KR.G.C,
+
+        439CT1KR.G.C,           451AT1KR.G.C,           451BAT1KR.G.C,
+        451BBT1KR.G.C,          11AT1KR.G.C,            458BT1KR.G.C,
+        458AT1KR.G.C,           14BBT1KR.G.C,           14BAT1KR.G.C,
+        14AT1KR.G.C,            SPARE,                  SPARE,
+
+        SPARE,                  473AAT1KR.G.C,          473ABT1KR.G.C,
+        473BT1KR.G.C,           483AAT1KR.G.C,          483ABT1KR.G.C,
+        SPARE,                  480ABT1KR.G.C,          480AAT1KR.G.C,
+        CE14DT1KR.G.C,          CE14CBT1KR.G.C,         CE14CAT1KR.G.C,
+
+        11U1PR.G.C,             11RGKR.G.C,             11HGKR.G.C,
+        11ALSR.G.C,             11HR.G.C,               11HHR.G.C,
+        11DR.G.C,               11IZR.G.C,              11IZCR.G.C,
+
+        12U1PR.G.C,             12RGKR.G.C,             12HGKR.G.C,
+        12ALSR.G.C,             12HR.G.C,               12HHR.G.C,
+        12DR.G.C,               12IZR.G.C,              12IZCR.G.C,
+
+        13U1PR.G.C,             13RGKR.G.C,             13HGKR.G.C,
+        13ALSR.G.C,             13HR.G.C,               13HHR.G.C,
+        13DR.G.C,               13IZR.G.C,              13IZCR.G.C,
+
+        14U1PR.G.C,             14RGKR.G.C,             14HGKR.G.C,
+        14ALSR.G.C,             14HR.G.C,               14HHR.G.C,
+        14DR.G.C,               14IZR.G.C,              14IZCR.G.C,
+
+        PFJC1KR.G.C,            N128.ELD1KR.G.C,        SPARE,
+        SPARE,                  SPARE,                  SPARE,
+        BBVS1KR.G.C,            SPARE,                  SPARE,
+        SPARE,                  SPARE,                   N128.VSL1A.G.C,
+        N128.VSL1B.G.C,         N130.COMM.LNK.ALM.G.C,         SPARE,
+        N128.COMM.LNK.ALM.G.C,         SPARE,                  N134.COMM.LNK.ALM.G.C,
+        SPARE,                  VSLBUMO.G.C,            N128CFKPR.G.C,
+        N130CFKPR.G.C,          N134CFKPR.G.C,          CFKPR.G.C,
+        N128SMKEPR.G.C,         N130SMKEPR.G.C,         N134SMKEPR.G.C,
+        SMKEPR.G.C,             N128ALMPR.G.C,          N130ALMPR.G.C,
+        N134ALMPR.G.C,          ALMPR.G.C,              N128.50VFAIL.G.C,
+        N130.50VFAIL.G.C,          N134.50VFAIL.G.C,    SER.50VFAIL.G.C,
+        MOSA.LOGLA.G.C,         MOSA.LOGFL.G.C,         LINK.OK.G.C,
+        CRI.AL.G.C,             NCRI.AL.G.C,            SPARE,
+        N137.COMM.LNK.ALM.G.C,         SPARE,           MOCE.COMM.LNK.ALM.G.C,
+
+        ND451HR.G.C,            ND451HHR.G.C,           ND451DR.G.C,
+        ND451IZR.G.C,           ND451RGKR.G.C,          ND451HGKR.G.C,
+        ND451IZCR.G.C,          NU451HR.G.C,            NU451HHR.G.C,
+        NU451DR.G.C,            NU451IZR.G.C,           NU451RGKR.G.C,
+        NU451HGKR.G.C,          NU451IZCR.G.C,          ND458HR.G.C,
+        ND458HHR.G.C,           ND458DR.G.C,            ND458IZR.G.C,
+        ND458RGKR.G.C,          ND458HGKR.G.C,          ND458IZCR.G.C,
+        NU458HR.G.C,            NU458HHR.G.C,           NU458DR.G.C,
+        NU458IZR.G.C,           NU458RGKR.G.C,          NU458HGKR.G.C,
+        NU458IZCR.G.C,          ND473HR.G.C,            ND473HHR.G.C,
+        ND473DR.G.C,            ND473IZR.G.C,           ND473RGKR.G.C,
+        ND473HGKR.G.C,          ND473IZCR.G.C,          NU473HR.G.C,
+        NU473HHR.G.C,           NU473DR.G.C,            NU473IZR.G.C,
+        NU473RGKR.G.C,          NU473HGKR.G.C,          NU473IZCR.G.C,
+        ND480HR.G.C,            ND480HHR.G.C,           ND480DR.G.C,
+        ND480RGKR.G.C,          ND480HGKR.G.C,          NU480HR.G.C,
+        NU480HHR.G.C,           NU480DR.G.C,            NU480RGKR.G.C,
+        NU480HGKR.G.C,          ND483HR.G.C,            ND483HHR.G.C,
+        ND483DR.G.C,            ND483RGKR.G.C,          ND483HGKR.G.C,
+        NU483HR.G.C,            NU483HHR.G.C,           NU483DR.G.C,
+        NU483RGKR.G.C,          NU483HGKR.G.C,          MSR.CONKR.G.C,
+
+        MSR.CON1KR.G.C,         MSR.UP1KR.G.C,          MSR.DN1KR.G.C,
+        MSR.CFKPR.G.C,          MSR.CON1CR.G.C,         MSR.XO1CKR.G.C,
+        MSR.XJ1KR.G.C,          MSR.PX.ALM.G.C,         ND473Y1KR.G.C,
+        ND473ALSR.G.C,          NU473Y1KR.G.C,          NU473ALSR.G.C,
+        ND480Y1KR.G.C,          NU480Y1KR.G.C,          ND480ALSR.G.C,          
+        NU480ALSR.G.C,          11A1PR.G.C,             14A1PR.G.C,             
+        SPARE,                  SPARE,
+
+        PT1.SEL.G.C,            PT2.SEL.G.C,            RCF1KR.G.C,
+
+        MOBUDLUPAR.G.C,         BUMODLDNAR.G.C,         MOBUDLUPAV.G.C,
+        MOBUULUPAR.G.C,         BUMOULDNAR.G.C,         MOBUULUPAV.G.C,
+        MOCEDLDNAR.G.C,         CEMODLUPAR.G.C,         MOCEDLDNAV.G.C,
+        MOCEULDNAR.G.C,         CEMOULUPAR.G.C,         MOCEULDNAV.G.C,
+
+        MSRTLCCALL.G.C,         MSRTLC34JP.G.C,         MSRTLC34JZ.G.C,
+        451AATS1PR.G.C,         451ABTS1PR.G.C,         458AATS1PR.G.C,
+        458ABTS1PR.G.C,         110V.ELD1KR.G.C,        24VMLELD1KR.G.C,
+        415V.ELD1KR.G.C,        12VMLELD1KR.G.C,        MF1KR.G.C, SBF1KR.G.C,
+
+        PERSMKEPR.G.C,          PERINT.ALM.G.C,         UBP1KR.G.C,
+        RF1KR.G.C,              IF1KR.G.C,              BF1KR.G.C,
+        LOB1KR.G.C,             LB1KR.G.C,              FF1KR.G.C,
+        HT1KR.G.C,              PT1_ONLINE.G.C,         PT2_ONLINE.G.C,
+
+        PT1_AVAIL.G.C,          PT2_AVAIL.G.C,          N128.RS400.FAIL.G.C,
+
+        N130.RS400.FAIL.G.C,  N134.RS400.FAIL.G.C,  SER.RS400.FAIL.G.C;
+
+
+
+/**********************************************************************************************/
+
+NV.BOOLEAN BITS
+
+    PT1_ONLINE,         PT2_ONLINE,
+
+    PT1_ADDR22_JR1,     PT1_ADDR22_JR2,
+    PT1_ADDR23_JR1,     PT1_ADDR23_JR2,
+
+    PT2_ADDR22_JR1,     PT2_ADDR22_JR2,
+    PT2_ADDR23_JR1,     PT2_ADDR23_JR2,
+
+    PT1_RX_OK,          PT2_RX_OK,
+
+    RCJZR,              TEL.FAIL,
+
+    
+
+    PT1_ADDR22_OK,      PT1_ADDR23_OK,
+
+    PT2_ADDR22_OK,      PT2_ADDR23_OK,
+
+    PT1_PART_OK,        PT2_PART_OK,
+
+    CHECKADDRESS,       RCR1,             RCR2,
+    568NLJR,            568RLJR,          568AB.HEALTHY,       568CD.HEALTHY;
+
+
+TIMER BITS
+FIXED
+    CHECKADDRESS:                       SET = 500:MSEC  CLEAR = 20:SEC;
+FIXED
+    PT1_ADDR22_JR2,     PT1_ADDR23_JR2,
+    PT2_ADDR22_JR2,     PT2_ADDR23_JR2: SET = 0:SEC     CLEAR = 12:SEC;
+FIXED
+    PT1_ADDR22_JR1,     PT1_ADDR23_JR1,
+    PT2_ADDR22_JR1,     PT2_ADDR23_JR1: SET = 12:SEC    CLEAR = 0:SEC;
+FIXED
+    RCJZR:                              SET = 30:SEC    CLEAR = 0:SEC;
+FIXED
+    568NLJR, 568RLJR:                   SET = 10:SEC    CLEAR = 0:SEC;
+FIXED
+    568AB.HEALTHY, 568CD.HEALTHY:       SET = 0:SEC     CLEAR = 500:MSEC;
+
+
+/***********************************************************************************************/
+
+CONSTANTS
+  BOOLEAN
+        FALSE = 0;
+        TRUE  = 1;
+
+  NUMERIC
+        INSTALLATION_ADDRESS        = 24;
+        APPLICATION_DATA_VERSION    = 23;
+        EXECUTIVE_SOFTWARE_VERSION  = 75; //75 STANDS FOR VERSION 7.5
+
+CONFIGURATION
+
+  SYSTEM
+        FIXED DEBUG_PORT_ADDRESS:        1;
+        FIXED DEBUG_PORT_BAUDRATE:       9600;
+        FIXED LOGIC_TIMEOUT:             2:SEC; //DEFAULT VALUE
+
+  USER NUMERIC
+        CONFIGURATIONELEMENT_ADDRESS:                     "INSTALLATION_ADDRESS";
+        CONFIGURATIONELEMENT_APPLICATION_DATA_VERSION:    "APPLICATION_DATA_VERSION";
+        CONFIGURATIONELEMENT_EXECUTIVE_SOFTWARE_VERSION:  "EXECUTIVE_SOFTWARE_VERSION";
+
+/************************************************************************************************/
+
+
+LOGIC BEGIN
+
+NV.ASSIGN   ~CHECKADDRESS                             TO CHECKADDRESS; %SP=500MSEC SR=20SEC\
+
+//CONTROL LOGIC
+
+NV.ASSIGN   PT1_ONLINE * PT1_RX_OK * RCFR.PT1         TO RCR1;
+
+NV.ASSIGN   PT2_ONLINE * PT2_RX_OK * RCFR.PT2         TO RCR2;
+
+
+
+NV.ASSIGN   RCR1 * 11.1M.U1PR.PT1 + RCR2 * 11.1M.U1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 11.1M.U1PR.G.SA * (11HG1KR.SA.G +
+            11AT1KR.SA.G + 11.A.1PR.G.SA)                   TO 11.1M.U1PR.G.SA;
+
+NV.ASSIGN   RCR1 * 11.A.1PR.PT1 + RCR2 * 11.A.1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 11.1M.U1PR.G.SA                               TO 11.A.1PR.G.SA;
+
+NV.ASSIGN   RCR1 * 12.1M.U1PR.PT1 + RCR2 * 12.1M.U1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 12.1M.U1PR.G.SA * (12HG1KR.SA.G +
+            11AT1KR.SA.G)                                   TO 12.1M.U1PR.G.SA;
+
+NV.ASSIGN   RCR1 * 13.1M.U1PR.PT1 + RCR2 * 13.1M.U1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 13.1M.U1PR.G.SA * (13HG1KR.SA.G +
+            14AT1KR.SA.G)                                   TO 13.1M.U1PR.G.SA;
+
+NV.ASSIGN   RCR1 * 14.1M.U1PR.PT1 + RCR2 * 14.1M.U1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 14.1M.U1PR.G.SA * (14HG1KR.SA.G +
+            14AT1KR.SA.G + 14.A.1PR.G.SA)                   TO 14.1M.U1PR.G.SA;
+
+NV.ASSIGN   RCR1 * 14.A.1PR.PT1 + RCR2 * 14.A.1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * 14.1M.U1PR.G.SA                               TO 14.A.1PR.G.SA;
+
+NV.ASSIGN   RCR1 * ND473R1PR.PT1 + RCR2 * ND473R1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * ND473R1PR.G.SA                                TO ND473R1PR.G.SA;
+
+NV.ASSIGN   RCR1 * NU473R1PR.PT1 + RCR2 * NU473R1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * NU473R1PR.G.SA                                TO NU473R1PR.G.SA;
+
+NV.ASSIGN   RCR1 * ND480R1PR.PT1 + RCR2 * ND480R1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * ND480R1PR.G.SA                                TO ND480R1PR.G.SA;
+
+NV.ASSIGN   RCR1 * NU480R1PR.PT1 + RCR2 * NU480R1PR.PT2 +
+            (PT1_ONLINE * ~PT1_RX_OK +
+            PT2_ONLINE * ~PT2_RX_OK)
+            * NU480R1PR.G.SA                                TO NU480R1PR.G.SA;
+
+
+//INDICATION LOGIC
+
+NV.ASSIGN   RCR1 + RCR2                                TO COKR.PT1, COKR.PT2;
+
+NV.ASSIGN  PFJCR.SA.G                                      TO PFJC1KR.G.C,
+                                                           PFJC1KR.PT1,
+                                                           PFJC1KR.PT2;
+
+NV.ASSIGN  N128.ELD1KR.SA.G * 110V.ELD1KR.SA.G *
+        24VMLELD1KR.SA.G * 415V.ELD1KR.SA.G *
+        12VMLELD1KR.SA.G                              TO ELD1KR.PT1,
+                                                         ELD1KR.PT2;
+
+NV.ASSIGN  N128.ELD1KR.SA.G                                TO N128.ELD1KR.G.C;
+
+NV.ASSIGN  110V.ELD1KR.SA.G                                TO 110V.ELD1KR.G.C;  
+
+NV.ASSIGN  24VMLELD1KR.SA.G                                TO 24VMLELD1KR.G.C;
+
+NV.ASSIGN  415V.ELD1KR.SA.G                                TO 415V.ELD1KR.G.C;  
+
+NV.ASSIGN  12VMLELD1KR.SA.G                              TO 12VMLELD1KR.G.C;
+
+NV.ASSIGN  MF1KR.SA.G                                      TO MF1KR.G.C,
+                                                           MF1KR.PT1,
+                                                           MF1KR.PT2;
+
+NV.ASSIGN  SBF1KR.SA.G                                     TO SBF1KR.G.C,
+                                                           SBF1KR.PT1,
+                                                           SBF1KR.PT2;
+
+NV.ASSIGN  UBP1KR.SA.G * RF1KR.SA.G * IF1KR.SA.G *
+        BF1KR.SA.G * LOB1KR.SA.G * LB1KR.SA.G           TO UPSCRIT.PT1, UPSCRIT.PT2;
+
+NV.ASSIGN  FF1KR.SA.G                                      TO UPSNCRIT.PT1, UPSNCRIT.PT2;
+
+NV.ASSIGN  PER.SD1KR.SA.G                                  TO PERSMKEPR.G.C,
+                                                           PERSMKEPR.PT1, PERSMKEPR.PT2;
+
+NV.ASSIGN  PER.IAR.SA.G                                    TO PERINT.ALM.G.C,
+                                                           PERINT.ALM.PT1, PERINT.ALM.PT2;
+
+NV.ASSIGN  UBP1KR.SA.G                                     TO UBP1KR.G.C;
+
+NV.ASSIGN  RF1KR.SA.G                                      TO RF1KR.G.C;
+
+NV.ASSIGN  IF1KR.SA.G                                      TO IF1KR.G.C;
+
+NV.ASSIGN  BF1KR.SA.G                                      TO BF1KR.G.C;
+
+NV.ASSIGN  LOB1KR.SA.G                                     TO LOB1KR.G.C;
+
+NV.ASSIGN  LB1KR.SA.G                                      TO LB1KR.G.C;
+
+NV.ASSIGN  FF1KR.SA.G                                      TO FF1KR.G.C;
+
+NV.ASSIGN  HT1KR.SA.G                                      TO HT1KR.G.C;
+
+NV.ASSIGN  BBVS1KR.SA.G                                    TO BBVS1KR.G.C;
+
+NV.ASSIGN  RCDR.G.SA                                       TO RCF1KR.G.C;
+
+NV.ASSIGN  439CT1KR.SA.G                                   TO 439CT1KR.G.C,
+                                                           439CT1KR.PT1, 439CT1KR.PT2;
+
+NV.ASSIGN  451AT1KR.SA.G                                   TO 451AT1KR.G.C,
+                                                           451AT1KR.PT1, 451AT1KR.PT2;
+
+NV.ASSIGN  451BT1KR.SA.G                                   TO 451BT1KR.PT1, 451BT1KR.PT2;
+
+NV.ASSIGN  11AT1KR.SA.G                                    TO 11AT1KR.G.C,
+                                                           11AT1KR.PT1, 11AT1KR.PT2;
+
+NV.ASSIGN  11BT1KR.SA.G                                    TO 11BT1KR.G.C,
+                                                           11BT1KR.PT1, 11BT1KR.PT2;
+
+NV.ASSIGN  473AT1KR.SA.G                                   TO 473AT1KR.PT1, 473AT1KR.PT2;
+
+NV.ASSIGN  473BT1KR.SA.G                                   TO 473BT1KR.G.C,
+                                                           473BT1KR.PT1, 473BT1KR.PT2;
+
+NV.ASSIGN  483AT1KR.SA.G                                   TO 483AT1KR.PT1, 483AT1KR.PT2;
+
+
+
+NV.ASSIGN  458BT1KR.SA.G                                   TO 458BT1KR.G.C,
+                                                           458BT1KR.PT1, 458BT1KR.PT2;
+
+NV.ASSIGN  458AT1KR.SA.G                                   TO 458AT1KR.G.C,
+                                                           458AT1KR.PT1, 458AT1KR.PT2;
+
+NV.ASSIGN  14BT1KR.SA.G                                    TO 14BT1KR.PT1, 14BT1KR.PT2;
+
+NV.ASSIGN  14AT1KR.SA.G                                    TO 14AT1KR.G.C,
+                                                           14AT1KR.PT1, 14AT1KR.PT2;
+
+NV.ASSIGN  480BT1KR.SA.G                                   TO 480BT1KR.G.C,
+                                                           480BT1KR.PT1, 480BT1KR.PT2;
+
+NV.ASSIGN  480AT1KR.SA.G                                   TO 480AT1KR.PT1, 480AT1KR.PT2;
+
+NV.ASSIGN  CE14DT1KR.SA.G                                    TO CE14DT1KR.G.C,
+                                                           CE14DT1KR.PT1, CE14DT1KR.PT2;
+
+NV.ASSIGN  14CT1KR.SA.G                                    TO 14CT1KR.PT1, 14CT1KR.PT2;
+
+
+
+NV.ASSIGN  11NL1KR.SA.G                                    TO 11NL1KR.PT1, 11NL1KR.PT2;
+
+NV.ASSIGN  11RG1KR.SA.G                                    TO 11RGKR.G.C,
+                                                           11RG1KR.PT1, 11RG1KR.PT2;
+
+NV.ASSIGN  11HG1KR.SA.G                                    TO 11HGKR.G.C,
+                                                           11HG1KR.PT1, 11HG1KR.PT2;
+
+
+NV.ASSIGN  12NL1KR.SA.G                                    TO 12NL1KR.PT1, 12NL1KR.PT2;
+
+NV.ASSIGN  12RG1KR.SA.G                                    TO 12RGKR.G.C,
+                                                           12RG1KR.PT1, 12RG1KR.PT2;
+
+NV.ASSIGN  12HG1KR.SA.G                                    TO 12HGKR.G.C,
+                                                           12HG1KR.PT1, 12HG1KR.PT2;
+
+
+NV.ASSIGN  13NL1KR.SA.G                                    TO 13NL1KR.PT1, 13NL1KR.PT2;
+
+NV.ASSIGN  13RG1KR.SA.G                                    TO 13RGKR.G.C,
+                                                           13RG1KR.PT1, 13RG1KR.PT2;
+
+NV.ASSIGN  13HG1KR.SA.G                                    TO 13HGKR.G.C,
+                                                           13HG1KR.PT1, 13HG1KR.PT2;
+
+
+NV.ASSIGN  14NL1KR.SA.G                                    TO 14NL1KR.PT1, 14NL1KR.PT2;
+
+NV.ASSIGN  14RG1KR.SA.G                                    TO 14RGKR.G.C,
+                                                           14RG1KR.PT1, 14RG1KR.PT2;
+
+NV.ASSIGN  14HG1KR.SA.G                                    TO 14HGKR.G.C,
+                                                           14HG1KR.PT1, 14HG1KR.PT2;
+
+
+NV.ASSIGN  ND473Y1KR.SA.G                                  TO ND473Y1KR.G.C,
+                                                           ND473Y1KR.PT1, ND473Y1KR.PT2;
+
+NV.ASSIGN  ND473HG1KR.SA.G                                 TO ND473HGKR.G.C,
+                                                           ND473HG1KR.PT1, ND473HG1KR.PT2;
+
+NV.ASSIGN  NU473Y1KR.SA.G                                  TO NU473Y1KR.G.C,
+                                                           NU473Y1KR.PT1, NU473Y1KR.PT2;
+
+NV.ASSIGN  NU473HG1KR.SA.G                                 TO NU473HGKR.G.C,
+                                                           NU473HG1KR.PT1, NU473HG1KR.PT2;
+
+NV.ASSIGN  ND480Y1KR.SA.G                                  TO ND480Y1KR.G.C,
+                                                           ND480Y1KR.PT1, ND480Y1KR.PT2;
+
+NV.ASSIGN  ND480HGKR.SA.G                                  TO ND480HGKR.G.C,
+                                                           ND480HG1KR.PT1, ND480HG1KR.PT2;
+
+NV.ASSIGN  NU480Y1KR.SA.G                                  TO NU480Y1KR.G.C,
+                                                           NU480Y1KR.PT1, NU480Y1KR.PT2;
+
+NV.ASSIGN  NU480HGKR.SA.G                                  TO NU480HGKR.G.C,
+                                                           NU480HG1KR.PT1, NU480HG1KR.PT2;
+
+
+NV.ASSIGN  MOBU.DLUPAR.SA.G                                TO MOBUDLUPAR.G.C,
+                                                           MOBU.DLUPAR.PT1, MOBU.DLUPAR.PT2;
+
+NV.ASSIGN  BUMO.DLDNAR.SA.G                                TO BUMODLDNAR.G.C,
+                                                           BUMO.DLDNAR.PT1, BUMO.DLDNAR.PT2;
+
+NV.ASSIGN  MOBU.DLUPAV.SA.G                                TO MOBUDLUPAV.G.C,
+                                                           MOBU.DLUPAV.PT1, MOBU.DLUPAV.PT2;
+
+
+NV.ASSIGN  MOBU.ULUPAR.SA.G                                TO MOBUULUPAR.G.C,
+                                                           MOBU.ULUPAR.PT1, MOBU.ULUPAR.PT2;
+
+NV.ASSIGN  BUMO.ULDNAR.SA.G                                TO BUMOULDNAR.G.C,
+                                                           BUMO.ULDNAR.PT1, BUMO.ULDNAR.PT2;
+
+NV.ASSIGN  MOBU.ULUPAV.SA.G                                TO MOBUULUPAV.G.C,
+                                                           MOBU.ULUPAV.PT1, MOBU.ULUPAV.PT2;
+
+
+NV.ASSIGN  MOCE.DLDNAR.SA.G                                TO MOCEDLDNAR.G.C,
+                                                           MOCE.DLDNAR.PT1, MOCE.DLDNAR.PT2;
+
+NV.ASSIGN  CEMO.DLUPAR.SA.G                                TO CEMODLUPAR.G.C,
+                                                           CEMO.DLUPAR.PT1, CEMO.DLUPAR.PT2;
+
+NV.ASSIGN  MOCE.DLDNAV.SA.G                                TO MOCEDLDNAV.G.C,
+                                                           MOCE.DLDNAV.PT1, MOCE.DLDNAV.PT2;
+
+
+NV.ASSIGN  MOCE.ULDNAR.SA.G                                TO MOCEULDNAR.G.C,
+                                                           MOCE.ULDNAR.PT1, MOCE.ULDNAR.PT2;
+
+NV.ASSIGN  CEMO.ULUPAR.SA.G                                TO CEMOULUPAR.G.C,
+                                                           CEMO.ULUPAR.PT1, CEMO.ULUPAR.PT2;
+
+NV.ASSIGN  MOCE.ULDNAV.SA.G                                TO MOCEULDNAV.G.C,
+                                                           MOCE.ULDNAV.PT1, MOCE.ULDNAV.PT2;
+
+
+NV.ASSIGN  MSR.XJ1KR.SA.G                                  TO MSR.XJ1KR.G.C,
+                                                           MSR.XJ1KR.PT1, MSR.XJ1KR.PT2;
+
+
+NV.ASSIGN  MSR.CON1KR.SA.G                                 TO MSR.CON1KR.G.C;
+
+NV.ASSIGN  MSR.UP1KR.SA.G                                  TO MSR.UP1KR.G.C,
+                                                           MSR.UP1KR.PT1, MSR.UP1KR.PT2;
+
+NV.ASSIGN  MSR.DN1KR.SA.G                                  TO MSR.DN1KR.G.C,
+                                                           MSR.DN1KR.PT1, MSR.DN1KR.PT2;
+
+NV.ASSIGN  MSR.CFKPR.SA.G                                  TO MSR.CFKPR.G.C,
+                                                           MSR.CFKPR.PT1, MSR.CFKPR.PT2;
+
+NV.ASSIGN  MSR.PX.ALM.SA.G                                 TO MSR.PX.ALM.G.C,
+                                                           MSR.PX.ALM.PT1, MSR.PX.ALM.PT2;
+
+
+NV.ASSIGN  N128CFKPR.SA.G                                  TO N128CFKPR.G.C,
+                                                           N128CFKPR.PT1, N128CFKPR.PT2;
+
+NV.ASSIGN  N130CFKPR.SA.G                                  TO N130CFKPR.G.C,
+                                                           N130CFKPR.PT1, N130CFKPR.PT2;
+
+NV.ASSIGN  N134CFKPR.SA.G                                  TO N134CFKPR.G.C,
+                                                           N134CFKPR.PT1, N134CFKPR.PT2;
+
+NV.ASSIGN  CFKPR.SA.G                                      TO CFKPR.G.C,
+                                                           CFKPR.PT1, CFKPR.PT2;
+
+
+NV.ASSIGN  N128SMKEPR.SA.G                                 TO N128SMKEPR.G.C,
+                                                           N128SMKEPR.PT1, N128SMKEPR.PT2;
+
+NV.ASSIGN  N130SMKEPR.SA.G                                 TO N130SMKEPR.G.C,
+                                                           N130SMKEPR.PT1, N130SMKEPR.PT2;
+
+NV.ASSIGN  N134SMKEPR.SA.G                                 TO N134SMKEPR.G.C,
+                                                           N134SMKEPR.PT1, N134SMKEPR.PT2;
+
+NV.ASSIGN  SMKEPR.SA.G                                     TO SMKEPR.G.C,
+                                                           SMKEPR.PT1, SMKEPR.PT2;
+
+
+NV.ASSIGN  N128ALMPR.SA.G                                  TO N128ALMPR.G.C,
+                                                           N128INT.ALM.PT1, N128INT.ALM.PT2;
+
+NV.ASSIGN  N130ALMPR.SA.G                                  TO N130ALMPR.G.C,
+                                                           N130INT.ALM.PT1, N130INT.ALM.PT2;
+
+NV.ASSIGN  N134ALMPR.SA.G                                  TO N134ALMPR.G.C,
+                                                           N134INT.ALM.PT1, N134INT.ALM.PT2;
+
+NV.ASSIGN  ALMPR.SA.G                                      TO ALMPR.G.C,
+                                                           INT.ALM.PT1, INT.ALM.PT2;
+
+
+NV.ASSIGN  N128.50VFAIL.SA.G                                  TO N128.50VFAIL.G.C,
+                                                           N128.50VFAIL.PT1, N128.50VFAIL.PT2;
+
+NV.ASSIGN  N130.50VFAIL.SA.G                                  TO N130.50VFAIL.G.C,
+                                                           N130.50VFAIL.PT1, N130.50VFAIL.PT2;
+
+NV.ASSIGN  N134.50VFAIL.SA.G                                  TO N134.50VFAIL.G.C,
+                                                           N134.50VFAIL.PT1, N134.50VFAIL.PT2;
+
+NV.ASSIGN  SER.50VFAIL.SA.G                                TO SER.50VFAIL.G.C,
+                                                              SER.50VFAIL.PT1, SER.50VFAIL.PT2;
+
+NV.ASSIGN  N128.VSL1A.SA.G                                 TO N128.VSL1A.G.C,
+                                                           N128.VSL1A.PT1, N128.VSL1A.PT2;
+
+NV.ASSIGN  N128.VSL1B.SA.G                                 TO N128.VSL1B.G.C,
+                                                           N128.VSL1B.PT1, N128.VSL1B.PT2;
+
+NV.ASSIGN  N130.COMM.LNK.ALM.SA.G                                 TO N130.COMM.LNK.ALM.G.C,
+                                                           N130.COMM.LNK.ALM.PT1, N130.COMM.LNK.ALM.PT2;
+
+NV.ASSIGN  N128.COMM.LNK.ALM.SA.G                                 TO N128.COMM.LNK.ALM.G.C,
+                                                           N128.COMM.LNK.ALM.PT1, N128.COMM.LNK.ALM.PT2;
+
+NV.ASSIGN  N134.COMM.LNK.ALM.SA.G                                 TO N134.COMM.LNK.ALM.G.C,
+                                                           N134.COMM.LNK.ALM.PT1, N134.COMM.LNK.ALM.PT2;
+
+NV.ASSIGN  N137.COMM.LNK.ALM.SA.G                                 TO N137.COMM.LNK.ALM.G.C,
+                                                           N137.COMM.LNK.ALM.PT1, N137.COMM.LNK.ALM.PT2;
+
+NV.ASSIGN  MOCE.COMM.LNK.ALM.SA.G                                 TO MOCE.COMM.LNK.ALM.G.C,
+                                                           MOCE.COMM.LNK.ALM.PT1, MOCE.COMM.LNK.ALM.PT2;
+
+NV.ASSIGN  VSLBUMO.SA.G                                    TO VSLBUMO.G.C,
+                                                           VSLBUMO.PT1, VSLBUMO.PT2;
+
+
+NV.ASSIGN  CRI.AL.SA.G                                     TO CRI.AL.G.C,
+                                                           CRI.AL.PT1, CRI.AL.PT2;
+
+NV.ASSIGN  NCRI.AL.SA.G                                    TO NCRI.AL.G.C,
+                                                           NCRI.AL.PT1, NCRI.AL.PT2;
+
+
+
+
+
+NV.ASSIGN  11ADNULSR.SA.G                                  TO 11ADNULSR.G.C;
+
+NV.ASSIGN  14ADNULSR.SA.G                                  TO 14ADNULSR.G.C;
+
+NV.ASSIGN  11AUPULSR.SA.G                                  TO 11AUPULSR.G.C;
+
+NV.ASSIGN  14AUPULSR.SA.G                                  TO 14AUPULSR.G.C;
+
+
+NV.ASSIGN  451BAT1KR.SA.G                                  TO 451BAT1KR.G.C;
+
+NV.ASSIGN  451BBT1KR.SA.G                                  TO 451BBT1KR.G.C;
+
+NV.ASSIGN  473AAT1KR.SA.G                                  TO 473AAT1KR.G.C;
+
+NV.ASSIGN  473ABT1KR.SA.G                                  TO 473ABT1KR.G.C;
+
+NV.ASSIGN  483AAT1KR.SA.G                                  TO 483AAT1KR.G.C;
+
+NV.ASSIGN  483ABT1KR.SA.G                                  TO 483ABT1KR.G.C;
+
+NV.ASSIGN  14BBT1KR.SA.G                                   TO 14BBT1KR.G.C;
+
+NV.ASSIGN  14BAT1KR.SA.G                                   TO 14BAT1KR.G.C;
+
+NV.ASSIGN  480ABT1KR.SA.G                                  TO 480ABT1KR.G.C;
+
+NV.ASSIGN  480AAT1KR.SA.G                                  TO 480AAT1KR.G.C;
+
+NV.ASSIGN  CE14CBT1KR.SA.G                                 TO CE14CBT1KR.G.C;
+
+NV.ASSIGN  CE14CAT1KR.SA.G                                 TO CE14CAT1KR.G.C;
+
+
+
+NV.ASSIGN  11U1PR.SA.G                                     TO 11U1PR.G.C;
+
+NV.ASSIGN  11A1PR.SA.G                                     TO 11A1PR.G.C;
+
+NV.ASSIGN  11ALSR.SA.G                                     TO 11ALSR.G.C;
+
+NV.ASSIGN  11HR.SA.G                                       TO 11HR.G.C;
+
+NV.ASSIGN  11HHR.SA.G                                      TO 11HHR.G.C;
+
+NV.ASSIGN  11DR.SA.G                                       TO 11DR.G.C;
+
+NV.ASSIGN  11IZR.SA.G                                      TO 11IZR.G.C;
+
+NV.ASSIGN  11IZCR.SA.G                                     TO 11IZCR.G.C;
+
+
+
+NV.ASSIGN  12U1PR.SA.G                                     TO 12U1PR.G.C;
+
+NV.ASSIGN  12ALSR.SA.G                                     TO 12ALSR.G.C;
+
+NV.ASSIGN  12HR.SA.G                                       TO 12HR.G.C;
+
+NV.ASSIGN  12HHR.SA.G                                      TO 12HHR.G.C;
+
+NV.ASSIGN  12DR.SA.G                                       TO 12DR.G.C;
+
+NV.ASSIGN  12IZR.SA.G                                      TO 12IZR.G.C;
+
+NV.ASSIGN  12IZCR.SA.G                                     TO 12IZCR.G.C;
+
+
+
+
+NV.ASSIGN  13U1PR.SA.G                                     TO 13U1PR.G.C;
+
+NV.ASSIGN  13ALSR.SA.G                                     TO 13ALSR.G.C;
+
+NV.ASSIGN  13HR.SA.G                                       TO 13HR.G.C;
+
+NV.ASSIGN  13HHR.SA.G                                      TO 13HHR.G.C;
+
+NV.ASSIGN  13DR.SA.G                                       TO 13DR.G.C;
+
+NV.ASSIGN  13IZR.SA.G                                      TO 13IZR.G.C;
+
+NV.ASSIGN  13IZCR.SA.G                                     TO 13IZCR.G.C;
+
+
+
+NV.ASSIGN  14U1PR.SA.G                                     TO 14U1PR.G.C;
+
+NV.ASSIGN  14A1PR.SA.G                                     TO 14A1PR.G.C;
+
+NV.ASSIGN  14ALSR.SA.G                                     TO 14ALSR.G.C;
+
+NV.ASSIGN  14HR.SA.G                                       TO 14HR.G.C;
+
+NV.ASSIGN  14HHR.SA.G                                      TO 14HHR.G.C;
+
+NV.ASSIGN  14DR.SA.G                                       TO 14DR.G.C;
+
+NV.ASSIGN  14IZR.SA.G                                      TO 14IZR.G.C;
+
+NV.ASSIGN  14IZCR.SA.G                                     TO 14IZCR.G.C;
+
+
+
+NV.ASSIGN  ND451HR.SA.G                                    TO ND451HR.G.C;
+
+NV.ASSIGN  ND451HHR.SA.G                                   TO ND451HHR.G.C;
+
+NV.ASSIGN  ND451DR.SA.G                                    TO ND451DR.G.C;
+
+NV.ASSIGN  ND451IZR.SA.G                                   TO ND451IZR.G.C;
+
+NV.ASSIGN  ND451RGKR.SA.G                                  TO ND451RGKR.G.C;
+
+NV.ASSIGN  ND451HGKR.SA.G                                  TO ND451HGKR.G.C;
+
+NV.ASSIGN  ND451IZCR.SA.G                                  TO ND451IZCR.G.C;
+
+
+NV.ASSIGN  NU451HR.SA.G                                    TO NU451HR.G.C;
+
+NV.ASSIGN  NU451HHR.SA.G                                   TO NU451HHR.G.C;
+
+NV.ASSIGN  NU451DR.SA.G                                    TO NU451DR.G.C;
+
+NV.ASSIGN  NU451IZR.SA.G                                   TO NU451IZR.G.C;
+
+NV.ASSIGN  NU451RGKR.SA.G                                  TO NU451RGKR.G.C;
+
+NV.ASSIGN  NU451HGKR.SA.G                                  TO NU451HGKR.G.C;
+
+NV.ASSIGN  NU451IZCR.SA.G                                  TO NU451IZCR.G.C;
+
+
+
+
+NV.ASSIGN  ND458HR.SA.G                                    TO ND458HR.G.C;
+
+NV.ASSIGN  ND458HHR.SA.G                                   TO ND458HHR.G.C;
+
+NV.ASSIGN  ND458DR.SA.G                                    TO ND458DR.G.C;
+
+NV.ASSIGN  ND458IZR.SA.G                                   TO ND458IZR.G.C;
+
+NV.ASSIGN  ND458RGKR.SA.G                                  TO ND458RGKR.G.C;
+
+NV.ASSIGN  ND458HGKR.SA.G                                  TO ND458HGKR.G.C;
+
+NV.ASSIGN  ND458IZCR.SA.G                                  TO ND458IZCR.G.C;
+
+
+NV.ASSIGN  NU458HR.SA.G                                    TO NU458HR.G.C;
+
+NV.ASSIGN  NU458HHR.SA.G                                   TO NU458HHR.G.C;
+
+NV.ASSIGN  NU458DR.SA.G                                    TO NU458DR.G.C;
+
+NV.ASSIGN  NU458IZR.SA.G                                   TO NU458IZR.G.C;
+
+NV.ASSIGN  NU458RGKR.SA.G                                  TO NU458RGKR.G.C;
+
+NV.ASSIGN  NU458HGKR.SA.G                                  TO NU458HGKR.G.C;
+
+NV.ASSIGN  NU458IZCR.SA.G                                  TO NU458IZCR.G.C;
+
+
+
+NV.ASSIGN  ND473ALSR.SA.G                                  TO ND473ALSR.G.C;
+
+NV.ASSIGN  ND473HR.SA.G                                    TO ND473HR.G.C;
+
+NV.ASSIGN  ND473HHR.SA.G                                   TO ND473HHR.G.C;
+
+NV.ASSIGN  ND473DR.SA.G                                    TO ND473DR.G.C;
+
+NV.ASSIGN  ND473IZR.SA.G                                   TO ND473IZR.G.C;
+
+NV.ASSIGN  ND473RGKR.SA.G                                  TO ND473RGKR.G.C;
+
+NV.ASSIGN  ND473IZCR.SA.G                                  TO ND473IZCR.G.C;
+
+
+NV.ASSIGN  NU473ALSR.SA.G                                  TO NU473ALSR.G.C;
+
+NV.ASSIGN  NU473HR.SA.G                                    TO NU473HR.G.C;
+
+NV.ASSIGN  NU473HHR.SA.G                                   TO NU473HHR.G.C;
+
+NV.ASSIGN  NU473DR.SA.G                                    TO NU473DR.G.C;
+
+NV.ASSIGN  NU473IZR.SA.G                                   TO NU473IZR.G.C;
+
+NV.ASSIGN  NU473RGKR.SA.G                                  TO NU473RGKR.G.C;
+
+NV.ASSIGN  NU473IZCR.SA.G                                  TO NU473IZCR.G.C;
+
+
+
+NV.ASSIGN  ND480ALSR.SA.G                                  TO ND480ALSR.G.C;
+
+NV.ASSIGN  ND480HR.SA.G                                    TO ND480HR.G.C;
+
+NV.ASSIGN  ND480HHR.SA.G                                   TO ND480HHR.G.C;
+
+NV.ASSIGN  ND480DR.SA.G                                    TO ND480DR.G.C;
+
+NV.ASSIGN  ND480RGKR.SA.G                                  TO ND480RGKR.G.C;
+
+
+NV.ASSIGN  NU480ALSR.SA.G                                  TO NU480ALSR.G.C;
+
+NV.ASSIGN  NU480HR.SA.G                                    TO NU480HR.G.C;
+
+NV.ASSIGN  NU480HHR.SA.G                                   TO NU480HHR.G.C;
+
+NV.ASSIGN  NU480DR.SA.G                                    TO NU480DR.G.C;
+
+NV.ASSIGN  NU480RGKR.SA.G                                  TO NU480RGKR.G.C;
+
+
+NV.ASSIGN  ND483HR.SA.G                                    TO ND483HR.G.C;
+
+NV.ASSIGN  ND483HHR.SA.G                                   TO ND483HHR.G.C;
+
+NV.ASSIGN  ND483DR.SA.G                                    TO ND483DR.G.C;
+
+NV.ASSIGN  ND483RGKR.SA.G                                  TO ND483RGKR.G.C;
+
+NV.ASSIGN  ND483HGKR.SA.G                                  TO ND483HGKR.G.C;
+
+
+NV.ASSIGN  NU483HR.SA.G                                    TO NU483HR.G.C;
+
+NV.ASSIGN  NU483HHR.SA.G                                   TO NU483HHR.G.C;
+
+NV.ASSIGN  NU483DR.SA.G                                    TO NU483DR.G.C;
+
+NV.ASSIGN  NU483RGKR.SA.G                                  TO NU483RGKR.G.C;
+
+NV.ASSIGN  NU483HGKR.SA.G                                  TO NU483HGKR.G.C;
+
+
+NV.ASSIGN  MOSA.LOGLA.SA.G                                 TO MOSA.LOGLA.G.C;
+
+NV.ASSIGN  MOSA.LOGFL.SA.G                                 TO MOSA.LOGFL.G.C;
+
+NV.ASSIGN  LINK.OK.SA.G                                    TO LINK.OK.G.C;
+
+
+
+NV.ASSIGN  MSR.CONKR.SA.G                                  TO MSR.CONKR.G.C,
+                                                           MSR.CONKR.PT1, MSR.CONKR.PT2;
+
+NV.ASSIGN  MSR.CON1CKR.SA.G                                TO MSR.CON1CR.G.C;
+
+NV.ASSIGN  MSR.XO1CKR.SA.G                                 TO MSR.XO1CKR.G.C;
+
+NV.ASSIGN  MSRTLCCALL.SA.GA                                TO MSRTLCCALL.G.C;
+
+NV.ASSIGN  MSRTLC34JP.SA.GA                                TO MSRTLC34JP.G.C;
+
+NV.ASSIGN  MSRTLC34JZ.SA.GA                                TO MSRTLC34JZ.G.C;
+
+NV.ASSIGN  451AATS1PR.SA.GA                                TO 451AATS1PR.G.C;
+
+NV.ASSIGN  451ABTS1PR.SA.GA                                TO 451ABTS1PR.G.C;
+
+NV.ASSIGN  458AATS1PR.SA.GA                                TO 458AATS1PR.G.C;
+
+NV.ASSIGN  458ABTS1PR.SA.GA                                TO 458ABTS1PR.G.C;
+
+NV.ASSIGN  N128.RS400.FAIL.SA.GA                           TO N128.RS400.FAIL.G.C;
+
+NV.ASSIGN  N130.RS400.FAIL.SA.GA                           TO N130.RS400.FAIL.G.C;
+
+NV.ASSIGN  N134.RS400.FAIL.SA.GA                           TO N134.RS400.FAIL.G.C;
+
+NV.ASSIGN  SER.RS400.FAIL.SA.GA                            TO SER.RS400.FAIL.G.C;
+
+NV.ASSIGN  PT1.SEL.SA.GA                                   TO PT1.SEL.G.C;
+
+NV.ASSIGN  PT2.SEL.SA.GA                                   TO PT2.SEL.G.C;
+
+%*********************************************************************************
+
+ TELEMETRY INDICATION LOGIC
+
+**********************************************************************************\
+//TELEMETRY ALARM
+NV.ASSIGN   ~PT1.22.STATUS * ~PT1.23.STATUS * PT1_ONLINE +
+            ~PT2.22.STATUS * ~PT2.23.STATUS * PT2_ONLINE +
+            ~NVSLINTGEN.17.STATUS + ~NVSLINTGEN.38.STATUS     TO RCJZR; //SP 30:SEC
+
+NV.ASSIGN   RCJZR + PFJCR.SA.G                                TO TEL.FAIL;
+
+NV.ASSIGN   TEL.FAIL                                          TO 22TFKR.PT1,
+                                                                 23TFKR.PT1,
+                                                                 22TFKR.PT2,
+                                                                 23TFKR.PT2;
+
+NV.ASSIGN   ~TEL.FAIL                                         TO RCDR.G.SA;
+
+//PORT ONLINE INDICATION
+NV.ASSIGN   PT1_ONLINE                                        TO TELACTV_ADD22.PT1,
+                                                                 TELACTV_ADD23.PT1;
+
+NV.ASSIGN   PT2_ONLINE                                        TO TELACTV_ADD22.PT2,
+                                                                 TELACTV_ADD23.PT2;
+
+//OFFLINE HEALTH INDICATION
+NV.ASSIGN   ((PT1_RX_OK + PT1_PART_OK * ~PT2_RX_OK) *
+            PT2_ONLINE + (PT2_RX_OK + PT2_PART_OK *
+            ~PT1_RX_OK) * PT1_ONLINE)                         TO SB_AVAIL.PT1, SB_AVAIL.PT2;
+
+//DUAL TELEMETRY ARBITRATION
+
+NV.ASSIGN   PT1.SEL.SA.GA * ~PT2.SEL.SA.GA +
+            ~PT1.SEL.SA.GA * ~PT2.SEL.SA.GA *
+            (PT1_RX_OK * (~PT2_RX_OK + ~PT2_ONLINE) +
+            PT1_ONLINE * ~PT2_RX_OK * ~PT2_PART_OK +
+            PT1_PART_OK * (~PT2_PART_OK +
+            ~PT2_ONLINE * ~PT2_RX_OK))                        TO PT1_ONLINE, PT1_ONLINE.G.C;
+
+NV.ASSIGN   PT2.SEL.SA.GA * ~PT1.SEL.SA.GA +
+            ~PT2.SEL.SA.GA * ~PT1.SEL.SA.GA *
+            (PT2_RX_OK * (~PT1_RX_OK + ~PT1_ONLINE) +
+            PT2_ONLINE * ~PT1_RX_OK * ~PT1_PART_OK +
+            PT2_PART_OK * (~PT1_PART_OK +
+            ~PT1_ONLINE * ~PT1_RX_OK))                        TO PT2_ONLINE, PT2_ONLINE.G.C;
+
+//PORT HEALTH FOR ADDRESSES 59 & 60
+NV.ASSIGN   ADDR22_OK.PT1                                     TO PT1_ADDR22_JR1, PT1_ADDR22_JR2;
+                                                              //SP 12:SEC        SR 12:SEC
+
+NV.ASSIGN   ADDR23_OK.PT1                                     TO PT1_ADDR23_JR1, PT1_ADDR23_JR2;
+                                                              //SP 12:SEC        SR 12:SEC
+
+NV.ASSIGN   ADDR22_OK.PT2                                     TO PT2_ADDR22_JR1, PT2_ADDR22_JR2;
+                                                              //SP 12:SEC        SR 12:SEC
+
+NV.ASSIGN   ADDR23_OK.PT2                                     TO PT2_ADDR23_JR1, PT2_ADDR23_JR2;
+                                                              //SP 12:SEC        SR 12:SEC
+
+NV.ASSIGN   ~PT1_ADDR22_JR1 * PT1_ADDR22_JR2                  TO PT1_ADDR22_OK;
+
+NV.ASSIGN   ~PT1_ADDR23_JR1 * PT1_ADDR23_JR2                  TO PT1_ADDR23_OK;
+
+NV.ASSIGN   ~PT2_ADDR22_JR1 * PT2_ADDR22_JR2                  TO PT2_ADDR22_OK;
+
+NV.ASSIGN   ~PT2_ADDR23_JR1 * PT2_ADDR23_JR2                  TO PT2_ADDR23_OK;
+
+NV.ASSIGN   PT1_ADDR22_OK * PT1_ADDR23_OK                     TO PT1_RX_OK;
+
+NV.ASSIGN   PT2_ADDR22_OK * PT2_ADDR23_OK                     TO PT2_RX_OK;
+
+NV.ASSIGN   PT1_ADDR22_OK + PT1_ADDR23_OK                     TO PT1_PART_OK;
+
+NV.ASSIGN   PT2_ADDR22_OK + PT2_ADDR23_OK                     TO PT2_PART_OK;
+
+NV.ASSIGN   PT1_RX_OK + PT1_PART_OK * ~PT2_RX_OK              TO PT1_AVAIL.G.C;
+
+NV.ASSIGN   PT2_RX_OK + PT2_PART_OK * ~PT1_RX_OK              TO PT2_AVAIL.G.C;
+
+
+//LED INDICATION
+NV.ASSIGN   PT1_RX_OK                                         TO LED.1;
+NV.ASSIGN   PT2_RX_OK                                         TO LED.2;
+NV.ASSIGN   NVSLINTGEN.17.STATUS * NVSLINTGEN.38.STATUS       TO LED.3;
+NV.ASSIGN   PT1_ONLINE                                        TO LED.6;
+NV.ASSIGN   PT2_ONLINE                                        TO LED.7;
+NV.ASSIGN   TEL.FAIL                                          TO LED.8;
+
+END LOGIC
+
+//  START OF SIMULATOR MODIFICATION 5 OF 5
+NUMERIC BEGIN
+
+//PROGRAM VERIFICATION LOGIC
+BLOCK 1 TRIGGERS ON CHECKADDRESS AND STALE AFTER        0:SEC;
+
+NV.ASSIGN (CONFIGURATIONELEMENT_ADDRESS <> INSTALLATION_ADDRESS) OR
+          (CONFIGURATIONELEMENT_APPLICATION_DATA_VERSION <>
+          APPLICATION_DATA_VERSION) OR
+          (CONFIGURATIONELEMENT_EXECUTIVE_SOFTWARE_VERSION <>
+          EXECUTIVE_SOFTWARE_VERSION) OR
+          CONFIGURE.ERROR                                     TO KILL;
+
+END BLOCK
+
+END NUMERIC
+//  END OF SIMULATOR MODIFICATION 5 OF 5
+END PROGRAM

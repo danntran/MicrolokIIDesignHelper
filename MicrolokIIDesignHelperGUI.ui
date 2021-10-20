@@ -1137,6 +1137,127 @@ None
             </child>
           </object>
         </child>
+        <child>
+          <object class="ttk.Notebook.Tab" id="compile_tab">
+            <property name="text" translatable="yes">Compiler</property>
+            <child>
+              <object class="ttk.Labelframe" id="Labelframe2">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="anchor">n</property>
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="Label4">
+                    <property name="text" translatable="yes">NOTE: For Compiler to work, the filepath shall not contain any white space.</property>
+                    <layout manager="pack">
+                      <property name="pady">0 10</property>
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Frame" id="compiler_loadfiles_frame">
+                    <property name="height">200</property>
+                    <property name="width">200</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                    <child>
+                      <object class="ttk.Label" id="compiler_compiler_label">
+                        <property name="text" translatable="yes">Compiler file:</property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Combobox" id="compiler_compilername_combobox">
+                        <property name="width">40</property>
+                        <layout manager="grid">
+                          <property name="column">1</property>
+                          <property name="padx">5</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="compiler_compilername_button">
+                        <property name="command" type="command" cbtype="simple">compileropencompilercallback</property>
+                        <property name="text" translatable="yes">Select Compiler</property>
+                        <property name="width">20</property>
+                        <layout manager="grid">
+                          <property name="column">2</property>
+                          <property name="padx">10 0</property>
+                          <property name="pady">0 10</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Label" id="compiler_filename_label">
+                        <property name="text" translatable="yes">File name:</property>
+                        <layout manager="grid">
+                          <property name="column">0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Combobox" id="compiler_filename_combobox">
+                        <property name="width">40</property>
+                        <layout manager="grid">
+                          <property name="column">1</property>
+                          <property name="padx">5</property>
+                          <property name="propagate">True</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Button" id="compiler_filename_button">
+                        <property name="command" type="command" cbtype="simple">compileropenfilecallback</property>
+                        <property name="text" translatable="yes">Select File</property>
+                        <property name="width">20</property>
+                        <layout manager="grid">
+                          <property name="column">2</property>
+                          <property name="padx">10 0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">1</property>
+                        </layout>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Button" id="compiler_compile_button">
+                    <property name="command" type="command" cbtype="simple">compilecallback</property>
+                    <property name="height">2</property>
+                    <property name="state">normal</property>
+                    <property name="text" translatable="yes">Compile</property>
+                    <property name="width">30</property>
+                    <layout manager="pack">
+                      <property name="pady">10 0</property>
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </object>
@@ -1161,11 +1282,12 @@ None
         <child>
           <object class="ttk.Label" id="about_label">
             <property name="justify">left</property>
-            <property name="text" translatable="yes">Current version: 2.0
+            <property name="text" translatable="yes">Current version: 3.0
 Developed by Danny Tran
 For feedback/bugs reports email me at: danny.tran.au@outlook.com
 ----------------------------------------------
 Changelog:
+V3.0 - 20211020 - Added Compiler
 V2.0 - 20211018 - Added Bit Comparator
 V1.0 - 20211009 - Initial Release</property>
             <layout manager="pack">

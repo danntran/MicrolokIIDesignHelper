@@ -1,6 +1,6 @@
 import fn_callback as fn
 import parse_document as parsedoc
-
+import subprocess
 # Rebuild code down here
 import os
 import tkinter as tk
@@ -22,29 +22,25 @@ class MicrolokiidesignhelperguiApp:
         self.formatnrows = None
         self.removecomma = None
         self.builder.import_variables(self, ['formatnrows', 'removecomma'])
-        
-        (self.builder.get_object('bitcomp_portcombobox')).bind("<<ComboboxSelected>>", self.bitformat_loadaddresscallback)
+        self.file_types = (
+            ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
+            ('All files', '*.*'))
 
-        # needed for the callback for comboboxes
+
+        # Callback for the comboboxes        
+        (self.builder.get_object('bitcomp_portcombobox')).bind("<<ComboboxSelected>>", self.bitformat_loadaddresscallback)
         for CBs in ['file1inout_combobox','file1address_combobox']:
-            Cbbox = self.builder.get_object(CBs)
-            Cbbox.bind("<<ComboboxSelected>>", self.file1loadbitscallback)
+            (self.builder.get_object(CBs)).bind("<<ComboboxSelected>>", self.file1loadbitscallback)
         for CBs in ['file2inout_combobox','file2address_combobox']:
-            Cbbox = self.builder.get_object(CBs)
-            Cbbox.bind("<<ComboboxSelected>>", self.file2loadbitscallback)
-        Cbbox = self.builder.get_object('file1port_combobox')
-        Cbbox.bind("<<ComboboxSelected>>", self.file1loadaddresscallback)
-        Cbbox = self.builder.get_object('file2port_combobox')
-        Cbbox.bind("<<ComboboxSelected>>", self.file2loadaddresscallback)
+            (self.builder.get_object(CBs)).bind("<<ComboboxSelected>>", self.file2loadbitscallback)
+        (self.builder.get_object('file1port_combobox')).bind("<<ComboboxSelected>>", self.file1loadaddresscallback)
+        (self.builder.get_object('file2port_combobox')).bind("<<ComboboxSelected>>", self.file2loadaddresscallback)
     
     def portlistfile(self, filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB):
         # gets theport info for a given file 
-        file_types = (
-            ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
-            ('All files', '*.*'))
         try:
             # TO DO: Need to add error check for correct file
-            openfile_text = filedialog.askopenfile(title='Open a file', filetypes=file_types).read().splitlines()
+            openfile_text = filedialog.askopenfile(title='Open a file', filetypes=self.file_types).read().splitlines()
         except: # opening file failed
             openfile_text = ''
             portlist = ''
@@ -242,6 +238,37 @@ class MicrolokiidesignhelperguiApp:
         compare_textbox.delete(1.0, tk.END)
         compare_textbox.insert(tk.END, ('NUMBER OF ERRORS: ' + str(nerrors) + '\n'))
         compare_textbox.insert(tk.END, compare_resultstr)
+    
+    def compileropencompilercallback(self):
+        compfile_textbox = self.builder.get_object('compiler_compilername_combobox')
+        try:
+            # TO DO: Need to add error check for correct file
+            file_types = (('Microlok II/Genisys II Compiler', '*.exe'),('All files', '*.*'))
+            openfile_text = filedialog.askopenfile(title='Open a file', filetypes=file_types)
+            compfile_textbox.set(openfile_text.name)
+        except: # opening file failed
+            openfile_text = ''
+            compfile_textbox.set("")        
+        return 1
+        
+
+    def compileropenfilecallback(self):
+        file_textbox = self.builder.get_object('compiler_filename_combobox')
+        try:
+            # TO DO: Need to add error check for correct file
+            openfile_text = filedialog.askopenfile(title='Open a file', filetypes=self.file_types)
+            file_textbox.set(openfile_text.name)
+        except: # opening file failed
+            openfile_text = ''
+            file_textbox.set("")        
+        return 1
+
+    def compilecallback(self):
+        compfile_textbox = self.builder.get_object('compiler_compilername_combobox')
+        file_textbox = self.builder.get_object('compiler_filename_combobox')
+        cmd_line = 'start cmd.exe /k "' + compfile_textbox.get() + '" "' + file_textbox.get() + '"'
+        print(cmd_line)
+        subprocess.Popen(cmd_line, shell=True)
 
     def run(self):
         self.mainwindow.mainloop()
