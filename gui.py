@@ -1,5 +1,6 @@
 import fn_callback as fn
 import parse_document as parsedoc
+import formatbits_dynamic as format
 import subprocess
 # Rebuild code down here
 import os
@@ -74,7 +75,7 @@ class MicrolokiidesignhelperguiApp:
         # Obtain the text from the text box
         in_textbox = self.builder.get_object('InputTextBox')
         input_txt = fn.txt2column(in_textbox.get(1.0, tk.END))
-        formatted_txt = fn.formattxt(input_txt, self.formatnrows.get(), self.removecomma.get())
+        formatted_txt = format.formattxt(input_txt, self.formatnrows.get(), self.removecomma.get())
         # Print to the output text box
         out_textbox = self.builder.get_object('OutputTextBox')
         out_textbox.delete(1.0, tk.END)
@@ -157,7 +158,7 @@ class MicrolokiidesignhelperguiApp:
         portnumcombobox = self.builder.get_object(portnumCB)
         portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addresscombobox.get(), portnumcombobox.get()))
         input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addresscombobox.get(), inputoutputcombobox.get(), portnumcombobox.get()))
-        formatted_txt = fn.formattxt(input_txt, 1, True)
+        formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)
         out_textbox.delete(1.0, tk.END)
@@ -206,7 +207,7 @@ class MicrolokiidesignhelperguiApp:
         portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addresscombobox.get(), portnumcombobox.get()))
         input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addresscombobox.get(), inputoutputcombobox.get(), portnumcombobox.get()))
         # format the bits with 1 column, commas removed
-        formatted_txt = fn.formattxt(input_txt, 1, True)
+        formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)
         out_textbox.delete(1.0, tk.END)

@@ -995,12 +995,25 @@ None
                           </object>
                         </child>
                         <child>
+                          <object class="ttk.Radiobutton" id="format3row_button">
+                            <property name="text" translatable="yes">3</property>
+                            <property name="value">3</property>
+                            <property name="variable">int:formatnrows</property>
+                            <layout manager="grid">
+                              <property name="column">2</property>
+                              <property name="padx">40 0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
                           <object class="ttk.Radiobutton" id="format4row_button">
                             <property name="text" translatable="yes">4</property>
                             <property name="value">4</property>
                             <property name="variable">int:formatnrows</property>
                             <layout manager="grid">
-                              <property name="column">2</property>
+                              <property name="column">3</property>
                               <property name="padx">40 0</property>
                               <property name="propagate">True</property>
                               <property name="row">0</property>
@@ -1014,7 +1027,7 @@ None
                             <property name="value">8</property>
                             <property name="variable">int:formatnrows</property>
                             <layout manager="grid">
-                              <property name="column">3</property>
+                              <property name="column">4</property>
                               <property name="padx">40 0</property>
                               <property name="propagate">True</property>
                               <property name="row">0</property>
@@ -1153,7 +1166,7 @@ None
                 </layout>
                 <child>
                   <object class="ttk.Label" id="Label4">
-                    <property name="text" translatable="yes">NOTE: For Compiler to work, the filepath shall not contain any white space.</property>
+                    <property name="text" translatable="yes">DOES NOT CURRENTLY WORK! NOTE: For Compiler to work, the filepath shall not contain any white space.</property>
                     <layout manager="pack">
                       <property name="pady">0 10</property>
                       <property name="propagate">True</property>
@@ -1282,11 +1295,12 @@ None
         <child>
           <object class="ttk.Label" id="about_label">
             <property name="justify">left</property>
-            <property name="text" translatable="yes">Current version: 3.0
+            <property name="text" translatable="yes">Current version: 3.1
 Developed by Danny Tran
 For feedback/bugs reports email me at: danny.tran.au@outlook.com
 ----------------------------------------------
 Changelog:
+V3.1 - 20211120 - Bitformattor uses spaces instead of tabs
 V3.0 - 20211020 - Added Compiler
 V2.0 - 20211018 - Added Bit Comparator
 V1.0 - 20211009 - Initial Release</property>
