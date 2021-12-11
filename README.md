@@ -23,10 +23,10 @@ pyinstaller gui.py --add-data "MicrolokIIDesignHelperGUI.ui;." --add-data "MLKII
 - Bit comparator gives the ability to select 2 files, choose the address, input and output and compare whether the bits align.
 - Bit formatter can now read ml2/gn2 files and automatically extract the bit input and output information
 
-### [3.0.0] - < 2021-10-18
+### [3.0.0] - < 2021-10-20
 #### Changes
 - Added Compiler but doesn't work due to the MLK2 compiler limitations
 
-### [3.1.0] - < 2021-10-18
+### [3.1.0] - < 2021-11-20
 #### Changes
 - Bit Formator no longer uses Tabs but determines the amount of spaces needed betweens bits.
