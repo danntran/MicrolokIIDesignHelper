@@ -175,16 +175,3 @@ def getfilename(text):
         filenamelist = list(filter(None, re.split(r'[ ;]', text_ncomms[0])))
         return filenamelist[-1]
     return ''
-
-# if __name__ == '__main__':
-#     file_types = (
-#                 ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
-#                 ('All files', '*.*'))
-#     openfile_text = filedialog.askopenfile(title='Open a file', filetypes=file_types).read().splitlines()
-#     portlist = rm_commnewlinesfromtext(openfile_text)
-#     outfile = open('testfile.gn2','w')
-#     for line in portlist:
-#         outfile.writelines(line)
-#         outfile.writelines('\n')
-#     outfile.close()
-#     print('1')

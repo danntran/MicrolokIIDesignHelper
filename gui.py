@@ -9,17 +9,19 @@ import tkinter.ttk as ttk
 from tkinter import filedialog
 import pygubu
 
+# File/project paths
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 PROJECT_UI = os.path.join(PROJECT_PATH, "MicrolokIIDesignHelperGUI.ui")
 
 class MicrolokiidesignhelperguiApp:
     def __init__(self, master=None):
+        # Front End Variables
         self.builder =  pygubu.Builder()
         self.builder.add_resource_path(PROJECT_PATH)
         self.builder.add_from_file(PROJECT_UI)
         self.mainwindow = self.builder.get_object('mainwindow_toplevel', master)
         self.builder.connect_callbacks(self)
-        self.port_list = [None, None, None]
+        self.port_list = [None, None, None] # port info, 0=BF, 1=BC_file1, 2=BC_file2
         self.formatnrows = None
         self.removecomma = None
         self.builder.import_variables(self, ['formatnrows', 'removecomma'])
@@ -27,6 +29,7 @@ class MicrolokiidesignhelperguiApp:
             ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
             ('All files', '*.*'))
 
+        # Initialisation of Input/output list boxes
         (self.builder.get_object('BF_inoutlistbox')).insert(tk.END, *['INPUT:','OUTPUT:'])
         (self.builder.get_object('file1inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
         (self.builder.get_object('file2inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
@@ -35,11 +38,9 @@ class MicrolokiidesignhelperguiApp:
         (self.builder.get_object('file1addlb')).bind("<<ListboxSelect>>", self.file1loadbitscallback)
         (self.builder.get_object('file1portlb')).bind("<<ListboxSelect>>", self.file1loadaddresscallback)
         (self.builder.get_object('file1inoutlb')).bind("<<ListboxSelect>>", self.file1inoutcallback)
-
         for CBs in ['file2inoutlb','file2addlb']:
             (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.file2loadbitscallback)
         (self.builder.get_object('file2portlb')).bind("<<ListboxSelect>>", self.file2loadaddresscallback)
-
         (self.builder.get_object('BF_PortListbox')).bind("<<ListboxSelect>>", self.BF_loadaddresscallback) # loadaddresscallback when PortListBox selected
         for CBs in ['BF_addresslistbox','BF_inoutlistbox']:
             (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.BF_loadcallback) # loadcallback when addressLB or inoutLB selected
@@ -53,28 +54,29 @@ class MicrolokiidesignhelperguiApp:
         builder2.get_object('about_toplevel')
 
     def portlistfileLB(self, filenameMSG, fileaddress, inout, portdataMSG, bitsTXT, portnum):
-        # gets theport info for a given file 
+        # gets the port info for a given file 
         try:
             # TO DO: Need to add error check for correct file
             openfile_text = filedialog.askopenfile(title='Open a file', filetypes=self.file_types).read().splitlines()
         except: # opening file failed
             openfile_text = ''
             portlist = ''
-        if openfile_text:
+        if openfile_text: # opened correctly
             portnumbox = self.builder.get_object(portnum)
             filenameinput = self.builder.get_object(filenameMSG)
             # clear the fields
             self.clearallfieldsLB(address=fileaddress, portinfoMSG=portdataMSG, textbox=bitsTXT, portnum=portnum)
-            # get the file name
+            # get the file name and information
             filenameinput.configure(text=parsedoc.getfilename(openfile_text))
             portlist = parsedoc.obtcomminfo(parsedoc.rm_commnewlinesfromtext(openfile_text))
             portnumbox.insert(tk.END, *parsedoc.returnportnumlist(portlist))
         return portlist
 
     def loadaddresscallbackLB(self, portlist, fileaddress, portnum):
+        # loads the addresses into the listbox
         portnumbox = self.builder.get_object(portnum)
         addressbox = self.builder.get_object(fileaddress)
-        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else '' # check cursor select, if not return ''
         addlist = parsedoc.returnaddresslist(portlist, putnumboxval)
         addressbox.insert(tk.END, *addlist)
 
@@ -95,33 +97,34 @@ class MicrolokiidesignhelperguiApp:
         portinfomessage = self.builder.get_object('portinfomessage')
         in_textbox = self.builder.get_object('InputTextBox')
         portnumbox = self.builder.get_object('BF_PortListbox')
-        addressboxval = addressbox.get(addressbox.curselection()) if addressbox.curselection() else ''
-        inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
-        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
-        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(self.port_list[0], addressboxval, putnumboxval))
-        in_textbox.delete(1.0, tk.END)
-        in_textbox.insert(tk.END, parsedoc.obtaininoutfromaddr(self.port_list[0], addressboxval, inoutval, putnumboxval))
-        self.bitformat_convertcallback()
+        addressboxval = addressbox.get(addressbox.curselection()) if addressbox.curselection() else '' # check cursor select, if not return ''
+        inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else '' # check cursor select, if not return ''
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else '' # check cursor select, if not return ''
+        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(self.port_list[0], addressboxval, putnumboxval)) # add info to the port info msgbox
+        in_textbox.delete(1.0, tk.END) # delete odd data
+        in_textbox.insert(tk.END, parsedoc.obtaininoutfromaddr(self.port_list[0], addressboxval, inoutval, putnumboxval)) # place new data
+        self.bitformat_convertcallback() # run convert imediately as new data loaded
 
     def BF_loadaddresscallback(self, *args):
-        self.clearallfieldsLB(address='BF_addresslistbox', textbox='InputTextBox', portinfoMSG='portinfomessage')
-        self.loadaddresscallbackLB(self.port_list[0],'BF_addresslistbox','BF_PortListbox')
+        # call back for the bit formatter for load addresses in box
+        self.clearallfieldsLB(address='BF_addresslistbox', textbox='InputTextBox', portinfoMSG='portinfomessage') # clear fields
+        self.loadaddresscallbackLB(self.port_list[0],'BF_addresslistbox','BF_PortListbox') 
     
     def clearallfieldsLB(self, address='', inout='', portinfoMSG='', textbox='', portnum=''):
         # clear the fields, addressCB, inputoutputCB, port information msg, input textbox
-        if address:
+        if address: #listbox
             addressbox = self.builder.get_object(address)
             addressbox.delete(0, tk.END)
-        if inout:
+        if inout: # listbox
             inoutbox = self.builder.get_object(inout)
             inoutbox.delete(0, tk.END)
-        if portinfoMSG:
+        if portinfoMSG: # message box
             portinfomsg = self.builder.get_object(portinfoMSG)
             portinfomsg.configure(text="")
-        if textbox:
+        if textbox: # text box
             inputtextbox = self.builder.get_object(textbox)
             inputtextbox.delete(1.0, tk.END)
-        if portnum:
+        if portnum: # listbox
             portnumbox = self.builder.get_object(portnum)
             portnumbox.delete(0, tk.END)
 
@@ -154,6 +157,7 @@ class MicrolokiidesignhelperguiApp:
         portdataMSG = 'file1portdata_message'
         bitsTXT = 'file1bits_text'
         portnum = 'file1portlb'
+        # get port info and place in the dict
         self.port_list[1] = self.portlistfileLB(filenameMSG, fileaddress, inout, portdataMSG, bitsTXT, portnum)
 
     def file1inoutcallback(self, *args):
@@ -207,6 +211,7 @@ class MicrolokiidesignhelperguiApp:
         outputtxtbox.delete(1.0, tk.END)
     
     def file1loadaddresscallback(self, *args):
+        # CB for bit comp file 1
         self.clearallfieldsLB(address='file1addlb', textbox='file1bits_text', portinfoMSG='file1portdata_message')
         self.loadaddresscallbackLB(self.port_list[1],'file1addlb','file1portlb')
 

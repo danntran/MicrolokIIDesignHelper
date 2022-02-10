@@ -2,17 +2,17 @@
 # --- Function Definitons --- #
 # --------------------------- #
 
-# Create array of arrays based off column number
+
 def column_create(input_arr, col_num):
+	# Create array of arrays based off column number
 	col_arr = []
 	for i in range(0,col_num,1):
 		val_arr = input_arr[i::col_num]
 		col_arr.append(val_arr)
 	return col_arr
 
-
-# Combine existing text column with column to append
 def array_combine(col_exist, col_adjoin):
+	# Combine existing text column with column to append
 	output_array = []							# Create empty output array to store combined column array
 	max_str_len = len(max(col_exist, key=len))	# Determine number of characters within the largest string of existing column
 	max_empty_str_len = max_str_len + 4			# Add single tab (4 whitespaces) to maximum length
@@ -36,9 +36,8 @@ def array_combine(col_exist, col_adjoin):
 
 	return output_array	# return output array
 
-
-# Add an empty row to text array, every block of 4
 def add_empty_rows(text_arr):
+	# Add an empty row to text array, every block of 4
 	spacepos = range(4,len(text_arr),4)
 	for j in reversed(spacepos):
 		text_arr.insert(j, "")
@@ -54,9 +53,9 @@ def addcomma2txt(text):
 	return output_txt
 
 
-# Create output text array based off input text and number of columns to segment
-def column_divide(input_array, num_col, rmcomma):
 
+def column_divide(input_array, num_col, rmcomma):
+	# Create output text array based off input text and number of columns to segment
 	output_text_array = [] # Create empty output array for text file
 
 	if input_array: # check if empty array
@@ -85,6 +84,7 @@ def column_divide(input_array, num_col, rmcomma):
 	return output_text_array	# return output text array
 
 def formattxt(text, ncols, rmcomma):
+	# Get text and format them appropriately
 	bits = column_divide(text, ncols, rmcomma)
 	output = "\n".join(bits)
 	return output
