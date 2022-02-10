@@ -118,23 +118,23 @@ def obtcomminfo(text):
 
 def returnaddresslist(port_list, port_num):
     # input port_list and port number
-    # output string of address from the chosen port e.g. '1 20 49 110 123'
-    output_txt = ""
+    # output string of address from the chosen port e.g. ["1","20","49","110","123"]
+    output_array = []
     if port_list and port_num:
         for links in port_list:
             if port_num in links["PORT:"]:
-                output_txt += links["ADDRESS:"] + " "
-    return output_txt
+                output_array.append(links["ADDRESS:"])
+    return output_array
 
 def returnportnumlist(port_list):
     # input port_list
-    # output string of port for e.g. '1 2 3 4 '
-    output_txt = ""
+    # output string of port for e.g. ["1","2","3","4"]
+    output_array = []
     if port_list:
         for links in port_list:
-            if links["PORT:"] not in output_txt:
-                output_txt += links["PORT:"] + " "
-    return output_txt
+            if links["PORT:"] not in output_array:
+                output_array.append(links["PORT:"])
+    return output_array
 
 def indexportinfofromaddr(port_list, address, port_num):
     # input portlist dictionary, address

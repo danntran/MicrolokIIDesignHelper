@@ -27,17 +27,32 @@ class MicrolokiidesignhelperguiApp:
             ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
             ('All files', '*.*'))
 
+        (self.builder.get_object('BF_inoutlistbox')).insert(tk.END, *['INPUT:','OUTPUT:'])
+        (self.builder.get_object('file1inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
+        (self.builder.get_object('file2inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
 
         # Callback for the comboboxes        
-        (self.builder.get_object('bitcomp_portcombobox')).bind("<<ComboboxSelected>>", self.bitformat_loadaddresscallback)
-        for CBs in ['file1inout_combobox','file1address_combobox']:
-            (self.builder.get_object(CBs)).bind("<<ComboboxSelected>>", self.file1loadbitscallback)
-        for CBs in ['file2inout_combobox','file2address_combobox']:
-            (self.builder.get_object(CBs)).bind("<<ComboboxSelected>>", self.file2loadbitscallback)
-        (self.builder.get_object('file1port_combobox')).bind("<<ComboboxSelected>>", self.file1loadaddresscallback)
-        (self.builder.get_object('file2port_combobox')).bind("<<ComboboxSelected>>", self.file2loadaddresscallback)
+        (self.builder.get_object('file1addlb')).bind("<<ListboxSelect>>", self.file1loadbitscallback)
+        (self.builder.get_object('file1portlb')).bind("<<ListboxSelect>>", self.file1loadaddresscallback)
+        (self.builder.get_object('file1inoutlb')).bind("<<ListboxSelect>>", self.file1inoutcallback)
+
+        for CBs in ['file2inoutlb','file2addlb']:
+            (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.file2loadbitscallback)
+        (self.builder.get_object('file2portlb')).bind("<<ListboxSelect>>", self.file2loadaddresscallback)
+
+        (self.builder.get_object('BF_PortListbox')).bind("<<ListboxSelect>>", self.BF_loadaddresscallback) # loadaddresscallback when PortListBox selected
+        for CBs in ['BF_addresslistbox','BF_inoutlistbox']:
+            (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.BF_loadcallback) # loadcallback when addressLB or inoutLB selected
+
     
-    def portlistfile(self, filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB):
+    def open_about_toplevel(self, *args):
+        # Open About window
+        builder2 = pygubu.Builder()
+        builder2.add_resource_path(PROJECT_PATH)
+        builder2.add_from_file(PROJECT_UI)
+        builder2.get_object('about_toplevel')
+
+    def portlistfileLB(self, filenameMSG, fileaddress, inout, portdataMSG, bitsTXT, portnum):
         # gets theport info for a given file 
         try:
             # TO DO: Need to add error check for correct file
@@ -46,29 +61,69 @@ class MicrolokiidesignhelperguiApp:
             openfile_text = ''
             portlist = ''
         if openfile_text:
-            portnumcombobox = self.builder.get_object(portnumCB)
+            portnumbox = self.builder.get_object(portnum)
             filenameinput = self.builder.get_object(filenameMSG)
-            addresscombobox = self.builder.get_object(fileaddressCB)
             # clear the fields
-            self.clearallfields(fileaddressCB,inoutCB,portdataMSG,bitsTXT,portnumCB)
+            self.clearallfieldsLB(address=fileaddress, portinfoMSG=portdataMSG, textbox=bitsTXT, portnum=portnum)
             # get the file name
             filenameinput.configure(text=parsedoc.getfilename(openfile_text))
             portlist = parsedoc.obtcomminfo(parsedoc.rm_commnewlinesfromtext(openfile_text))
-            portnumcombobox['values'] = parsedoc.returnportnumlist(portlist)
+            portnumbox.insert(tk.END, *parsedoc.returnportnumlist(portlist))
         return portlist
-    
-    def loadaddresscallback(self, portlist, fileaddressCB, portnumCB):
-        portnumcombobox = self.builder.get_object(portnumCB)
-        addresscombobox = self.builder.get_object(fileaddressCB)
-        addresscombobox['values'] = parsedoc.returnaddresslist(portlist, portnumcombobox.get())
-        
 
-    def open_about_toplevel(self, *args):
-        # Open About window
-        builder2 = pygubu.Builder()
-        builder2.add_resource_path(PROJECT_PATH)
-        builder2.add_from_file(PROJECT_UI)
-        builder2.get_object('about_toplevel')
+    def loadaddresscallbackLB(self, portlist, fileaddress, portnum):
+        portnumbox = self.builder.get_object(portnum)
+        addressbox = self.builder.get_object(fileaddress)
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
+        addlist = parsedoc.returnaddresslist(portlist, putnumboxval)
+        addressbox.insert(tk.END, *addlist)
+
+    def BF_openfilecallback(self, *args):
+        # call back for bit formatter, open file
+        filenameMSG = 'BF_filenameinput'
+        fileaddressCB = 'BF_addresslistbox'
+        inoutCB = 'BF_inoutlistbox'
+        portdataMSG = 'portinfomessage'
+        bitsTXT = 'InputTextBox'
+        portnumCB = 'BF_PortListbox'
+        self.port_list[0] = self.portlistfileLB(filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB)
+
+    def BF_loadcallback(self, *args):
+        # call back for bit formatter, load bit using the listbox
+        addressbox = self.builder.get_object('BF_addresslistbox')
+        inputoutputbox = self.builder.get_object('BF_inoutlistbox')
+        portinfomessage = self.builder.get_object('portinfomessage')
+        in_textbox = self.builder.get_object('InputTextBox')
+        portnumbox = self.builder.get_object('BF_PortListbox')
+        addressboxval = addressbox.get(addressbox.curselection()) if addressbox.curselection() else ''
+        inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
+        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(self.port_list[0], addressboxval, putnumboxval))
+        in_textbox.delete(1.0, tk.END)
+        in_textbox.insert(tk.END, parsedoc.obtaininoutfromaddr(self.port_list[0], addressboxval, inoutval, putnumboxval))
+        self.bitformat_convertcallback()
+
+    def BF_loadaddresscallback(self, *args):
+        self.clearallfieldsLB(address='BF_addresslistbox', textbox='InputTextBox', portinfoMSG='portinfomessage')
+        self.loadaddresscallbackLB(self.port_list[0],'BF_addresslistbox','BF_PortListbox')
+    
+    def clearallfieldsLB(self, address='', inout='', portinfoMSG='', textbox='', portnum=''):
+        # clear the fields, addressCB, inputoutputCB, port information msg, input textbox
+        if address:
+            addressbox = self.builder.get_object(address)
+            addressbox.delete(0, tk.END)
+        if inout:
+            inoutbox = self.builder.get_object(inout)
+            inoutbox.delete(0, tk.END)
+        if portinfoMSG:
+            portinfomsg = self.builder.get_object(portinfoMSG)
+            portinfomsg.configure(text="")
+        if textbox:
+            inputtextbox = self.builder.get_object(textbox)
+            inputtextbox.delete(1.0, tk.END)
+        if portnum:
+            portnumbox = self.builder.get_object(portnum)
+            portnumbox.delete(0, tk.END)
 
     def bitformat_convertcallback(self, *args):
         ## Format the text
@@ -91,73 +146,47 @@ class MicrolokiidesignhelperguiApp:
         nlines_textbox.delete(1.0, tk.END)
         nlines_textbox.insert(tk.END, nbits)
 
-    def bitformat_openfilecallback(self, *args):
-        # call back for bit formatter, open file
-        filenameMSG = 'filenameinput'
-        fileaddressCB = 'addresscombobox'
-        inoutCB = 'inputoutputcombobox'
-        portdataMSG = 'portinfomessage'
-        bitsTXT = 'InputTextBox'
-        portnumCB = 'bitcomp_portcombobox'
-        self.port_list[0] = self.portlistfile(filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB)
-    
-    def bitformat_loadcallback(self, *args):
-        # call back for bit formatter, load bit
-        addresscombobox = self.builder.get_object('addresscombobox')
-        inputoutputcombobox = self.builder.get_object('inputoutputcombobox')
-        portinfomessage = self.builder.get_object('portinfomessage')
-        in_textbox = self.builder.get_object('InputTextBox')
-        portnumcombobox = self.builder.get_object('bitcomp_portcombobox')
-        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(self.port_list[0], addresscombobox.get(), portnumcombobox.get()))
-        in_textbox.delete(1.0, tk.END)
-        in_textbox.insert(tk.END, parsedoc.obtaininoutfromaddr(self.port_list[0], addresscombobox.get(), inputoutputcombobox.get(), portnumcombobox.get()))
-
-    def bitformat_loadaddresscallback(self, *args):
-        self.clearallfields(addressCB='addresscombobox', inoutCB='inputoutputcombobox', textbox='InputTextBox', portinfoMSG='bitcomp_portcombobox')
-        self.loadaddresscallback(self.port_list[0],'addresscombobox','bitcomp_portcombobox')
-        
-    def clearallfields(self, addressCB='', inoutCB='', portinfoMSG='', textbox='', portnumCB=''):
-        # clear the fields, addressCB, inputoutputCB, port information msg, input textbox
-        if addressCB:
-            addresscombobox = self.builder.get_object(addressCB)
-            addresscombobox.set("")
-        if inoutCB:
-            inoutcombobox = self.builder.get_object(inoutCB)
-            inoutcombobox.set("")
-        if portinfoMSG:
-            portinfomsg = self.builder.get_object(portinfoMSG)
-            portinfomsg.configure(text="")
-        if textbox:
-            inputtextbox = self.builder.get_object(textbox)
-            inputtextbox.delete(1.0, tk.END)
-        if portnumCB:
-            portnumcombobox = self.builder.get_object(portnumCB)
-            portnumcombobox.set("")
-
     def file1openfilecallback(self, *args):
         # callback for the file 1 open file
-        filenameMSG = 'file1name_input'
-        fileaddressCB = 'file1address_combobox'
-        inoutCB = 'file1inout_combobox'
+        filenameMSG = 'file1filename'
+        fileaddress = 'file1addlb'
+        inout = 'file1inoutlb'
         portdataMSG = 'file1portdata_message'
         bitsTXT = 'file1bits_text'
-        portnumCB = 'file1port_combobox'
-        self.port_list[1] = self.portlistfile(filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB)
+        portnum = 'file1portlb'
+        self.port_list[1] = self.portlistfileLB(filenameMSG, fileaddress, inout, portdataMSG, bitsTXT, portnum)
+
+    def file1inoutcallback(self, *args):
+        # callback which looks at whether input or output is selected on file 1 and chooses the opposite on file 2
+        f1inoutcursel = (self.builder.get_object('file1inoutlb')).curselection() # get highlighted pos
+        if f1inoutcursel: # may not be highlighted
+            f2inoutform = self.builder.get_object('file2inoutlb')
+            f2inoutform.selection_clear(f1inoutcursel[0])
+            f2inoutform.activate(1 - f1inoutcursel[0]) # activate the other pos
+            f2inoutform.selection_set(1 - f1inoutcursel[0])
+        self.file1loadbitscallback()
+        self.file2loadbitscallback()
 
     def file1loadbitscallback(self, *args):
         # callback for the file 1 load bits
-        fileaddressCB = 'file1address_combobox'
-        inoutCB = 'file1inout_combobox'
+        fileaddress = 'file1addlb'
+        inout = 'file1inoutlb'
         portdataMSG = 'file1portdata_message'
         bitsTXT = 'file1bits_text'
-        portnumCB = 'file1port_combobox'
+        portnum = 'file1portlb'
+        nbitsform = 'file1nbits_text'
+        nlinesform = 'file1nlines_text'
+        outputform = 'bitcompare_textbox'
         portlist = self.port_list[1]
-        addresscombobox = self.builder.get_object(fileaddressCB)
-        inputoutputcombobox = self.builder.get_object(inoutCB)
+        addressbox = self.builder.get_object(fileaddress)
+        inputoutputbox = self.builder.get_object(inout)
         portinfomessage = self.builder.get_object(portdataMSG)
-        portnumcombobox = self.builder.get_object(portnumCB)
-        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addresscombobox.get(), portnumcombobox.get()))
-        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addresscombobox.get(), inputoutputcombobox.get(), portnumcombobox.get()))
+        portnumbox = self.builder.get_object(portnum)
+        addressboxval = addressbox.get(addressbox.curselection()) if addressbox.curselection() else ''
+        inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
+        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addressboxval, putnumboxval))
+        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
         formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)
@@ -166,69 +195,73 @@ class MicrolokiidesignhelperguiApp:
         ## Add to the Line and Bit count
         nlines, nbits = fn.ObtainNLines(input_txt)
         # Print to nline TB
-        nlines_textbox = self.builder.get_object('file1nlines_text')
+        nlines_textbox = self.builder.get_object(nlinesform)
         nlines_textbox.delete(1.0, tk.END)
         nlines_textbox.insert(tk.END, nlines)
         # Print to nbit TB
-        nlines_textbox = self.builder.get_object('file1nbits_text')
-        nlines_textbox.delete(1.0, tk.END)
-        nlines_textbox.insert(tk.END, nbits)
+        nbits_textbox = self.builder.get_object(nbitsform)
+        nbits_textbox.delete(1.0, tk.END)
+        nbits_textbox.insert(tk.END, nbits)
         # clear comparison
-        outputtxtbox = self.builder.get_object('bitcompare_textbox')
+        outputtxtbox = self.builder.get_object(outputform)
         outputtxtbox.delete(1.0, tk.END)
     
     def file1loadaddresscallback(self, *args):
-        self.clearallfields(addressCB='file1address_combobox', inoutCB='file1inout_combobox', textbox='file1bits_text', portinfoMSG='file1portdata_message')
-        self.loadaddresscallback(self.port_list[1],'file1address_combobox','file1port_combobox')
+        self.clearallfieldsLB(address='file1addlb', textbox='file1bits_text', portinfoMSG='file1portdata_message')
+        self.loadaddresscallbackLB(self.port_list[1],'file1addlb','file1portlb')
 
     def file2openfilecallback(self, *args):
         # callback for the file 2 open file
-        filenameMSG = 'file2name_input'
-        fileaddressCB = 'file2address_combobox'
-        inoutCB = 'file2inout_combobox'
+        filenameMSG = 'file2filename'
+        fileaddress = 'file2addlb'
+        inout = 'file2inoutlb'
         portdataMSG = 'file2portdata_message'
         bitsTXT = 'file2bits_text'
-        portnumCB = 'file2port_combobox'
-        self.port_list[2] = self.portlistfile(filenameMSG, fileaddressCB, inoutCB, portdataMSG, bitsTXT, portnumCB)
+        portnum = 'file2portlb'
+        self.port_list[2] = self.portlistfileLB(filenameMSG, fileaddress, inout, portdataMSG, bitsTXT, portnum)
 
     def file2loadbitscallback(self, *args):
         # callback for the file 2 load bits
-        fileaddressCB = 'file2address_combobox'
-        inoutCB = 'file2inout_combobox'
+        fileaddress = 'file2addlb'
+        inout = 'file2inoutlb'
         portdataMSG = 'file2portdata_message'
         bitsTXT = 'file2bits_text'
-        portnumCB = 'file2port_combobox'
+        portnum = 'file2portlb'
+        nbitsform = 'file2nbits_text'
+        nlinesform = 'file2nlines_text'
+        outputform = 'bitcompare_textbox'
         portlist = self.port_list[2]
-        addresscombobox = self.builder.get_object(fileaddressCB)
-        inputoutputcombobox = self.builder.get_object(inoutCB)
+        addressbox = self.builder.get_object(fileaddress)
+        inputoutputbox = self.builder.get_object(inout)
         portinfomessage = self.builder.get_object(portdataMSG)
-        portnumcombobox = self.builder.get_object(portnumCB)
-        # write to the port info box
-        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addresscombobox.get(), portnumcombobox.get()))
-        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addresscombobox.get(), inputoutputcombobox.get(), portnumcombobox.get()))
-        # format the bits with 1 column, commas removed
+        portnumbox = self.builder.get_object(portnum)
+        addressboxval = addressbox.get(addressbox.curselection()) if addressbox.curselection() else ''
+        inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
+        putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
+        portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addressboxval, putnumboxval))
+        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
         formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)
         out_textbox.delete(1.0, tk.END)
         out_textbox.insert(tk.END, formatted_txt)
-        # Add to the Line and Bit count
+        ## Add to the Line and Bit count
         nlines, nbits = fn.ObtainNLines(input_txt)
         # Print to nline TB
-        nlines_textbox = self.builder.get_object('file2nlines_text')
+        nlines_textbox = self.builder.get_object(nlinesform)
         nlines_textbox.delete(1.0, tk.END)
         nlines_textbox.insert(tk.END, nlines)
         # Print to nbit TB
-        nlines_textbox = self.builder.get_object('file2nbits_text')
-        nlines_textbox.delete(1.0, tk.END)
-        nlines_textbox.insert(tk.END, nbits)
+        nbits_textbox = self.builder.get_object(nbitsform)
+        nbits_textbox.delete(1.0, tk.END)
+        nbits_textbox.insert(tk.END, nbits)
         # clear comparison
-        outputtxtbox = self.builder.get_object('bitcompare_textbox')
+        outputtxtbox = self.builder.get_object(outputform)
         outputtxtbox.delete(1.0, tk.END)
 
     def file2loadaddresscallback(self, *args):
-        self.clearallfields(addressCB='file2address_combobox', inoutCB='file2inout_combobox', textbox='file2bits_text', portinfoMSG='file2portdata_message')
-        self.loadaddresscallback(self.port_list[2],'file2address_combobox','file2port_combobox')
+        self.clearallfieldsLB(address='file2addlb', textbox='file2bits_text', portinfoMSG='file2portdata_message')
+        self.loadaddresscallbackLB(self.port_list[2],'file2addlb','file2portlb')
 
     def comparebitscallback(self, *args):
         # call back for the compare button
@@ -252,7 +285,6 @@ class MicrolokiidesignhelperguiApp:
             compfile_textbox.set("")        
         return 1
         
-
     def compileropenfilecallback(self):
         file_textbox = self.builder.get_object('compiler_filename_combobox')
         try:

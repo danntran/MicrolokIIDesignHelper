@@ -39,48 +39,48 @@ def array_combine(col_exist, col_adjoin):
 
 # Add an empty row to text array, every block of 4
 def add_empty_rows(text_arr):
-	for j in range(4,len(text_arr),5):
+	spacepos = range(4,len(text_arr),4)
+	for j in reversed(spacepos):
 		text_arr.insert(j, "")
-		j += 5
 	return text_arr
 
 def addcomma2txt(text):
-    # adds commas to the end of each row
-    output_txt = []
-    for bit in text[:-1]:
-        output_txt.append(bit+",")
-    output_txt.append(text[-1]+";")
-    return output_txt
+	# adds commas to the end of each row
+	output_txt = []
+	if text:
+		for bit in text[:-1]:
+			output_txt.append(bit+",")
+		output_txt.append(text[-1]+";")
+	return output_txt
 
 
 # Create output text array based off input text and number of columns to segment
 def column_divide(input_array, num_col, rmcomma):
 
-	if not rmcomma:
-		bits_arr = addcomma2txt(input_array)
-	else:
-		bits_arr = input_array
-	
-	output_text_array = []								# Create empty output array for text file
-	column_array = column_create(bits_arr, num_col)	# Create array of text column arrays
+	output_text_array = [] # Create empty output array for text file
 
-	if num_col == 1:
-		output_text_array = bits_arr
+	if input_array: # check if empty array
+		if not rmcomma: # check if user wants commas
+			bits_arr = addcomma2txt(input_array)
+		else:
+			bits_arr = input_array
 		
-	elif num_col == 2:
-		column_text_combine = array_combine(column_array[0],column_array[1])
-		output_text_array = add_empty_rows(column_text_combine)
+		column_array = column_create(bits_arr, num_col)	# Create array of text column arrays
 
-	elif (3 <= num_col <= 8):
-		column_text_combine = array_combine(column_array[0],column_array[1])
-		k=2
-		while k < num_col:
-			column_text_combine = array_combine(column_text_combine,column_array[k])
-			k += 1
-		output_text_array = add_empty_rows(column_text_combine)
+		if num_col == 1:
+			output_text_array = bits_arr
+			
+		elif num_col == 2:
+			column_text_combine = array_combine(column_array[0],column_array[1])
+			output_text_array = add_empty_rows(column_text_combine)
 
-	else:
-		pass
+		elif (3 <= num_col <= 8):
+			column_text_combine = array_combine(column_array[0],column_array[1])
+			k=2
+			while k < num_col:
+				column_text_combine = array_combine(column_text_combine,column_array[k])
+				k += 1
+			output_text_array = add_empty_rows(column_text_combine)
 
 	return output_text_array	# return output text array
 

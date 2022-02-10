@@ -83,140 +83,6 @@
                                   <property name="side">top</property>
                                 </layout>
                                 <child>
-                                  <object class="ttk.Frame" id="file1input_frame">
-                                    <property name="height">200</property>
-                                    <property name="width">200</property>
-                                    <layout manager="grid">
-                                      <property name="column">0</property>
-                                      <property name="padx">10</property>
-                                      <property name="propagate">True</property>
-                                      <property name="row">0</property>
-                                    </layout>
-                                    <child>
-                                      <object class="ttk.Button" id="file1open_button">
-                                        <property name="command" type="command" cbtype="simple">file1openfilecallback</property>
-                                        <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
-                                        <property name="width">35</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="pady">0 10</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">0</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Frame" id="file1name_frame">
-                                        <property name="height">200</property>
-                                        <property name="width">200</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">1</property>
-                                        </layout>
-                                        <child>
-                                          <object class="ttk.Label" id="file1name_label">
-                                            <property name="text" translatable="yes">Filename:</property>
-                                            <layout manager="grid">
-                                              <property name="column">0</property>
-                                              <property name="propagate">True</property>
-                                              <property name="row">0</property>
-                                            </layout>
-                                          </object>
-                                        </child>
-                                        <child>
-                                          <object class="ttk.Label" id="file1name_input">
-                                            <property name="text" translatable="yes">[Not Loaded]</property>
-                                            <layout manager="grid">
-                                              <property name="column">1</property>
-                                              <property name="padx">5 0</property>
-                                              <property name="propagate">True</property>
-                                              <property name="row">0</property>
-                                            </layout>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label1">
-                                        <property name="text" translatable="yes">PORT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">2</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file1port_combobox">
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">2</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label84">
-                                        <property name="anchor">e</property>
-                                        <property name="text" translatable="yes">(MII)ADDRESS:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="pady">5</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">3</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file1address_combobox">
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">3</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label85">
-                                        <property name="anchor">e</property>
-                                        <property name="text" translatable="yes">IN/OUT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">4</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file1inout_combobox">
-                                        <property name="values">INPUT: OUTPUT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">4</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Button" id="file1loadbit_button">
-                                        <property name="command" type="command" cbtype="simple">file1loadbitscallback</property>
-                                        <property name="text" translatable="yes">↓ Load Bits ↓</property>
-                                        <property name="width">35</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="pady">10 0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">5</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
                                   <object class="ttk.Labelframe" id="file1portinfo_frame">
                                     <property name="height">200</property>
                                     <property name="text" translatable="yes">Port Information</property>
@@ -265,6 +131,122 @@ None
                                           <property name="sticky">w</property>
                                           <property type="col" id="1" name="minsize">120</property>
                                           <property type="row" id="0" name="minsize">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="ttk.Frame" id="file1inputframe">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout manager="grid">
+                                      <property name="column">0</property>
+                                      <property name="padx">0 20</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Button" id="file1openbutton">
+                                        <property name="command" type="command" cbtype="simple">file1openfilecallback</property>
+                                        <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
+                                        <property name="width">35</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="pady">0 5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file1filenamelabel">
+                                        <property name="text" translatable="yes">Filename:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file1filename">
+                                        <property name="text" translatable="yes">[Not loaded]</property>
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file1portlabel">
+                                        <property name="text" translatable="yes">PORT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file1portlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">4</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file1addlabel">
+                                        <property name="text" translatable="yes">(MII)ADDRESS:</property>
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file1addlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <bind sequence="" handler="" add="" />
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">4</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file1inoutlabel">
+                                        <property name="text" translatable="yes">IN/OUT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file1inoutlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <layout manager="grid">
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">4</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -363,140 +345,6 @@ None
                                   <property name="side">top</property>
                                 </layout>
                                 <child>
-                                  <object class="ttk.Frame" id="file1input_">
-                                    <property name="height">200</property>
-                                    <property name="width">200</property>
-                                    <layout manager="grid">
-                                      <property name="column">0</property>
-                                      <property name="padx">10</property>
-                                      <property name="propagate">True</property>
-                                      <property name="row">0</property>
-                                    </layout>
-                                    <child>
-                                      <object class="ttk.Button" id="file2open_button">
-                                        <property name="command" type="command" cbtype="simple">file2openfilecallback</property>
-                                        <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
-                                        <property name="width">35</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="pady">0 10</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">0</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Frame" id="file2name_">
-                                        <property name="height">200</property>
-                                        <property name="width">200</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">1</property>
-                                        </layout>
-                                        <child>
-                                          <object class="ttk.Label" id="Label90">
-                                            <property name="text" translatable="yes">Filename:</property>
-                                            <layout manager="grid">
-                                              <property name="column">0</property>
-                                              <property name="propagate">True</property>
-                                              <property name="row">0</property>
-                                            </layout>
-                                          </object>
-                                        </child>
-                                        <child>
-                                          <object class="ttk.Label" id="file2name_input">
-                                            <property name="text" translatable="yes">[Not Loaded]</property>
-                                            <layout manager="grid">
-                                              <property name="column">1</property>
-                                              <property name="padx">5 0</property>
-                                              <property name="propagate">True</property>
-                                              <property name="row">0</property>
-                                            </layout>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label2">
-                                        <property name="text" translatable="yes">PORT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">2</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file2port_combobox">
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">2</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label92">
-                                        <property name="anchor">e</property>
-                                        <property name="text" translatable="yes">(MII)ADDRESS:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="pady">5</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">3</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file2address_combobox">
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">3</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Label" id="Label93">
-                                        <property name="anchor">e</property>
-                                        <property name="text" translatable="yes">IN/OUT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">4</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Combobox" id="file2inout_combobox">
-                                        <property name="values">INPUT: OUTPUT:</property>
-                                        <layout manager="grid">
-                                          <property name="column">1</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">4</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="ttk.Button" id="Button38">
-                                        <property name="command" type="command" cbtype="simple">file2loadbitscallback</property>
-                                        <property name="text" translatable="yes">↓ Load Bits ↓</property>
-                                        <property name="width">35</property>
-                                        <layout manager="grid">
-                                          <property name="column">0</property>
-                                          <property name="columnspan">2</property>
-                                          <property name="pady">10 0</property>
-                                          <property name="propagate">True</property>
-                                          <property name="row">5</property>
-                                        </layout>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
                                   <object class="ttk.Labelframe" id="Labelframe20">
                                     <property name="height">200</property>
                                     <property name="text" translatable="yes">Port Information</property>
@@ -545,6 +393,122 @@ None
                                           <property name="sticky">w</property>
                                           <property type="col" id="1" name="minsize">120</property>
                                           <property type="row" id="0" name="minsize">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="ttk.Frame" id="file2inputframe">
+                                    <property name="height">200</property>
+                                    <property name="width">200</property>
+                                    <layout manager="grid">
+                                      <property name="column">0</property>
+                                      <property name="padx">0 20</property>
+                                      <property name="propagate">True</property>
+                                      <property name="row">0</property>
+                                    </layout>
+                                    <child>
+                                      <object class="ttk.Button" id="file2openbutton">
+                                        <property name="command" type="command" cbtype="simple">file2openfilecallback</property>
+                                        <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
+                                        <property name="width">35</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="columnspan">3</property>
+                                          <property name="pady">0 5</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">0</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file2filenamelabel">
+                                        <property name="text" translatable="yes">Filename:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file2filename">
+                                        <property name="text" translatable="yes">[Not loaded]</property>
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">1</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file2portlabel">
+                                        <property name="text" translatable="yes">PORT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file2portlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <layout manager="grid">
+                                          <property name="column">0</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file2addlabel">
+                                        <property name="text" translatable="yes">(MII)ADDRESS:</property>
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file2addlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <bind sequence="" handler="" add="" />
+                                        <layout manager="grid">
+                                          <property name="column">1</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="ttk.Label" id="file2inoutlabel">
+                                        <property name="text" translatable="yes">IN/OUT:</property>
+                                        <layout manager="grid">
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">2</property>
+                                        </layout>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="tk.Listbox" id="file2inoutlb">
+                                        <property name="exportselection">false</property>
+                                        <property name="height">6</property>
+                                        <property name="selectmode">single</property>
+                                        <property name="width">10</property>
+                                        <layout manager="grid">
+                                          <property name="column">2</property>
+                                          <property name="propagate">True</property>
+                                          <property name="row">3</property>
                                         </layout>
                                       </object>
                                     </child>
@@ -724,64 +688,51 @@ None
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="ttk.Frame" id="linkinputframe">
+                      <object class="ttk.Frame" id="linkinputframedropdown">
                         <property name="height">200</property>
                         <property name="width">200</property>
                         <layout manager="grid">
                           <property name="column">0</property>
-                          <property name="padx">10</property>
+                          <property name="padx">0 20</property>
                           <property name="propagate">True</property>
                           <property name="row">1</property>
                         </layout>
                         <child>
-                          <object class="ttk.Button" id="openfilebutton">
-                            <property name="command" type="command" cbtype="simple">bitformat_openfilecallback</property>
+                          <object class="ttk.Button" id="BF_openfilebutton">
+                            <property name="command" type="command" cbtype="simple">BF_openfilecallback</property>
                             <property name="text" translatable="yes">Open MLK2/GN2 file ...</property>
                             <property name="width">35</property>
                             <layout manager="grid">
                               <property name="column">0</property>
-                              <property name="columnspan">2</property>
-                              <property name="pady">0 10</property>
+                              <property name="columnspan">3</property>
+                              <property name="pady">0 5</property>
                               <property name="propagate">True</property>
                               <property name="row">0</property>
                             </layout>
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Frame" id="filenameframe">
-                            <property name="height">200</property>
-                            <property name="width">200</property>
+                          <object class="ttk.Label" id="BF_filenamelabel">
+                            <property name="text" translatable="yes">Filename:</property>
                             <layout manager="grid">
                               <property name="column">0</property>
-                              <property name="columnspan">2</property>
                               <property name="propagate">True</property>
                               <property name="row">1</property>
                             </layout>
-                            <child>
-                              <object class="ttk.Label" id="filenamelabel">
-                                <property name="text" translatable="yes">Filename:</property>
-                                <layout manager="grid">
-                                  <property name="column">0</property>
-                                  <property name="propagate">True</property>
-                                  <property name="row">0</property>
-                                </layout>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="ttk.Label" id="filenameinput">
-                                <property name="text" translatable="yes">[Not Loaded]</property>
-                                <layout manager="grid">
-                                  <property name="column">1</property>
-                                  <property name="padx">5 0</property>
-                                  <property name="propagate">True</property>
-                                  <property name="row">0</property>
-                                </layout>
-                              </object>
-                            </child>
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Label" id="Label3">
+                          <object class="ttk.Label" id="BF_filenameinput">
+                            <property name="text" translatable="yes">[Not loaded]</property>
+                            <layout manager="grid">
+                              <property name="column">1</property>
+                              <property name="propagate">True</property>
+                              <property name="row">1</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Label" id="BF_portlabel">
                             <property name="text" translatable="yes">PORT:</property>
                             <layout manager="grid">
                               <property name="column">0</property>
@@ -791,7 +742,21 @@ None
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Combobox" id="bitcomp_portcombobox">
+                          <object class="tk.Listbox" id="BF_PortListbox">
+                            <property name="exportselection">false</property>
+                            <property name="height">6</property>
+                            <property name="selectmode">single</property>
+                            <property name="width">10</property>
+                            <layout manager="grid">
+                              <property name="column">0</property>
+                              <property name="propagate">True</property>
+                              <property name="row">3</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Label" id="BF_addresslabel">
+                            <property name="text" translatable="yes">(MII)ADDRESS:</property>
                             <layout manager="grid">
                               <property name="column">1</property>
                               <property name="propagate">True</property>
@@ -800,7 +765,12 @@ None
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Combobox" id="addresscombobox">
+                          <object class="tk.Listbox" id="BF_addresslistbox">
+                            <property name="exportselection">false</property>
+                            <property name="height">6</property>
+                            <property name="selectmode">single</property>
+                            <property name="width">10</property>
+                            <bind sequence="" handler="" add="" />
                             <layout manager="grid">
                               <property name="column">1</property>
                               <property name="propagate">True</property>
@@ -809,49 +779,25 @@ None
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Label" id="addresslabel">
-                            <property name="anchor">e</property>
-                            <property name="text" translatable="yes">(MII)ADDRESS:</property>
-                            <layout manager="grid">
-                              <property name="column">0</property>
-                              <property name="pady">5</property>
-                              <property name="propagate">True</property>
-                              <property name="row">3</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Label" id="inputoutputlabel">
-                            <property name="anchor">e</property>
+                          <object class="ttk.Label" id="BF_inoutlabel">
                             <property name="text" translatable="yes">IN/OUT:</property>
                             <layout manager="grid">
-                              <property name="column">0</property>
+                              <property name="column">2</property>
                               <property name="propagate">True</property>
-                              <property name="row">4</property>
+                              <property name="row">2</property>
                             </layout>
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Combobox" id="inputoutputcombobox">
-                            <property name="values">INPUT: OUTPUT:</property>
+                          <object class="tk.Listbox" id="BF_inoutlistbox">
+                            <property name="exportselection">false</property>
+                            <property name="height">6</property>
+                            <property name="selectmode">single</property>
+                            <property name="width">10</property>
                             <layout manager="grid">
-                              <property name="column">1</property>
+                              <property name="column">2</property>
                               <property name="propagate">True</property>
-                              <property name="row">4</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Button" id="portloadbutton">
-                            <property name="command" type="command" cbtype="simple">bitformat_loadcallback</property>
-                            <property name="text" translatable="yes">↓ Load Bits ↓</property>
-                            <property name="width">35</property>
-                            <layout manager="grid">
-                              <property name="column">0</property>
-                              <property name="columnspan">2</property>
-                              <property name="pady">10 0</property>
-                              <property name="propagate">True</property>
-                              <property name="row">5</property>
+                              <property name="row">3</property>
                             </layout>
                           </object>
                         </child>
@@ -863,7 +809,7 @@ None
                         <property name="text" translatable="yes">Port Information</property>
                         <property name="width">200</property>
                         <layout manager="grid">
-                          <property name="column">1</property>
+                          <property name="column">2</property>
                           <property name="propagate">True</property>
                           <property name="row">1</property>
                         </layout>
@@ -970,6 +916,7 @@ None
                         </layout>
                         <child>
                           <object class="ttk.Radiobutton" id="format1row_button">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                             <property name="state">normal</property>
                             <property name="text" translatable="yes">1</property>
                             <property name="value">1</property>
@@ -983,6 +930,7 @@ None
                         </child>
                         <child>
                           <object class="ttk.Radiobutton" id="format2row_button">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                             <property name="text" translatable="yes">2</property>
                             <property name="value">2</property>
                             <property name="variable">int:formatnrows</property>
@@ -996,6 +944,7 @@ None
                         </child>
                         <child>
                           <object class="ttk.Radiobutton" id="format3row_button">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                             <property name="text" translatable="yes">3</property>
                             <property name="value">3</property>
                             <property name="variable">int:formatnrows</property>
@@ -1009,6 +958,7 @@ None
                         </child>
                         <child>
                           <object class="ttk.Radiobutton" id="format4row_button">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                             <property name="text" translatable="yes">4</property>
                             <property name="value">4</property>
                             <property name="variable">int:formatnrows</property>
@@ -1022,6 +972,7 @@ None
                         </child>
                         <child>
                           <object class="ttk.Radiobutton" id="format8row_button">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                             <property name="state">normal</property>
                             <property name="text" translatable="yes">8</property>
                             <property name="value">8</property>
@@ -1038,6 +989,7 @@ None
                     </child>
                     <child>
                       <object class="ttk.Checkbutton" id="comma_checkbutton">
+                        <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
                         <property name="offvalue">0</property>
                         <property name="onvalue">1</property>
                         <property name="text" translatable="yes">Remove Commas</property>
@@ -1046,19 +998,6 @@ None
                           <property name="column">0</property>
                           <property name="propagate">True</property>
                           <property name="row">2</property>
-                        </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="tk.Button" id="ConvertButton">
-                        <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                        <property name="height">2</property>
-                        <property name="justify">left</property>
-                        <property name="text" translatable="yes">↑ Convert ↓</property>
-                        <property name="width">50</property>
-                        <layout manager="grid">
-                          <property name="pady">5</property>
-                          <property name="row">3</property>
                         </layout>
                       </object>
                     </child>
@@ -1295,11 +1234,15 @@ None
         <child>
           <object class="ttk.Label" id="about_label">
             <property name="justify">left</property>
-            <property name="text" translatable="yes">Current version: 3.1
-Developed by Danny Tran
+            <property name="text" translatable="yes">Version 3.2 - 20220210
+Developed by Danny Tran.
+
 For feedback/bugs reports email me at: danny.tran.au@outlook.com
 ----------------------------------------------
 Changelog:
+V3.2 - 20220210 - Removed buttons from bitformator and comparator.
+  - Changed layout of loading bits.
+  - Selecting Input/Output on File 1 will automatically inverse on file 2.
 V3.1 - 20211120 - Bitformattor uses spaces instead of tabs
 V3.0 - 20211020 - Added Compiler
 V2.0 - 20211018 - Added Bit Comparator
