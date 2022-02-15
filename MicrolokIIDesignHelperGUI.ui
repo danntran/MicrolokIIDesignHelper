@@ -888,7 +888,7 @@ None
                   </object>
                 </child>
                 <child>
-                  <object class="ttk.Frame" id="formatchoice_frame">
+                  <object class="ttk.Frame" id="BFchoice_frame">
                     <property name="height">10</property>
                     <layout manager="pack">
                       <property name="expand">false</property>
@@ -897,108 +897,167 @@ None
                       <property name="side">top</property>
                     </layout>
                     <child>
-                      <object class="ttk.Label" id="formatchoice_label">
-                        <property name="text" translatable="yes">Covert to number of columns: </property>
+                      <object class="ttk.Frame" id="addprefixlabel">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
                         <layout manager="grid">
                           <property name="column">0</property>
+                          <property name="padx">0 50</property>
                           <property name="propagate">True</property>
                           <property name="row">0</property>
                         </layout>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="ttk.Frame" id="formatsel_frame">
-                        <layout manager="grid">
-                          <property name="column">0</property>
-                          <property name="pady">0 5</property>
-                          <property name="propagate">True</property>
-                          <property name="row">1</property>
-                        </layout>
                         <child>
-                          <object class="ttk.Radiobutton" id="format1row_button">
-                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                            <property name="state">normal</property>
-                            <property name="text" translatable="yes">1</property>
-                            <property name="value">1</property>
-                            <property name="variable">int:formatnrows</property>
-                            <layout manager="grid">
-                              <property name="column">0</property>
+                          <object class="ttk.Label" id="prefixlabel">
+                            <property name="text" translatable="yes">Add prefix to bits:</property>
+                            <layout manager="pack">
+                              <property name="anchor">w</property>
                               <property name="propagate">True</property>
-                              <property name="row">0</property>
+                              <property name="side">top</property>
                             </layout>
                           </object>
                         </child>
                         <child>
-                          <object class="ttk.Radiobutton" id="format2row_button">
-                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                            <property name="text" translatable="yes">2</property>
-                            <property name="value">2</property>
-                            <property name="variable">int:formatnrows</property>
-                            <layout manager="grid">
-                              <property name="column">1</property>
-                              <property name="padx">40 0</property>
+                          <object class="ttk.Entry" id="PrefixEntry">
+                            <property name="textvariable">string:sPrefix</property>
+                            <layout manager="pack">
                               <property name="propagate">True</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Radiobutton" id="format3row_button">
-                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                            <property name="text" translatable="yes">3</property>
-                            <property name="value">3</property>
-                            <property name="variable">int:formatnrows</property>
-                            <layout manager="grid">
-                              <property name="column">2</property>
-                              <property name="padx">40 0</property>
-                              <property name="propagate">True</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Radiobutton" id="format4row_button">
-                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                            <property name="text" translatable="yes">4</property>
-                            <property name="value">4</property>
-                            <property name="variable">int:formatnrows</property>
-                            <layout manager="grid">
-                              <property name="column">3</property>
-                              <property name="padx">40 0</property>
-                              <property name="propagate">True</property>
-                              <property name="row">0</property>
-                            </layout>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="ttk.Radiobutton" id="format8row_button">
-                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                            <property name="state">normal</property>
-                            <property name="text" translatable="yes">8</property>
-                            <property name="value">8</property>
-                            <property name="variable">int:formatnrows</property>
-                            <layout manager="grid">
-                              <property name="column">4</property>
-                              <property name="padx">40 0</property>
-                              <property name="propagate">True</property>
-                              <property name="row">0</property>
+                              <property name="side">top</property>
                             </layout>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
-                      <object class="ttk.Checkbutton" id="comma_checkbutton">
-                        <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
-                        <property name="offvalue">0</property>
-                        <property name="onvalue">1</property>
-                        <property name="text" translatable="yes">Remove Commas</property>
-                        <property name="variable">int:removecomma</property>
+                      <object class="ttk.Frame" id="ncolumntea">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
                         <layout manager="grid">
-                          <property name="column">0</property>
+                          <property name="column">1</property>
                           <property name="propagate">True</property>
-                          <property name="row">2</property>
+                          <property name="row">0</property>
                         </layout>
+                        <child>
+                          <object class="ttk.Label" id="Label1">
+                            <property name="text" translatable="yes">Covert to number of columns: </property>
+                            <layout manager="pack" />
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Frame" id="Frame2">
+                            <layout manager="pack" />
+                            <child>
+                              <object class="ttk.Radiobutton" id="Radiobutton1">
+                                <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                                <property name="state">normal</property>
+                                <property name="text" translatable="yes">1</property>
+                                <property name="value">1</property>
+                                <property name="variable">int:formatnrows</property>
+                                <layout manager="grid">
+                                  <property name="column">0</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="Radiobutton2">
+                                <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                                <property name="text" translatable="yes">2</property>
+                                <property name="value">2</property>
+                                <property name="variable">int:formatnrows</property>
+                                <layout manager="grid">
+                                  <property name="column">1</property>
+                                  <property name="padx">40 0</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="Radiobutton3">
+                                <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                                <property name="text" translatable="yes">3</property>
+                                <property name="value">3</property>
+                                <property name="variable">int:formatnrows</property>
+                                <layout manager="grid">
+                                  <property name="column">2</property>
+                                  <property name="padx">40 0</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="Radiobutton4">
+                                <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                                <property name="text" translatable="yes">4</property>
+                                <property name="value">4</property>
+                                <property name="variable">int:formatnrows</property>
+                                <layout manager="grid">
+                                  <property name="column">3</property>
+                                  <property name="padx">40 0</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="ttk.Radiobutton" id="Radiobutton5">
+                                <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                                <property name="text" translatable="yes">8</property>
+                                <property name="value">8</property>
+                                <property name="variable">int:formatnrows</property>
+                                <layout manager="grid">
+                                  <property name="column">4</property>
+                                  <property name="padx">40 0</property>
+                                  <property name="propagate">True</property>
+                                  <property name="row">0</property>
+                                </layout>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Checkbutton" id="Checkbutton1">
+                            <property name="command" type="command" cbtype="simple">bitformat_convertcallback</property>
+                            <property name="offvalue">0</property>
+                            <property name="onvalue">1</property>
+                            <property name="text" translatable="yes">Remove Commas</property>
+                            <property name="variable">int:removecomma</property>
+                            <layout manager="pack" />
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="ttk.Frame" id="addsuffixlabel">
+                        <property name="height">200</property>
+                        <property name="width">200</property>
+                        <layout manager="grid">
+                          <property name="column">2</property>
+                          <property name="padx">50 0</property>
+                          <property name="propagate">True</property>
+                          <property name="row">0</property>
+                        </layout>
+                        <child>
+                          <object class="ttk.Label" id="Suffixlabel">
+                            <property name="text" translatable="yes">Add suffix to bits:</property>
+                            <layout manager="pack">
+                              <property name="anchor">w</property>
+                              <property name="propagate">True</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="ttk.Entry" id="SuffixEntry">
+                            <property name="textvariable">string:sSuffix</property>
+                            <layout manager="pack">
+                              <property name="propagate">True</property>
+                              <property name="side">top</property>
+                            </layout>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -1234,12 +1293,13 @@ None
         <child>
           <object class="ttk.Label" id="about_label">
             <property name="justify">left</property>
-            <property name="text" translatable="yes">Version 3.2 - 20220210
+            <property name="text" translatable="yes">Version 3.3 - 20220215
 Developed by Danny Tran.
 
 For feedback/bugs reports email me at: danny.tran.au@outlook.com
 ----------------------------------------------
 Changelog:
+V3.3 - 20220215 - Added Prefix and Suffix to the bit formattor.
 V3.2 - 20220210 - Removed buttons from bitformator and comparator.
   - Changed layout of loading bits.
   - Selecting Input/Output on File 1 will automatically inverse on file 2.

@@ -24,7 +24,9 @@ class MicrolokiidesignhelperguiApp:
         self.port_list = [None, None, None] # port info, 0=BF, 1=BC_file1, 2=BC_file2
         self.formatnrows = None
         self.removecomma = None
-        self.builder.import_variables(self, ['formatnrows', 'removecomma'])
+        self.sSuffix = None
+        self.sPrefix = None
+        self.builder.import_variables(self, ['sPrefix', 'formatnrows', 'removecomma', 'sSuffix'])
         self.file_types = (
             ('Microlok II/Genisys II Files', ['*.ml2','*.gn2']),
             ('All files', '*.*'))
@@ -34,18 +36,22 @@ class MicrolokiidesignhelperguiApp:
         (self.builder.get_object('file1inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
         (self.builder.get_object('file2inoutlb')).insert(tk.END, *['INPUT:','OUTPUT:'])
 
-        # Callback for the comboboxes        
+        # Callback for the comboboxes
+        # File 1 of bit comparator callbacks        
         (self.builder.get_object('file1addlb')).bind("<<ListboxSelect>>", self.file1loadbitscallback)
         (self.builder.get_object('file1portlb')).bind("<<ListboxSelect>>", self.file1loadaddresscallback)
-        (self.builder.get_object('file1inoutlb')).bind("<<ListboxSelect>>", self.file1inoutcallback)
+        (self.builder.get_object('file1inoutlb')).bind("<<ListboxSelect>>", self.file1inoutcallback) #different callback cuz of the selection of input/output
+        # File 2 of the bit comparator callbacks
         for CBs in ['file2inoutlb','file2addlb']:
             (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.file2loadbitscallback)
         (self.builder.get_object('file2portlb')).bind("<<ListboxSelect>>", self.file2loadaddresscallback)
+        # Bit formattor callbacks
         (self.builder.get_object('BF_PortListbox')).bind("<<ListboxSelect>>", self.BF_loadaddresscallback) # loadaddresscallback when PortListBox selected
         for CBs in ['BF_addresslistbox','BF_inoutlistbox']:
             (self.builder.get_object(CBs)).bind("<<ListboxSelect>>", self.BF_loadcallback) # loadcallback when addressLB or inoutLB selected
-
-    
+        (self.builder.get_object('PrefixEntry')).bind("<Return>", self.BF_loadcallback) # Press enter on the Prefix box
+        (self.builder.get_object('SuffixEntry')).bind("<Return>", self.BF_loadcallback) # Press enter on the Suffix box
+        
     def open_about_toplevel(self, *args):
         # Open About window
         builder2 = pygubu.Builder()
@@ -132,8 +138,9 @@ class MicrolokiidesignhelperguiApp:
         ## Format the text
         # Obtain the text from the text box
         in_textbox = self.builder.get_object('InputTextBox')
-        input_txt = fn.txt2column(in_textbox.get(1.0, tk.END))
-        formatted_txt = format.formattxt(input_txt, self.formatnrows.get(), self.removecomma.get())
+        input_txt = format.txt2column(in_textbox.get(1.0, tk.END))
+        txt_presuffix = format.addprefixsuffix(input_txt, self.sPrefix.get(), self.sSuffix.get())
+        formatted_txt = format.formattxt(txt_presuffix, self.formatnrows.get(), self.removecomma.get())
         # Print to the output text box
         out_textbox = self.builder.get_object('OutputTextBox')
         out_textbox.delete(1.0, tk.END)
@@ -190,7 +197,7 @@ class MicrolokiidesignhelperguiApp:
         inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
         putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
         portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addressboxval, putnumboxval))
-        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
+        input_txt = format.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
         formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)
@@ -244,7 +251,7 @@ class MicrolokiidesignhelperguiApp:
         inoutval = inputoutputbox.get(inputoutputbox.curselection()) if inputoutputbox.curselection() else ''
         putnumboxval = portnumbox.get(portnumbox.curselection()) if portnumbox.curselection() else ''
         portinfomessage.configure(text=parsedoc.obtainportinfofromaddr(portlist, addressboxval, putnumboxval))
-        input_txt = fn.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
+        input_txt = format.txt2column(parsedoc.obtaininoutfromaddr(portlist, addressboxval, inoutval, putnumboxval))
         formatted_txt = format.formattxt(input_txt, 1, True)
         # Print to the output text box
         out_textbox = self.builder.get_object(bitsTXT)

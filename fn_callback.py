@@ -2,19 +2,6 @@
 # --- Function Definitons --- #
 # --------------------------- #
 # Functions for the 
-
-import re
-
-def txt2column(text):
-    # Splits the long string into a list delimited by \n, ',' and ';'
-    # input: bits/text in long string
-    # output: bits/text in a list delimited by newline, comma and semicolon
-    output_txt = []
-    for bit in re.split(r'[\n,;]', text):
-        if bit.strip(): # check for empty string
-            output_txt.append(bit.strip())
-    return output_txt # returns text in a signal column
-
 def ObtainNLines(input_text):
     # input into the Nbits slots b y counting the number of new lines - number of comments
     # returns a array with [Nlines, NBits]

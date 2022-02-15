@@ -10,6 +10,10 @@ To build:
 pyinstaller gui.py --add-data "MicrolokIIDesignHelperGUI.ui;." --add-data "MLKIIDesignHelperLogo_Large.ico;." --collect-all "pygubu" --name MLKIIDesignHelper --icon "MLKIIDesignHelperLogo_Large.ico" --noconsole --onefile
 
 ## Changelog:
+### [3.3.0] - < 2022-02-15
+#### Changes
+- Added prefix and suffix box to the bit formator.
+
 ### [3.2.0] - < 2022-02-10
 #### Changes
 - Removed buttons from bitformator and comparator.

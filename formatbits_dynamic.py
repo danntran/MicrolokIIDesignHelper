@@ -2,6 +2,17 @@
 # --- Function Definitons --- #
 # --------------------------- #
 
+import re
+
+def txt2column(text):
+    # Splits the long string into a list delimited by \n, ',' and ';'
+    # input: bits/text in long string
+    # output: bits/text in a list delimited by newline, comma and semicolon
+    output_txt = []
+    for bit in re.split(r'[\n,;]', text):
+        if bit.strip(): # check for empty string
+            output_txt.append(bit.strip())
+    return output_txt # returns text in a signal column
 
 def column_create(input_arr, col_num):
 	# Create array of arrays based off column number
@@ -52,7 +63,21 @@ def addcomma2txt(text):
 		output_txt.append(text[-1]+";")
 	return output_txt
 
-
+def addprefixsuffix(text, prefix, suffix):
+	# adds a prefix to the text of the data
+    # input: bits/text in array 
+    # output: bits/text in array with added prefix and suffix
+	output_txt = []
+	if text:
+		for bit in text:
+			tempstr = bit
+			if tempstr != "SPARE":
+				if prefix:
+					tempstr = str(prefix)+tempstr
+				if suffix:
+					tempstr = tempstr+str(suffix)
+			output_txt.append(tempstr)
+	return output_txt
 
 def column_divide(input_array, num_col, rmcomma):
 	# Create output text array based off input text and number of columns to segment
